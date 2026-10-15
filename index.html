@@ -468,6 +468,95 @@
   .logo-aba{cursor:pointer;transition:transform .15s;}
   .logo-card:hover .logo-aba{transform:scale(1.03);}
 
+
+  /* ===== Filtro por CC no dashboard ===== */
+  .dash-filtro{display:flex;align-items:center;gap:8px;}
+  .dash-filtro label{font-size:12px;color:#6b7785;}
+  .dash-filtro select{
+    height:34px;border:1px solid #d3dae2;border-radius:8px;padding:0 10px;font-size:12.5px;color:#3d4a58;
+    background:#fff;outline:none;font-family:inherit;min-width:120px;
+  }
+  .dash-filtro select:focus{border-color:var(--azul);box-shadow:0 0 0 3px rgba(18,114,185,.15);}
+  .dash-filtro select.ativo{border-color:var(--navy);background:#17456e;color:#fff;font-weight:600;}
+  .dash-aviso{
+    display:flex;align-items:center;gap:10px;background:#17456e;color:#fff;border-radius:12px;
+    padding:10px 16px;margin-bottom:12px;font-size:13px;
+  }
+  .dash-aviso b{font-size:14px;}
+  .dash-aviso .flex{flex:1;}
+  .dash-aviso button{
+    border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.12);color:#fff;border-radius:8px;
+    padding:5px 12px;font-size:12.5px;cursor:pointer;font-family:inherit;
+  }
+  .dash-aviso button:hover{background:rgba(255,255,255,.22);}
+  .dcard .dhint{font-size:11.5px;color:#9aa6b2;margin-left:auto;}
+
+
+  /* ===== Painel de colaboradores da função ===== */
+  .mdlg{
+    background:#fff;border-radius:14px;box-shadow:0 20px 50px rgba(16,40,70,.3);
+    width:900px;max-width:95vw;max-height:88vh;display:flex;flex-direction:column;overflow:hidden;
+  }
+  .mdlg-head{display:flex;align-items:flex-start;gap:12px;padding:18px 20px 12px;}
+  .mdlg-head h2{font-size:19px;font-weight:700;color:#17456e;margin:0;}
+  .mdlg-sub{font-size:12.5px;color:#6b7785;margin-top:3px;}
+  .mdlg-head .flex{flex:1;}
+  .mdlg-x{
+    width:32px;height:32px;border-radius:50%;border:0;background:#f0f3f6;color:#4e5d6c;cursor:pointer;
+    font-size:13px;flex-shrink:0;font-family:inherit;
+  }
+  .mdlg-x:hover{background:#e3e8ee;color:#17456e;}
+  .mdlg-tools{display:flex;align-items:center;gap:12px;padding:0 20px 12px;flex-wrap:wrap;}
+  .mdlg-tools input{
+    flex:1;min-width:220px;height:36px;border:1px solid #d3dae2;border-radius:8px;padding:0 12px;
+    font-size:13px;outline:none;font-family:inherit;color:#3d4a58;
+  }
+  .mdlg-tools input:focus{border-color:var(--azul);box-shadow:0 0 0 3px rgba(18,114,185,.15);}
+  .mdlg-res{display:flex;gap:12px;flex-wrap:wrap;}
+  .mdlg-res span{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:#5d6b7a;}
+  .mdlg-res .dot{width:9px;height:9px;}
+  .mdlg-body{flex:1;overflow:auto;border-top:1px solid #eef1f4;border-bottom:1px solid #eef1f4;}
+  .mtab{width:100%;border-collapse:collapse;min-width:760px;}
+  .mtab thead th{
+    position:sticky;top:0;background:#eef3f8;color:#2b3f55;font-size:12.5px;font-weight:600;
+    text-align:left;padding:10px 12px;border-bottom:1px solid #d9e2eb;white-space:nowrap;z-index:1;
+  }
+  .mtab tbody td{padding:9px 12px;font-size:13px;color:#4a5866;border-bottom:1px solid #f0f3f6;white-space:nowrap;}
+  .mtab tbody tr{cursor:pointer;}
+  .mtab tbody tr:hover{background:#eef5fc;}
+  .mtab tbody tr:focus-visible{outline:2px solid var(--azul);outline-offset:-2px;}
+  .mtab .nm{font-weight:600;color:#1f3347;}
+  .mtab .badge{border-radius:999px;padding:3px 10px;}
+  .mtab tr.grp td{background:#17456e;color:#fff;font-weight:700;font-size:12.5px;padding:7px 12px;cursor:default;}
+  .mdlg-vazio{padding:30px;text-align:center;color:#9aa6b2;font-size:13px;}
+  .mdlg-foot{display:flex;align-items:center;gap:8px;padding:12px 20px;flex-wrap:wrap;}
+  .mdlg-foot .flex{flex:1;}
+  .mdlg-dica{font-size:12px;color:#9aa6b2;}
+  .mbtn{
+    border:1px solid #d3dae2;background:#fff;border-radius:8px;padding:8px 14px;font-size:12.5px;
+    cursor:pointer;font-family:inherit;color:#3d4a58;
+  }
+  .mbtn:hover{background:#f3f6f9;}
+  .mbtn.pri{background:var(--azul);border-color:var(--azul);color:#fff;font-weight:600;}
+  .mbtn.pri:hover{background:var(--azul-escuro);}
+  .mbtn:focus-visible,.mdlg-x:focus-visible{outline:2px solid var(--azul);outline-offset:2px;}
+
+
+  /* ===== Filtros combinados do dashboard ===== */
+  .dash-aviso{flex-wrap:wrap;}
+  .dchip{
+    display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.14);
+    border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:3px 4px 3px 11px;font-size:12.5px;
+  }
+  .dchip .dot{width:9px;height:9px;border:1.5px solid rgba(255,255,255,.85);}
+  .dash-aviso .dchip button{
+    width:20px;height:20px;padding:0;border-radius:50%;border:0;background:rgba(255,255,255,.18);
+    font-size:10px;display:inline-flex;align-items:center;justify-content:center;
+  }
+  .dav-n{font-size:12.5px;color:#cfe0f0;}
+  .kpi.apagado{opacity:.5;}
+  .kpi.sel{box-shadow:0 0 0 2px var(--k),0 4px 14px rgba(16,40,70,.12);}
+
   @media (max-width:860px){
     .sidebar{display:none;}
     .subbar .sess .hide-sm{display:none;}
@@ -678,14 +767,22 @@
         </div>
         <div class="flex"></div>
         <div class="dash-upd" id="dash-upd"></div>
+        <div class="dash-filtro">
+          <label for="dash-cc">CC</label>
+          <select id="dash-cc" onchange="filtraDashCC(this.value==='__all'?null:(this.value==='__sem'?'':this.value))"></select>
+          <label for="dash-st">Situa&ccedil;&atilde;o</label>
+          <select id="dash-st" onchange="filtraDashST(this.value==='__all'?null:this.value)"></select>
+          <button type="button" class="btn" id="dash-cc-limpar" onclick="limpaFiltrosDash()" style="display:none;">&#10005; Limpar</button>
+        </div>
         <button class="btn" onclick="gerarDashboard()" title="Atualizar gr&aacute;ficos">&#8635; Atualizar</button>
         <button class="btn" onclick="goHome()">Voltar</button>
       </div>
       <div class="dash-body">
+        <div class="dash-aviso" id="dash-aviso" style="display:none;"></div>
         <div class="kpis" id="dash-kpis"></div>
         <div class="dash-grid">
           <section class="dcard">
-            <header><h3>Status geral</h3><span class="dsub" id="sub-status"></span></header>
+            <header><h3>Status geral</h3><span class="dsub" id="sub-status"></span><span class="dhint">Clique em um status para filtrar</span></header>
             <div class="chart-box" style="height:300px;"><canvas id="chart-status"></canvas></div>
           </section>
           <section class="dcard">
@@ -697,11 +794,11 @@
             <div class="chart-box" style="height:300px;"><canvas id="chart-turma"></canvas></div>
           </section>
           <section class="dcard">
-            <header><h3>Por centro de custo</h3><span class="dsub" id="sub-cc"></span></header>
+            <header><h3>Por centro de custo</h3><span class="dsub" id="sub-cc"></span><span class="dhint">Clique em uma barra para filtrar</span></header>
             <div class="chart-box" style="height:300px;"><canvas id="chart-cc"></canvas></div>
           </section>
           <section class="dcard wide">
-            <header><h3>Colaboradores por fun&ccedil;&atilde;o</h3><span class="dsub" id="sub-funcao"></span></header>
+            <header><h3>Colaboradores por fun&ccedil;&atilde;o</h3><span class="dsub" id="sub-funcao"></span><span class="dhint">Clique em uma barra para ver os colaboradores</span></header>
             <div class="chart-box" id="box-funcao"><canvas id="chart-funcao"></canvas></div>
           </section>
           <section class="dcard wide">
@@ -2082,9 +2179,9 @@ function processImport(){
 var chartsInstances = {};
 var PALETA = ['#1272b9','#619935','#eaa837','#d9433b','#7b5cc4','#1d9a9a','#c2569b','#8a6d3b','#4b6584','#e07b39','#3f8f5f','#9e9e9e'];
 function paleta(n){ var out=[]; for(var i=0;i<n;i++) out.push(PALETA[i%PALETA.length]); return out; }
-function contaPor(fn){
+function contaPor(fn, lista){
   var m={};
-  state.colabs.forEach(function(c){ var k=fn(c); m[k]=(m[k]||0)+1; });
+  (lista||state.colabs).forEach(function(c){ var k=fn(c); m[k]=(m[k]||0)+1; });
   return m;
 }
 function ordenaRotulos(obj){
@@ -2092,74 +2189,147 @@ function ordenaRotulos(obj){
 }
 function pct(n,t){ return t ? Math.round(n*1000/t)/10 : 0; }
 
-function gerarDashboard(){
-  var total = state.colabs.length;
-  var ordem = ['EMB','TRANS','DES','AEMB','PEND','NAEMB','SEM'];
-  var statusCount = {};
-  ordem.forEach(function(k){ statusCount[k]=0; });
-  state.colabs.forEach(function(c){ var k=statusInfo(c).code; statusCount[k]=(statusCount[k]||0)+1; });
+/* Filtro por CC do dashboard: null = todos, '' = sem CC, '1225' = CC específico */
+state.dashCC = null;   // null = todos, '' = sem CC, '1225' = CC específico
+state.dashST = null;   // null = todos, 'EMB', 'DES', ...
+var ORDEM_ST = ['EMB','TRANS','DES','AEMB','PEND','NAEMB','SEM'];
+function passaCC(c){ return state.dashCC===null || String(c.cc||'')===state.dashCC; }
+function passaST(c){ return state.dashST===null || statusInfo(c).code===state.dashST; }
+function dashBase(){ return state.colabs.filter(function(c){ return passaCC(c) && passaST(c); }); }
+function nomeCC(v){ return v ? 'CC '+v : 'Sem CC'; }
+function filtraDashCC(v){ state.dashCC = (v===undefined) ? null : v; gerarDashboard(); }
+function filtraDashST(v){ state.dashST = (v===undefined) ? null : v; gerarDashboard(); }
+function limpaFiltrosDash(){ state.dashCC=null; state.dashST=null; gerarDashboard(); }
+function descricaoFiltrosDash(){
+  var p=[];
+  if(state.dashCC!==null) p.push('no '+nomeCC(state.dashCC));
+  if(state.dashST!==null) p.push('com status '+rotuloStatus(state.dashST).toLowerCase());
+  return p.length ? p.join(' e ') : 'em todos os CCs';
+}
+function dashIrRotina(code){
+  goBrowse(code);
+  if(state.dashCC){                     // leva o CC escolhido para a rotina
+    var sel=$('f-cc');
+    if([].some.call(sel.options,function(o){ return o.value===state.dashCC; })){ sel.value=state.dashCC; render(); }
+    var ab=(typeof abaAtual==='function')?abaAtual():null; if(ab){ ab.f=ab.f||{}; ab.f.cc=state.dashCC; }
+  }
+}
+function montaFiltrosDash(){
+  // CC
+  var ccs={}, temSem=false;
+  state.colabs.forEach(function(c){ if(c.cc) ccs[String(c.cc)]=1; else temSem=true; });
+  var lista=Object.keys(ccs).sort(function(a,b){ return a.localeCompare(b,'pt-BR',{numeric:true}); });
+  if(state.dashCC!==null && state.dashCC!=='' && !ccs[state.dashCC]) state.dashCC=null;  // CC não existe mais
+  var html='<option value="__all">Todos</option>'+lista.map(function(v){ return '<option value="'+esc(v)+'">'+esc(v)+'</option>'; }).join('');
+  if(temSem) html+='<option value="__sem">Sem CC</option>';
+  var sel=$('dash-cc'); sel.innerHTML=html;
+  sel.value = state.dashCC===null ? '__all' : (state.dashCC==='' ? '__sem' : state.dashCC);
+  sel.classList.toggle('ativo', state.dashCC!==null);
+  // Situação
+  var ss=$('dash-st');
+  ss.innerHTML='<option value="__all">Todas</option>'+ORDEM_ST.map(function(k){ return '<option value="'+k+'">'+rotuloStatus(k)+'</option>'; }).join('');
+  ss.value = state.dashST===null ? '__all' : state.dashST;
+  ss.classList.toggle('ativo', state.dashST!==null);
+  $('dash-cc-limpar').style.display = (state.dashCC!==null || state.dashST!==null) ? '' : 'none';
+}
 
-  // Indicadores (todos os status)
+function gerarDashboard(){
+  montaFiltrosDash();
+  var baseCC = state.colabs.filter(passaCC);      // para status e indicadores
+  var baseST = state.colabs.filter(passaST);      // para o gráfico de CC
+  var base   = baseCC.filter(passaST);            // para os demais gráficos
+  var total  = base.length;
+
+  // Faixa com os filtros ativos
+  var av=$('dash-aviso');
+  if(state.dashCC!==null || state.dashST!==null){
+    var chips='';
+    if(state.dashCC!==null) chips+='<span class="dchip"><b>'+esc(nomeCC(state.dashCC))+'</b><button type="button" onclick="filtraDashCC(null)" aria-label="Remover filtro de CC">&#10005;</button></span>';
+    if(state.dashST!==null) chips+='<span class="dchip"><span class="dot" style="background:'+ST[state.dashST].hex+';"></span><b>'+rotuloStatus(state.dashST)+'</b><button type="button" onclick="filtraDashST(null)" aria-label="Remover filtro de status">&#10005;</button></span>';
+    av.innerHTML='<span>Filtrando por</span>'+chips+'<span class="dav-n">'+total+' colaborador'+(total===1?'':'es')+'</span><span class="flex"></span><button type="button" onclick="limpaFiltrosDash()">Limpar filtros</button>';
+    av.style.display='flex';
+  } else { av.style.display='none'; }
+
+  var statusCount = {};
+  ORDEM_ST.forEach(function(k){ statusCount[k]=0; });
+  baseCC.forEach(function(c){ var k=statusInfo(c).code; statusCount[k]=(statusCount[k]||0)+1; });
+  var totalCC = baseCC.length;
+
+  // Indicadores (consideram o CC; o status selecionado fica destacado)
   var filtraveis = {EMB:1,DES:1,AEMB:1,PEND:1,SEM:1,TRANS:1};
-  var k = '<button type="button" class="kpi" style="--k:#17456e;" onclick="goBrowse(\'todos\')" title="Ver todos na rotina">'
-        + '<div class="kv">'+total+'</div><div class="kl">Total de colaboradores</div><div class="kp">100%</div></button>';
-  ordem.forEach(function(code){
-    var inner = '<div class="kv">'+statusCount[code]+'</div><div class="kl">'+rotuloStatus(code)+'</div><div class="kp">'+pct(statusCount[code],total)+'% do total</div>';
+  var k = '<button type="button" class="kpi'+(state.dashST!==null?' apagado':'')+'" style="--k:#17456e;" onclick="dashIrRotina(\'todos\')" title="Ver na rotina">'
+        + '<div class="kv">'+totalCC+'</div><div class="kl">'+(state.dashCC!==null?'Colaboradores no '+esc(nomeCC(state.dashCC)):'Total de colaboradores')+'</div><div class="kp">100%</div></button>';
+  ORDEM_ST.forEach(function(code){
+    var cls='kpi'+(state.dashST===code?' sel':(state.dashST!==null?' apagado':''));
+    var inner = '<div class="kv">'+statusCount[code]+'</div><div class="kl">'+rotuloStatus(code)+'</div><div class="kp">'+pct(statusCount[code],totalCC)+'% do total</div>';
     k += filtraveis[code]
-      ? '<button type="button" class="kpi" style="--k:'+ST[code].hex+';" onclick="goBrowse(\''+code+'\')" title="Ver na rotina">'+inner+'</button>'
-      : '<div class="kpi" style="--k:'+ST[code].hex+';">'+inner+'</div>';
+      ? '<button type="button" class="'+cls+'" style="--k:'+ST[code].hex+';" onclick="dashIrRotina(\''+code+'\')" title="Ver na rotina">'+inner+'</button>'
+      : '<div class="'+cls+'" style="--k:'+ST[code].hex+';">'+inner+'</div>';
   });
   $('dash-kpis').innerHTML = k;
   var agora=new Date();
   $('dash-upd').textContent = 'Atualizado às '+String(agora.getHours()).padStart(2,'0')+':'+String(agora.getMinutes()).padStart(2,'0');
 
-  // Status geral (todos, inclusive zerados ficam fora do gráfico para não poluir)
-  var stL=[], stD=[], stC=[];
-  ordem.forEach(function(code){ if(statusCount[code]>0){ stL.push(rotuloStatus(code)); stD.push(statusCount[code]); stC.push(ST[code].hex); } });
-  $('sub-status').textContent = total+' colaboradores';
-  renderChart('chart-status','doughnut',stL,stD,stC);
+  // Status geral — mostra todos os status do CC; clique filtra os demais gráficos
+  var stCodes=[], stL=[], stD=[], stC=[];
+  ORDEM_ST.forEach(function(code){ if(statusCount[code]>0){ stCodes.push(code); stL.push(rotuloStatus(code)); stD.push(statusCount[code]); stC.push(ST[code].hex); } });
+  $('sub-status').textContent = totalCC+' colaboradores';
+  renderChart('chart-status','doughnut',stL,stD,stC,{
+    destaque: state.dashST!==null ? stCodes.indexOf(state.dashST) : -1,
+    onClick: function(i){ var v=stCodes[i]; filtraDashST(state.dashST===v ? null : v); }
+  });
 
   // Por escala
-  var esc = contaPor(function(c){ return c.escala || 'Sem escala'; });
-  var escL = ordenaRotulos(esc);
+  var esc_ = contaPor(function(c){ return c.escala || 'Sem escala'; }, base);
+  var escL = ordenaRotulos(esc_);
   $('sub-escala').textContent = escL.length+' escala(s)';
-  renderChart('chart-escala','doughnut',escL,escL.map(function(x){return esc[x];}),paleta(escL.length));
+  renderChart('chart-escala','doughnut',escL,escL.map(function(x){return esc_[x];}),paleta(escL.length));
 
   // Por turma
-  var tur = contaPor(function(c){ return c.turma || 'Sem turma'; });
+  var tur = contaPor(function(c){ return c.turma || 'Sem turma'; }, base);
   var turL = ordenaRotulos(tur);
   $('sub-turma').textContent = turL.length+' turma(s)';
   renderChart('chart-turma','bar',turL,turL.map(function(x){return tur[x];}),paleta(turL.length));
 
-  // Por centro de custo
-  var ccs = contaPor(function(c){ return c.cc ? 'CC '+c.cc : 'Sem CC'; });
-  var ccL = ordenaRotulos(ccs);
-  $('sub-cc').textContent = ccL.length+' centro(s) de custo';
-  renderChart('chart-cc','bar',ccL,ccL.map(function(x){return ccs[x];}),paleta(ccL.length));
+  // Por centro de custo — considera o status; mostra todos os CCs e destaca o selecionado
+  var ccs = contaPor(function(c){ return String(c.cc||''); }, baseST);
+  if(state.dashCC!==null && !(state.dashCC in ccs)) ccs[state.dashCC]=0;
+  var ccVals = Object.keys(ccs).sort(function(a,b){ if(a==='') return 1; if(b==='') return -1; return a.localeCompare(b,'pt-BR',{numeric:true}); });
+  $('sub-cc').textContent = ccVals.length+' centro(s) de custo';
+  renderChart('chart-cc','bar',ccVals.map(nomeCC),ccVals.map(function(x){return ccs[x];}),paleta(ccVals.length),{
+    destaque: state.dashCC!==null ? ccVals.indexOf(state.dashCC) : -1,
+    onClick: function(i){ var v=ccVals[i]; filtraDashCC(state.dashCC===v ? null : v); }
+  });
 
   // Por função — TODAS, ordenadas da maior para a menor
-  var fun = contaPor(function(c){ return c.funcao || 'Não informada'; });
+  var fun = contaPor(function(c){ return c.funcao || 'Não informada'; }, base);
   var funL = Object.keys(fun).sort(function(a,b){ return fun[b]-fun[a] || a.localeCompare(b,'pt-BR'); });
   $('sub-funcao').textContent = funL.length+' função(ões)';
   $('box-funcao').style.height = Math.max(220, funL.length*30 + 40)+'px';
-  renderChart('chart-funcao','barH',funL,funL.map(function(x){return fun[x];}),Array(funL.length).fill('#1272b9'));
+  renderChart('chart-funcao','barH',funL,funL.map(function(x){return fun[x];}),Array(funL.length).fill(state.dashST!==null ? ST[state.dashST].hex : '#1272b9'),{
+    onClick: function(i){ abrirColabsFuncao(funL[i]); }
+  });
 
-  // Embarques por data (todas as datas)
+  // Embarques por data
   var tl = {};
-  state.colabs.forEach(function(c){
+  base.forEach(function(c){
     var e=c.embarques&&c.embarques[0];
     if(e && e.data_embarque) tl[e.data_embarque]=(tl[e.data_embarque]||0)+1;
   });
   var tlK = Object.keys(tl).sort();
-  $('sub-timeline').textContent = tlK.length ? tlK.length+' data(s) • '+fmtBR(tlK[0])+' a '+fmtBR(tlK[tlK.length-1]) : '';
-  renderChart('chart-timeline','line',tlK.map(fmtBR),tlK.map(function(d){return tl[d];}),['#1272b9']);
+  $('sub-timeline').textContent = tlK.length ? tlK.length+' data(s), de '+fmtBR(tlK[0])+' a '+fmtBR(tlK[tlK.length-1]) : '';
+  renderChart('chart-timeline','line',tlK.map(fmtBR),tlK.map(function(d){return tl[d];}),[state.dashST!==null ? ST[state.dashST].hex : '#1272b9']);
 }
 function rotuloStatus(code){
   var l=ST[code].label.toLowerCase().replace('reemb.','reembarque').replace('program.','programação');
   return l.charAt(0).toUpperCase()+l.slice(1);
 }
 
-function renderChart(id, type, labels, data, colors){
+function renderChart(id, type, labels, data, colors, opts){
+  opts = opts || {};
+  if(opts.destaque!=null && opts.destaque>=0){
+    colors = colors.map(function(c,i){ return i===opts.destaque ? c : c+'40'; });
+  }
   var ctx = document.getElementById(id);
   if(!ctx) return;
   if(chartsInstances[id]){ chartsInstances[id].destroy(); delete chartsInstances[id]; }
@@ -2179,6 +2349,7 @@ function renderChart(id, type, labels, data, colors){
   var rosca = type==='doughnut';
   var total = data.reduce(function(a,b){ return a+b; },0);
   var ds = { data:data, backgroundColor:colors, borderColor:'#fff', borderWidth:2 };
+  if(rosca && opts.destaque!=null && opts.destaque>=0){ ds.offset = data.map(function(_,i){ return i===opts.destaque ? 14 : 0; }); }
   if(type==='bar' || type==='barH'){
     ds.borderWidth=0; ds.borderRadius=6; ds.borderSkipped=false;
     ds.maxBarThickness = type==='barH' ? 20 : 56;
@@ -2194,11 +2365,14 @@ function renderChart(id, type, labels, data, colors){
     data: { labels:labels, datasets:[ds] },
     options: {
       responsive:true, maintainAspectRatio:false,
-      layout:{ padding: type==='barH' ? {right:34} : {top:26, right:8} },
+      layout:{ padding: rosca ? 14 : (type==='barH' ? {right:34} : {top:26, right:8}) },
       cutout: rosca ? '62%' : undefined,
       indexAxis: type==='barH' ? 'y' : 'x',
       plugins:{
-        legend:{ display:rosca, position:'right', labels:{ usePointStyle:true, pointStyle:'circle', boxWidth:8, padding:12 } },
+        legend:{ display:rosca, position:'right', labels:{ usePointStyle:true, pointStyle:'circle', boxWidth:8, padding:12 },
+          onClick: opts.onClick ? function(e, item){ var i=item.index; setTimeout(function(){ opts.onClick(i); },0); } : Chart.overrides.doughnut.plugins.legend.onClick,
+          onHover: opts.onClick ? function(e){ var t=e.native&&e.native.target; if(t) t.style.cursor='pointer'; } : undefined,
+          onLeave: opts.onClick ? function(e){ var t=e.native&&e.native.target; if(t) t.style.cursor='default'; } : undefined },
         tooltip:{
           backgroundColor:'#1f3347', padding:10, cornerRadius:8,
           callbacks:{ label:function(c){ var v=c.parsed && typeof c.parsed==='object' ? (type==='barH'?c.parsed.x:c.parsed.y) : c.parsed; return ' '+v+' ('+pct(v,total)+'%)'; } }
@@ -2222,6 +2396,10 @@ function renderChart(id, type, labels, data, colors){
       })
     }
   };
+  if(opts.onClick){
+    config.options.onClick = function(evt, els){ if(els && els.length){ var i=els[0].index; setTimeout(function(){ opts.onClick(i); }, 0); } };  // adia: o gráfico é recriado no clique
+    config.options.onHover = function(evt, els){ var t=evt.native&&evt.native.target; if(t) t.style.cursor = els && els.length ? 'pointer' : 'default'; };
+  }
   chartsInstances[id] = new Chart(ctx, config);
 }
 
@@ -2350,6 +2528,80 @@ document.addEventListener('keydown', function(ev){
   }
 });
 $('data-hoje').textContent = fmtBR(hoje());
+
+/* ===== Colaboradores de uma função (clique no gráfico) ===== */
+var funcSel = { nome:null, lista:[] };
+function abrirColabsFuncao(nomeFuncao){
+  var base = dashBase();
+  var lista = base.filter(function(c){ return (c.funcao || 'Não informada') === nomeFuncao; })
+    .map(function(c){ return {c:c, si:statusInfo(c)}; })
+    .sort(function(a,b){
+      var ca=String(a.c.cc||''), cb=String(b.c.cc||'');
+      if(ca!==cb){ if(ca==='') return 1; if(cb==='') return -1; return ca.localeCompare(cb,'pt-BR',{numeric:true}); }
+      return (a.c.nome||'').localeCompare(b.c.nome||'','pt-BR');
+    });
+  funcSel = { nome:nomeFuncao, lista:lista };
+  $('func-tit').textContent = nomeFuncao;
+  $('func-sub').textContent = lista.length+' colaborador'+(lista.length===1?'':'es')+' '+descricaoFiltrosDash();
+  var cont={}; lista.forEach(function(r){ cont[r.si.code]=(cont[r.si.code]||0)+1; });
+  $('func-res').innerHTML = ['EMB','TRANS','DES','AEMB','PEND','NAEMB','SEM'].filter(function(k){ return cont[k]; }).map(function(k){
+    return '<span><span class="dot" style="background:'+ST[k].hex+';"></span>'+rotuloStatus(k)+': <b>'+cont[k]+'</b></span>';
+  }).join('');
+  $('func-q').value='';
+  desenhaListaFuncao();
+  openDlg('dlg-func');
+  setTimeout(function(){ $('func-q').focus(); }, 30);
+}
+function desenhaListaFuncao(){
+  var q=$('func-q').value.trim().toUpperCase();
+  var vis=funcSel.lista.filter(function(r){
+    if(!q) return true;
+    var c=r.c; return ((c.nome||'')+' '+(c.matricula||'')+' '+(c.cc||'')+' '+(c.turma||'')).toUpperCase().indexOf(q)!==-1;
+  });
+  var html='', ccAtual=null, varios = state.dashCC===null;
+  vis.forEach(function(r){
+    var c=r.c, e=r.si.e, st=ST[r.si.code], cc=String(c.cc||'');
+    if(varios && cc!==ccAtual){
+      ccAtual=cc;
+      var n=vis.filter(function(x){ return String(x.c.cc||'')===cc; }).length;
+      html+='<tr class="grp"><td colspan="9">'+esc(nomeCC(cc))+' ('+n+')</td></tr>';
+    }
+    html+='<tr tabindex="0" onclick="verColabDaFuncao(\''+c.id+'\')" onkeydown="if(event.key===\'Enter\')verColabDaFuncao(\''+c.id+'\')">'
+      +'<td><span class="dot" style="background:'+st.hex+';"></span></td>'
+      +'<td class="nm">'+esc(c.nome||'—')+'</td>'
+      +'<td>'+esc(c.matricula||'—')+'</td>'
+      +'<td>'+esc(c.cc||'—')+'</td>'
+      +'<td>'+esc(c.turma||'—')+'</td>'
+      +'<td>'+esc(c.escala||'—')+'</td>'
+      +'<td><span class="badge" style="background:'+st.hex+';">'+st.label+'</span></td>'
+      +'<td>'+fmtBR(e?e.data_embarque:null)+'</td>'
+      +'<td>'+fmtBR(e?e.data_desembarque:null)+'</td>'
+      +'</tr>';
+  });
+  $('func-lista').innerHTML=html;
+  $('func-vazio').style.display = vis.length ? 'none' : 'block';
+}
+function verColabDaFuncao(id){
+  closeDlg('dlg-func');
+  state.sel=id;
+  openColab('ver');
+}
+function abrirFuncaoNaRotina(){
+  var nome=funcSel.nome, cc=state.dashCC, stF=state.dashST;
+  closeDlg('dlg-func');
+  goBrowse('todos');
+  // usa o filtro suspenso da coluna Função
+  var chave = (nome==='Não informada') ? '' : nome;
+  state.colF = {}; state.colF.func = {}; state.colF.func[chave]=true;
+  if(stF){ state.colF.sit = {}; state.colF.sit[ST[stF].label]=true; }
+  if(cc){ var sel=$('f-cc'); if([].some.call(sel.options,function(o){ return o.value===cc; })) sel.value=cc; }
+  render();
+  var ab=(typeof abaAtual==='function')?abaAtual():null; if(ab){ ab.f=ab.f||{}; ab.f.cc=$('f-cc').value; }
+}
+document.addEventListener('keydown', function(ev){
+  if(ev.key==='Escape' && $('dlg-func') && $('dlg-func').classList.contains('open')){ closeDlg('dlg-func'); }
+});
+
 /* ================= ABAS (estilo navegador) ================= */
 var ABAS = { lista:[], ativa:null, seq:0, trocando:false };
 var VIEW_INFO = {
@@ -2372,6 +2624,8 @@ function salvaEstadoAba(a){
   a.colF = JSON.parse(JSON.stringify(state.colF||{}));
   a.colSort = state.colSort ? {k:state.colSort.k, dir:state.colSort.dir} : null;
   a.ccFechados = JSON.parse(JSON.stringify(state.ccFechados||{}));
+  a.dashCC = state.dashCC;
+  a.dashST = state.dashST;
   var bw=document.querySelector('#view-browse .browse-wrap'); a.scroll = bw ? bw.scrollTop : 0;
   var hm=$('view-home'); a.scrollHome = hm ? hm.scrollTop : 0;
 }
@@ -2381,6 +2635,8 @@ function restauraEstadoAba(a){
   state.colF = a.colF ? JSON.parse(JSON.stringify(a.colF)) : {};
   state.colSort = a.colSort ? {k:a.colSort.k, dir:a.colSort.dir} : null;
   state.ccFechados = a.ccFechados ? JSON.parse(JSON.stringify(a.ccFechados)) : {};
+  state.dashCC = (a.dashCC===undefined) ? null : a.dashCC;
+  state.dashST = (a.dashST===undefined) ? null : a.dashST;
   if(typeof closeColFilter==='function') closeColFilter();
 }
 function mostraViewAba(a){
@@ -2413,7 +2669,7 @@ function fecharAba(id, ev){
   var idx=-1; ABAS.lista.forEach(function(a,i){ if(a.id===id) idx=i; });
   if(idx<0) return;
   if(ABAS.lista.length===1){            // sempre fica pelo menos uma aba: volta para o Início
-    var u=ABAS.lista[0]; u.view='home'; u.f={cc:'',sit:'todos',turma:'',q:''}; u.colF={}; u.colSort=null; u.ccFechados={};
+    var u=ABAS.lista[0]; u.view='home'; u.f={cc:'',sit:'todos',turma:'',q:''}; u.colF={}; u.colSort=null; u.ccFechados={}; u.dashCC=null; u.dashST=null;
     restauraEstadoAba(u); mostraViewAba(u); desenhaAbas(); return;
   }
   var eraAtiva = (id===ABAS.ativa);
@@ -2499,6 +2755,36 @@ function loadXLSX(cdnIndex){
 // Carregar XLSX apenas quando necessário
 setTimeout(function(){ loadXLSX(0); }, 2000);
 </script>
+<!-- ==================== COLABORADORES DA FUNÇÃO (dashboard) ==================== -->
+<div class="overlay" id="dlg-func" onclick="if(event.target===this)closeDlg('dlg-func')">
+  <div class="mdlg" role="dialog" aria-modal="true" aria-labelledby="func-tit">
+    <div class="mdlg-head">
+      <div>
+        <h2 id="func-tit"></h2>
+        <div class="mdlg-sub" id="func-sub"></div>
+      </div>
+      <div class="flex"></div>
+      <button type="button" class="mdlg-x" onclick="closeDlg('dlg-func')" aria-label="Fechar">&#10005;</button>
+    </div>
+    <div class="mdlg-tools">
+      <input type="text" id="func-q" placeholder="&#128269; Buscar por nome, matr&iacute;cula, CC ou turma..." oninput="desenhaListaFuncao()">
+      <div class="mdlg-res" id="func-res"></div>
+    </div>
+    <div class="mdlg-body">
+      <table class="mtab">
+        <thead><tr><th></th><th>Nome</th><th>Matr&iacute;cula</th><th>CC</th><th>Turma</th><th>Escala</th><th>Situa&ccedil;&atilde;o</th><th>Embarque</th><th>Desembarque</th></tr></thead>
+        <tbody id="func-lista"></tbody>
+      </table>
+      <div class="mdlg-vazio" id="func-vazio" style="display:none;">Ningu&eacute;m encontrado com essa busca.</div>
+    </div>
+    <div class="mdlg-foot">
+      <span class="mdlg-dica">Clique em um colaborador para ver o cadastro completo.</span>
+      <div class="flex"></div>
+      <button type="button" class="mbtn" onclick="closeDlg('dlg-func')">Fechar</button>
+      <button type="button" class="mbtn pri" onclick="abrirFuncaoNaRotina()">Abrir na rotina de embarque</button>
+    </div>
+  </div>
+</div>
 <div class="colf" id="colf" role="dialog" aria-label="Filtro da coluna"></div>
 </body>
 </html>
