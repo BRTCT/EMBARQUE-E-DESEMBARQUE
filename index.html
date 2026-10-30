@@ -975,10 +975,10 @@
   <button type="button" class="tab-new" onclick="novaAba()" title="Nova aba" aria-label="Nova aba">+</button>
   <div class="flex"></div>
   <div class="sess">
-    <div class="hide-sm">operador</div>
+    <div class="hide-sm" id="emb-operador">operador</div>
     <div id="data-hoje"></div>
     <div class="hide-sm">Parente Andrade / Pa - Manaus</div>
-    <div class="logoff" onclick="location.reload()">&#10005; Log Off</div>
+    <div class="logoff" id="emb-logoff" onclick="location.reload()">&#10005; Log Off</div>
   </div>
 </div>
 
@@ -1564,9 +1564,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script>
 /* ================= CONFIGURAÇÃO ================= */
-var SB_URL = 'https://lbzjcojhynvpguwebtnd.supabase.co';
-var SB_KEY = 'sb_publishable_uWM1YvKAQI8fKU1Mf-X2yQ_B1-GIAC9';
-var PUB_URL = 'https://lbzjcojhynvpguwebtnd.supabase.co/functions/v1/controle-embarque';
+/* Banco: projeto Supabase do Portal de Ambientes (tabelas emb_*) */
+var SB_URL = 'https://dzkxbvcxasvokdvjsmeb.supabase.co';
+var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR6a3hidmN4YXN2b2tkdmpzbWViIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcxNjk0MTUsImV4cCI6MjEwMjc0NTQxNX0.bRcgkjme7bV6Bju7B2yjErvR2VqWrY69SQ0pvmENKuk';
+var PUB_URL = 'https://embarque-e-desembarque.vercel.app/';
+/* Aberto dentro do Portal de Ambientes (ambiente 11)? */
+var EMB_CFG = (function(){ try { return (window.frameElement && window.frameElement._embCfg) || null; } catch (e) { return null; } })();
 
 var ESCALAS = {'12x8':[12,8],'14x14':[14,14],'15x15':[15,15],'28x28':[28,28],'7x7':[7,7]};
 var ST = {
@@ -1642,8 +1645,8 @@ function api(path, opts){
 function load(){
   loading(true);
   console.log('[LOAD] Iniciando carregamento de dados...');
-  console.log('[LOAD] Chamando API: colaboradores?select=*,embarques(*)&order=nome.asc');
-  return api('colaboradores?select=*,embarques(*)&order=nome.asc')
+  console.log('[LOAD] Chamando API: emb_colaboradores?select=*,embarques:emb_embarques(*)&order=nome.asc');
+  return api('emb_colaboradores?select=*,embarques:emb_embarques(*)&order=nome.asc')
     .then(function(data){
       console.log('[LOAD] ✓ Dados recebidos. Total de colaboradores:', (data||[]).length);
       (data||[]).forEach(function(c){ (c.embarques||[]).sort(function(a,b){ return b.data_embarque.localeCompare(a.data_embarque); }); });
@@ -1998,7 +2001,7 @@ function marcarNaoEmbarcou(checkbox, colabId){
   var marcado = checkbox.checked;
   loading(true);
   console.log('Salvando nao_embarcou:', marcado, 'para colaborador:', colabId);
-  api('colaboradores?id=eq.'+colabId, {method:'PATCH', body:{nao_embarcou: marcado}})
+  api('emb_colaboradores?id=eq.'+colabId, {method:'PATCH', body:{nao_embarcou: marcado}})
     .then(function(){
       console.log('Sucesso ao salvar nao_embarcou');
       c.nao_embarcou = marcado;
@@ -2019,7 +2022,7 @@ function salvarSitFolha(select, colabId){
   var novoValor = select.value || null;
   loading(true);
   console.log('Salvando sit_folha:', novoValor, 'para colaborador:', colabId);
-  api('colaboradores?id=eq.'+colabId, {method:'PATCH', body:{sit_folha: novoValor}})
+  api('emb_colaboradores?id=eq.'+colabId, {method:'PATCH', body:{sit_folha: novoValor}})
     .then(function(){
       console.log('Sucesso ao salvar sit_folha');
       c.sit_folha = novoValor;
@@ -2061,7 +2064,7 @@ function editarObs(td, colabId){
       return;
     }
     loading(true);
-    api('colaboradores?id=eq.'+colabId, {method:'PATCH', body:{observacoes: novaObs}})
+    api('emb_colaboradores?id=eq.'+colabId, {method:'PATCH', body:{observacoes: novaObs}})
       .then(function(){
         c.observacoes = novaObs;
         loading(false);
@@ -2423,14 +2426,14 @@ function salvarColab(){
   loading(true);
   var p;
   if(state.editId){
-    p = api('colaboradores?id=eq.'+state.editId, {method:'PATCH', body:payload});
+    p = api('emb_colaboradores?id=eq.'+state.editId, {method:'PATCH', body:payload});
   } else {
-    p = api('colaboradores', {method:'POST', body:payload, prefer:'return=representation'})
+    p = api('emb_colaboradores', {method:'POST', body:payload, prefer:'return=representation'})
       .then(function(rows){
         var emb=$('c-priemb').value;
         if(emb && rows && rows[0]){
           var ciclo=calcCiclo(emb,N,M);
-          return api('embarques', {method:'POST', body:{ colaborador_id:rows[0].id, data_embarque:emb, data_desembarque:ciclo.des, data_reembarque:ciclo.reemb, observacao:'1º embarque' }});
+          return api('emb_embarques', {method:'POST', body:{ colaborador_id:rows[0].id, data_embarque:emb, data_desembarque:ciclo.des, data_reembarque:ciclo.reemb, observacao:'1º embarque' }});
         }
       });
   }
@@ -2445,7 +2448,7 @@ function excluirColab(){
   var c=selecionado(); if(!c) return;
   confirmDlg('Confirma a exclusão do colaborador <b>'+esc(c.nome)+'</b>?<br><br>Todos os embarques dele também serão excluídos.', function(){
     loading(true);
-    api('colaboradores?id=eq.'+c.id, {method:'DELETE'})
+    api('emb_colaboradores?id=eq.'+c.id, {method:'DELETE'})
       .then(function(){ state.sel=null; toast('Registro excluído com sucesso'); return load(); })
       .catch(function(err){ loading(false); toast('Erro ao excluir: '+err.message, true); });
   });
@@ -2464,7 +2467,7 @@ function fillHist(c, podeEditar){
 function excluirEmb(id){
   confirmDlg('Confirma a exclusão deste ciclo de embarque?', function(){
     loading(true);
-    api('embarques?id=eq.'+id, {method:'DELETE'})
+    api('emb_embarques?id=eq.'+id, {method:'DELETE'})
       .then(function(){ toast('Ciclo excluído'); return load(); })
       .catch(function(err){ loading(false); toast('Erro ao excluir: '+err.message, true); });
   });
@@ -2538,11 +2541,11 @@ function salvarEmb(){
   var p;
   if(state.embEditId){
     console.log('Atualizando embarque ID:', state.embEditId);
-    p = api('embarques?id=eq.'+state.embEditId, {method:'PATCH', body:payload});
+    p = api('emb_embarques?id=eq.'+state.embEditId, {method:'PATCH', body:payload});
   } else {
     payload.colaborador_id = state.embColab.id;
     console.log('Criando novo embarque para colaborador:', state.embColab.id);
-    p = api('embarques', {method:'POST', body:payload});
+    p = api('emb_embarques', {method:'POST', body:payload});
   }
   p.then(function(){
       console.log('Embarque salvo com sucesso, carregando dados...');
@@ -2694,7 +2697,7 @@ function processImport(){
 
     if(!colab){
       console.log('Linha '+idx+': criando novo colaborador '+mat);
-      api('colaboradores', {method:'POST', body:payload})
+      api('emb_colaboradores', {method:'POST', body:payload})
         .then(function(res){
           updated++;
           console.log('✓ Inserido novo: '+mat);
@@ -2708,7 +2711,7 @@ function processImport(){
         });
     } else {
       console.log('Atualizando '+mat+' :', payload);
-      api('colaboradores?id=eq.'+colab.id, {method:'PATCH', body:payload})
+      api('emb_colaboradores?id=eq.'+colab.id, {method:'PATCH', body:payload})
         .then(function(res){
           updated++;
           console.log('✓ Atualizado: '+mat);
@@ -3087,6 +3090,10 @@ document.addEventListener('keydown', function(ev){
   }
 });
 $('data-hoje').textContent = fmtBR(hoje());
+if(EMB_CFG){
+  if(EMB_CFG.nome) $('emb-operador').textContent = EMB_CFG.nome;
+  $('emb-logoff').style.display = 'none';   /* a saída é pelo Log Off do portal */
+}
 
 /* ===== Colaboradores de uma função (clique no gráfico) ===== */
 var funcSel = { nome:null, lista:[] };
@@ -3189,7 +3196,7 @@ var SIT_ORD = {VENC:0, V30:1, V60:2, SEM:3, OK:4, ASSIN:5, NA:6};
 
 var DOCS = {
   pcv: {
-    tabela:'doc_pcv', titulo:'Controle de PCV', curto:'PCV', ico:'📋', responsavel:'SESMT',
+    tabela:'emb_doc_pcv', titulo:'Controle de PCV', curto:'PCV', ico:'📋', responsavel:'SESMT',
     alvo:'validade', campoData:'data_vencimento', rotData:'Vencimento', rotSit:'Validade', rotAlerta:'Alertas de validade',
     etapas:[
       ['data_envio_formulario','Envio do formulário para gestor Taboca','Envio do formulário'],
@@ -3229,7 +3236,7 @@ var DOCS = {
     ]
   },
   carta: {
-    tabela:'doc_cartas_designacao', titulo:'Cartas de Designação', curto:'Carta de designação', ico:'✉️', responsavel:'SESMT',
+    tabela:'emb_doc_cartas_designacao', titulo:'Cartas de Designação', curto:'Carta de designação', ico:'✉️', responsavel:'SESMT',
     alvo:'prazo', campoData:'prazo_assinatura', campoConclusao:'data_assinatura', inicioCampo:'data_emissao',
     rotData:'Prazo', rotSit:'Prazo', rotAlerta:'Alertas de prazo',
     etapas:[
@@ -3269,7 +3276,7 @@ var DOCS = {
     ]
   },
   cracha: {
-    tabela:'doc_cracha_critico', titulo:'Crachá Crítico', curto:'Crachá crítico', ico:'🪪', responsavel:'SESMT',
+    tabela:'emb_doc_cracha_critico', titulo:'Crachá Crítico', curto:'Crachá crítico', ico:'🪪', responsavel:'SESMT',
     alvo:'validade', campoData:'data_validade', autoConcluir:'data_emissao',
     rotData:'Validade', rotSit:'Validade', rotAlerta:'Alertas de validade',
     etapas:[['data_solicitacao','Solicitação'],['data_emissao','Emissão']],
@@ -3950,7 +3957,7 @@ function exportarDocsCSV(){
   var csv='\ufeff'+linhas.map(function(l){ return l.map(function(v){ v=String(v).replace(/"/g,'""'); return /[;"\n]/.test(v)?'"'+v+'"':v; }).join(';'); }).join('\r\n');
   var a=document.createElement('a');
   a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
-  a.download=cfg.tabela.replace('doc_','controle-')+'-'+hoje()+'.csv';
+  a.download=cfg.tabela.replace('emb_doc_','controle-')+'-'+hoje()+'.csv';
   document.body.appendChild(a); a.click(); setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 500);
 }
 
@@ -4316,9 +4323,9 @@ function goAlertas(){
   if(typeof ABAS!=='undefined' && !ABAS.trocando) marcaViewAba('alertas');
 }
 function alertasCarregar(forcar){
-  var pDest = api('doc_alerta_destinatarios?select=*&order=nome.asc').then(function(r){ state.alDest=r||[]; state.alErro=null; })
+  var pDest = api('emb_doc_alerta_destinatarios?select=*&order=nome.asc').then(function(r){ state.alDest=r||[]; state.alErro=null; })
     .catch(function(err){ state.alDest=[]; state.alErro=err.message; });
-  var pEnv = api('doc_alertas_enviados?select=*&order=enviado_em.desc&limit=200').then(function(r){ state.alEnv=r||[]; })
+  var pEnv = api('emb_doc_alertas_enviados?select=*&order=enviado_em.desc&limit=200').then(function(r){ state.alEnv=r||[]; })
     .catch(function(){ state.alEnv=[]; });
   return Promise.all([pDest, pEnv].concat(DOC_TIPOS.map(function(t){ return docsCarregar(t, forcar); })));
 }
@@ -4415,9 +4422,9 @@ function adicionarEmailsDoc(t){
   partes.filter(function(e,i){ return partes.indexOf(e)===i; }).forEach(function(email){
     var row=null; (state.alDest||[]).forEach(function(x){ if(String(x.email).toLowerCase()===email) row=x; });
     if(row && row[campo] && row.ativo){ jaTinha.push(email); return; }
-    if(row){ var body={ativo:true}; body[campo]=true; ops.push(api('doc_alerta_destinatarios?id=eq.'+encodeURIComponent(row.id), {method:'PATCH', body:body})); }
+    if(row){ var body={ativo:true}; body[campo]=true; ops.push(api('emb_doc_alerta_destinatarios?id=eq.'+encodeURIComponent(row.id), {method:'PATCH', body:body})); }
     else { var novo={nome:email.split('@')[0].toUpperCase(), email:email, ativo:true, recebe_pcv:false, recebe_carta:false, recebe_cracha:false}; novo[campo]=true;
-           ops.push(api('doc_alerta_destinatarios', {method:'POST', body:novo})); }
+           ops.push(api('emb_doc_alerta_destinatarios', {method:'POST', body:novo})); }
   });
   if(!ops.length){ toast(jaTinha.length>1 ? 'Esses e-mails já recebem este alerta.' : 'Esse e-mail já recebe este alerta.'); inp.value=''; return; }
   loading(true);
@@ -4431,8 +4438,8 @@ function removerEmailDoc(t, id){
   var outros=DOC_TIPOS.some(function(o){ return o!==t && row[ALERTA_COLS[o]]; });
   var body={}; body[campo]=false;
   loading(true);
-  (outros ? api('doc_alerta_destinatarios?id=eq.'+encodeURIComponent(id), {method:'PATCH', body:body})
-          : api('doc_alerta_destinatarios?id=eq.'+encodeURIComponent(id), {method:'DELETE'}))
+  (outros ? api('emb_doc_alerta_destinatarios?id=eq.'+encodeURIComponent(id), {method:'PATCH', body:body})
+          : api('emb_doc_alerta_destinatarios?id=eq.'+encodeURIComponent(id), {method:'DELETE'}))
     .then(function(){ toast(row.email+' não recebe mais o alerta de '+DOCS[t].titulo+'.'); return alertasCarregar(); })
     .then(renderAlertas).catch(function(err){ toast('Erro ao remover: '+err.message, true); }).then(function(){ loading(false); });
 }
@@ -4457,8 +4464,8 @@ function salvarDest(){
   DOC_TIPOS.forEach(function(t){ dados[ALERTA_COLS[t]]=$('ad-'+t).checked; });
   if(!DOC_TIPOS.some(function(t){ return dados[ALERTA_COLS[t]]; })){ toast('Marque pelo menos um documento.', true); return; }
   loading(true);
-  var p = alDestEdit ? api('doc_alerta_destinatarios?id=eq.'+encodeURIComponent(alDestEdit), {method:'PATCH', body:dados, prefer:'return=representation'})
-                     : api('doc_alerta_destinatarios', {method:'POST', body:dados, prefer:'return=representation'});
+  var p = alDestEdit ? api('emb_doc_alerta_destinatarios?id=eq.'+encodeURIComponent(alDestEdit), {method:'PATCH', body:dados, prefer:'return=representation'})
+                     : api('emb_doc_alerta_destinatarios', {method:'POST', body:dados, prefer:'return=representation'});
   p.then(function(){ closeDlg('dlg-dest'); toast(alDestEdit?'Destinatário atualizado.':'Destinatário incluído.'); return alertasCarregar(); })
    .then(renderAlertas).catch(function(err){ toast('Erro ao salvar: '+err.message, true); }).then(function(){ loading(false); });
 }
@@ -4467,7 +4474,7 @@ function alternaDest(id, campo){
   var d=null; (state.alDest||[]).forEach(function(x){ if(String(x.id)===String(id)) d=x; }); if(!d) return;
   var body={}; body[campo]=!d[campo];
   d[campo]=!d[campo]; renderAlertas();
-  api('doc_alerta_destinatarios?id=eq.'+encodeURIComponent(id), {method:'PATCH', body:body})
+  api('emb_doc_alerta_destinatarios?id=eq.'+encodeURIComponent(id), {method:'PATCH', body:body})
     .catch(function(err){ d[campo]=!d[campo]; renderAlertas(); toast('Erro ao salvar: '+err.message, true); });
 }
 function excluirDest(id){
@@ -4475,7 +4482,7 @@ function excluirDest(id){
   var d=null; (state.alDest||[]).forEach(function(x){ if(String(x.id)===String(id)) d=x; }); if(!d) return;
   confirmDlg('Excluir <b>'+esc(d.nome)+'</b> ('+esc(d.email)+') da lista de alertas?', function(){
     loading(true);
-    api('doc_alerta_destinatarios?id=eq.'+encodeURIComponent(id), {method:'DELETE'})
+    api('emb_doc_alerta_destinatarios?id=eq.'+encodeURIComponent(id), {method:'DELETE'})
       .then(function(){ toast('Destinatário excluído.'); return alertasCarregar(); }).then(renderAlertas)
       .catch(function(err){ toast('Erro ao excluir: '+err.message, true); }).then(function(){ loading(false); });
   });
