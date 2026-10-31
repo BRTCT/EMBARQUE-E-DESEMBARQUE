@@ -966,6 +966,11 @@
     .sidebar{display:none;}
     .subbar .sess .hide-sm{display:none;}
   }
+  .rel-tipos{display:flex;gap:0;margin-right:10px;}
+  .rel-tipos .rel-tipo{border-radius:0;margin:0;}
+  .rel-tipos .rel-tipo:first-child{border-radius:4px 0 0 4px;}
+  .rel-tipos .rel-tipo:last-child{border-radius:0 4px 4px 0;margin-left:-1px;}
+  .rel-tipos .rel-tipo.on{background:#4a7a26;border-color:#4a7a26;color:#fff;font-weight:bold;}
 </style>
 </head>
 <body>
@@ -1020,7 +1025,8 @@
         </div>
         <div class="tree-parent closed" onclick="toggleTree(this)"><span class="caret">&#9660;</span>Rota</div>
         <div class="tree-kids">
-          <span class="leaf" onclick="goRelatorio()">Relat&oacute;rio</span>
+          <span class="leaf" onclick="goRelatorio('embarque')">Relat&oacute;rio Embarque</span>
+          <span class="leaf" onclick="goRelatorio('desembarque')">Relat&oacute;rio Desembarque</span>
         </div>
         <div class="tree-parent closed" onclick="toggleTree(this)"><span class="caret">&#9660;</span>Solicita&ccedil;&atilde;o de Alojamento</div>
         <div class="tree-kids">
@@ -1177,9 +1183,13 @@
       <div class="routine-bar">
         <div>
           <div class="crumb">Gest&atilde;o de Pessoal &gt; Rota</div>
-          <h1>Relat&oacute;rio de Embarques</h1>
+          <h1 id="rel-titulo">Relat&oacute;rio de Embarques</h1>
         </div>
         <div class="flex"></div>
+        <div class="rel-tipos" role="group" aria-label="Tipo de relatório">
+          <button type="button" class="btn rel-tipo" id="rel-tipo-embarque" onclick="trocaTipoRelatorio('embarque')">&#128676; Embarque</button>
+          <button type="button" class="btn rel-tipo" id="rel-tipo-desembarque" onclick="trocaTipoRelatorio('desembarque')">&#127968; Desembarque</button>
+        </div>
         <button class="btn" onclick="baixarRelatorioExcel()">&#128202; Baixar Excel</button>
         <button class="btn" onclick="baixarRelatorioPDF()">&#128441; Baixar Relat&oacute;rio</button>
         <button class="btn" onclick="goHome()">Voltar</button>
@@ -2109,7 +2119,15 @@ function goBrowse(filtro, focusTurma){
   render();
   if(focusTurma){ $('f-turma').focus(); }
 }
-function goRelatorio(){
+/* Relatório de Rota: 'embarque' (quem vai embarcar) ou 'desembarque' (quem está a bordo e vai desembarcar) */
+var REL_TIPOS = {
+  embarque:    { codes:['AEMB'],        campo:'data_embarque',    titulo:'Relatório de Embarques',    pdf:'RELATÓRIO DE ROTA - EMBARQUES',    faixa:'A EMBARCAR',    tela:'A Embarcar',    rotData:'Data de Embarque',    arq:'Relatorio-Rota-Embarque',    vazio:'Nenhum colaborador a embarcar.' },
+  desembarque: { codes:['EMB','TRANS'], campo:'data_desembarque', titulo:'Relatório de Desembarques', pdf:'RELATÓRIO DE ROTA - DESEMBARQUES', faixa:'A DESEMBARCAR', tela:'A Desembarcar', rotData:'Data de Desembarque', arq:'Relatorio-Rota-Desembarque', vazio:'Nenhum colaborador a bordo para desembarcar.' }
+};
+state.relTipo = 'embarque';
+function trocaTipoRelatorio(t){ if(REL_TIPOS[t]){ state.relTipo = t; gerarRelatorio(); } }
+function goRelatorio(tipo){
+  if(tipo && REL_TIPOS[tipo]) state.relTipo = tipo;
   escondeDocs();
   $('view-home').style.display='none';
   $('view-browse').style.display='none';
@@ -2127,15 +2145,16 @@ function goDashboard(){
 }
 /* Mesma seleção do Relatório de Rota: status A EMBARCAR, "Precisa de rota",
    com data de embarque; agrupado por data e por bairro (ordem alfabética). */
-function relatorioGrupos(){
+function relatorioGrupos(tipo){
+  var cfg = REL_TIPOS[tipo || state.relTipo] || REL_TIPOS.embarque;
   var grupos = {};
   state.colabs.forEach(function(c){
     var si = statusInfo(c);
-    if(si.code !== 'AEMB') return;
+    if(cfg.codes.indexOf(si.code) < 0) return;
     if(c.precisa_rota === false) return;
     var e = (c.embarques && c.embarques[0]) || null;
-    if(!e || !e.data_embarque) return;
-    var data = e.data_embarque, bairro = c.bairro || 'SEM BAIRRO';
+    if(!e || !e[cfg.campo]) return;
+    var data = e[cfg.campo], bairro = c.bairro || 'SEM BAIRRO';
     (grupos[data] = grupos[data] || {});
     (grupos[data][bairro] = grupos[data][bairro] || []).push(c);
   });
@@ -2163,24 +2182,26 @@ function logoPABase64(){
   return m ? m[1] : null;
 }
 function baixarRelatorioExcel(){
-  var grupos = relatorioGrupos();
-  if(!grupos.length){ alert('⚠️ Nenhum colaborador a embarcar com rota para exportar.'); return; }
+  var cfgRel = REL_TIPOS[state.relTipo] || REL_TIPOS.embarque;
+  var grupos = relatorioGrupos(state.relTipo);
+  if(!grupos.length){ alert('⚠️ ' + cfgRel.vazio + ' Nada para exportar.'); return; }
   loading(true);
-  carregarExcelJS().then(function(){ return montarExcelRota(grupos); })
+  carregarExcelJS().then(function(){ return montarExcelRota(grupos, cfgRel); })
     .then(function(buf){
       var d = new Date();
-      var nome = 'Relatorio-Rota-' + String(d.getDate()).padStart(2,'0') + String(d.getMonth()+1).padStart(2,'0') + d.getFullYear() + '.xlsx';
+      var nome = cfgRel.arq + '-' + String(d.getDate()).padStart(2,'0') + String(d.getMonth()+1).padStart(2,'0') + d.getFullYear() + '.xlsx';
       var a = document.createElement('a');
       a.href = URL.createObjectURL(new Blob([buf], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }));
       a.download = nome;
       document.body.appendChild(a); a.click();
       setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1000);
-      toast('Excel da rota gerado.');
+      toast('Excel gerado: ' + cfgRel.titulo + '.');
     })
     .catch(function(err){ console.error(err); alert('Não foi possível gerar o Excel: ' + err.message); })
     .then(function(){ loading(false); });
 }
-function montarExcelRota(grupos){
+function montarExcelRota(grupos, cfgRel){
+  cfgRel = cfgRel || REL_TIPOS.embarque;
   var VERDE = 'FF3B6A1F', VERDE2 = 'FF4A7A26', AMARELO = 'FFEAA837', VERDE_CLARO = 'FFEEF4E6', CINZA = 'FFD9DEE3', TEXTO = 'FF3D4A58';
   var agora = new Date();
   var quando = fmtBR(hoje()) + ' ' + String(agora.getHours()).padStart(2,'0') + ':' + String(agora.getMinutes()).padStart(2,'0');
@@ -2202,7 +2223,7 @@ function montarExcelRota(grupos){
     t.font = { name: 'Arial', size: 16, bold: true, color: { argb: VERDE } }; t.alignment = { vertical: 'middle', horizontal: 'right' };
     var s2 = ws.getCell(2, 3); s2.value = 'Controle de Embarque e Desembarque - Taboca';
     s2.font = { name: 'Arial', size: 11, color: { argb: TEXTO } }; s2.alignment = { vertical: 'middle', horizontal: 'right' };
-    var s3 = ws.getCell(3, 3); s3.value = 'Gerado em ' + quando + (operador ? ' por ' + operador : '') + '  |  ' + total + ' colaborador(es) a embarcar';
+    var s3 = ws.getCell(3, 3); s3.value = 'Gerado em ' + quando + (operador ? ' por ' + operador : '') + '  |  ' + total + ' colaborador(es) ' + cfgRel.tela.toLowerCase();
     s3.font = { name: 'Arial', size: 9, italic: true, color: { argb: 'FF8A97A6' } }; s3.alignment = { vertical: 'middle', horizontal: 'right' };
     for(var c = 1; c <= ncol; c++){ ws.getCell(4, c).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: AMARELO } }; }
   }
@@ -2231,21 +2252,21 @@ function montarExcelRota(grupos){
     ws.columns = LARG.map(function(w){ return { width: w }; });
     ws.pageSetup = { orientation: 'landscape', paperSize: 9, fitToPage: true, fitToWidth: 1, fitToHeight: 0,
                      margins: { left: 0.4, right: 0.4, top: 0.5, bottom: 0.6, header: 0.2, footer: 0.3 } };
-    ws.headerFooter.oddFooter = '&L&8Parente Andrade - Relatório de Rota&R&8Página &P de &N';
+    ws.headerFooter.oddFooter = '&L&8Parente Andrade - ' + cfgRel.titulo + '&R&8Página &P de &N';
     ws.properties.tabColor = { argb: VERDE2 };
   }
 
   /* Aba 1: Rota, agrupada por data e bairro (igual ao relatório da tela) */
   var ws = wb.addWorksheet('Rota', { views: [{ showGridLines: false }] });
   configurar(ws);
-  cabecalho(ws, COLS.length, 'RELATÓRIO DE ROTA - EMBARQUES');
+  cabecalho(ws, COLS.length, cfgRel.pdf);
   var r = 6;
   grupos.forEach(function(g, gi){
     var qtd = g.bairros.reduce(function(t, b){ return t + b.colabs.length; }, 0);
     if(gi > 0){ r++; }
     ws.mergeCells(r, 1, r, COLS.length);
     var h = ws.getCell(r, 1);
-    h.value = 'A EMBARCAR - ' + fmtBRComDia(g.data).toUpperCase() + '   (' + qtd + ' colaborador' + (qtd === 1 ? '' : 'es') + ')';
+    h.value = cfgRel.faixa + ' - ' + fmtBRComDia(g.data).toUpperCase() + '   (' + qtd + ' colaborador' + (qtd === 1 ? '' : 'es') + ')';
     h.font = { name: 'Arial', size: 12, bold: true, color: { argb: 'FFFFFFFF' } };
     h.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: VERDE } };
     h.alignment = { vertical: 'middle', horizontal: 'left', indent: 1 };
@@ -2273,11 +2294,11 @@ function montarExcelRota(grupos){
   });
 
   /* Aba 2: lista corrida com filtros (para ordenar/filtrar no Excel) */
-  var COLS2 = ['Data de Embarque'].concat(COLS.slice(1));
+  var COLS2 = [cfgRel.rotData].concat(COLS.slice(1));
   var wl = wb.addWorksheet('Lista com filtros', { views: [{ state: 'frozen', ySplit: 6, showGridLines: false }] });
   configurar(wl);
   wl.columns = [14].concat(LARG.slice(1)).map(function(w){ return { width: w }; });
-  cabecalho(wl, COLS2.length, 'RELATÓRIO DE ROTA - LISTA');
+  cabecalho(wl, COLS2.length, cfgRel.pdf.replace('RELATÓRIO DE ROTA - ', 'ROTA - ') + ' (LISTA)');
   linhaCab(wl.getRow(6), COLS2);
   var r2 = 7, n = 0;
   grupos.forEach(function(g){
@@ -2297,50 +2318,22 @@ function montarExcelRota(grupos){
 }
 
 function gerarRelatorio(){
-  console.log('Gerando relatório...');
-  console.log('Total de colaboradores:', state.colabs.length);
-
-  var grupos = {};
-  var countAemb = 0;
-
-  state.colabs.forEach(function(c){
-    var si = statusInfo(c);
-    console.log(c.nome + ' - Status: ' + si.code);
-    if(si.code !== 'AEMB') return;
-    if(c.precisa_rota === false) return;
-    countAemb++;
-    var e = (c.embarques && c.embarques[0]) || null;
-    if(!e || !e.data_embarque){
-      console.log('  Sem embarque registrado');
-      return;
-    }
-    var data = e.data_embarque;
-    if(!grupos[data]) grupos[data] = {};
-    var bairro = c.bairro || 'SEM BAIRRO';
-    if(!grupos[data][bairro]) grupos[data][bairro] = [];
-    grupos[data][bairro].push(c);
-    console.log('  Adicionado para ' + data + ' - ' + bairro);
-  });
-
-  console.log('Encontrados ' + countAemb + ' colaboradores com status AEMB');
-  console.log('Grupos:', Object.keys(grupos));
-
-  var datas = Object.keys(grupos).sort();
+  var cfg = REL_TIPOS[state.relTipo] || REL_TIPOS.embarque;
+  $('rel-titulo').textContent = cfg.titulo;
+  Object.keys(REL_TIPOS).forEach(function(t){ var b = $('rel-tipo-' + t); if(b) b.classList.toggle('on', t === state.relTipo); });
+  var grupos = relatorioGrupos(state.relTipo);
   var html = '';
-
-  if(datas.length === 0){
-    html = '<p style="text-align:center;color:#999;">Nenhum colaborador a embarcar.</p>';
+  if(!grupos.length){
+    html = '<p style="text-align:center;color:#999;">' + cfg.vazio + '</p>';
   } else {
-    datas.forEach(function(data, idx){
+    grupos.forEach(function(g, idx){
       if(idx > 0) html += '<div style="page-break-before:always;margin-top:20px;"></div>';
-      html += '<h2 style="text-align:center;">A Embarcar - '+fmtBR(data)+'</h2>';
-
-      var bairros = Object.keys(grupos[data]).sort();
-      bairros.forEach(function(bairro){
-        html += '<h3 style="background:#e8e8e8;padding:10px;margin-top:15px;margin-bottom:0;border-left:4px solid #1272b9;">'+esc(bairro)+'</h3>';
+      html += '<h2 style="text-align:center;">' + cfg.tela + ' - ' + fmtBR(g.data) + '</h2>';
+      g.bairros.forEach(function(b){
+        html += '<h3 style="background:#e8e8e8;padding:10px;margin-top:15px;margin-bottom:0;border-left:4px solid #1272b9;">' + esc(b.bairro) + '</h3>';
         html += '<table style="width:100%;border-collapse:collapse;">';
         html += '<tr style="border-bottom:2px solid #333;"><th style="text-align:left;padding:8px;">Nome</th><th style="text-align:left;padding:8px;">Endereço</th><th style="text-align:left;padding:8px;">Complemento</th><th style="text-align:left;padding:8px;">Telefone</th></tr>';
-        grupos[data][bairro].forEach(function(c){
+        b.colabs.forEach(function(c){
           var end = (c.logradouro||'') + (c.numero?' '+c.numero:'');
           html += '<tr style="border-bottom:1px solid #ddd;"><td style="padding:8px;">'+esc(c.nome)+'</td><td style="padding:8px;">'+esc(end)+'</td><td style="padding:8px;">'+esc(c.complemento||'—')+'</td><td style="padding:8px;">'+esc(c.telefone||'—')+'</td></tr>';
         });
@@ -2348,22 +2341,21 @@ function gerarRelatorio(){
       });
     });
   }
-
-  console.log('HTML gerado, exibindo...');
   $('relatorio-content').innerHTML = html;
 }
 function baixarRelatorioPDF(){
   var conteudo = $('relatorio-content').innerHTML;
+  var cfgRel = REL_TIPOS[state.relTipo] || REL_TIPOS.embarque;
   if(!conteudo || conteudo.includes('Nenhum colaborador')){
     alert('⚠️ Nenhum relatório para baixar!');
     return;
   }
 
   var hoje = new Date();
-  var nomeArquivo = 'Relatorio-Rota-' + String(hoje.getDate()).padStart(2,'0') + String(hoje.getMonth()+1).padStart(2,'0') + hoje.getFullYear() + '.pdf';
+  var nomeArquivo = cfgRel.arq + '-' + String(hoje.getDate()).padStart(2,'0') + String(hoje.getMonth()+1).padStart(2,'0') + hoje.getFullYear() + '.pdf';
 
   var elemento = document.createElement('div');
-  elemento.innerHTML = '<h1 style="text-align:center;margin:20px 0;">RELATÓRIO DE ROTA - EMBARQUES</h1>' +
+  elemento.innerHTML = '<h1 style="text-align:center;margin:20px 0;">' + cfgRel.pdf + '</h1>' +
                        '<p style="text-align:center;font-size:12px;">Data: ' + fmtBR(hoje.toISOString().split('T')[0]) + '</p>' +
                        conteudo;
 
