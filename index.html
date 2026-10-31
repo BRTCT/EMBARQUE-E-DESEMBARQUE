@@ -1180,6 +1180,7 @@
           <h1>Relat&oacute;rio de Embarques</h1>
         </div>
         <div class="flex"></div>
+        <button class="btn" onclick="baixarRelatorioExcel()">&#128202; Baixar Excel</button>
         <button class="btn" onclick="baixarRelatorioPDF()">&#128441; Baixar Relat&oacute;rio</button>
         <button class="btn" onclick="goHome()">Voltar</button>
       </div>
@@ -1381,7 +1382,7 @@
         </div>
         <div class="frow c4">
           <div class="fld"><label>Turma</label><select id="c-turma"><option value="">Selecione</option><option value="1A">1A</option><option value="1B">1B</option><option value="1C">1C</option><option value="1D">1D</option><option value="2A">2A</option><option value="2B">2B</option><option value="2C">2C</option><option value="2D">2D</option></select></div>
-          <div class="fld"><label>CC</label><input id="c-cc" maxlength="4" inputmode="numeric" placeholder="0000" oninput="limpaCC()"></div>
+          <div class="fld"><label>CC</label><input id="c-cc" maxlength="60" placeholder="Ex.: 3006 ou ADMINISTRATIVO" oninput="limpaCC()" style="text-transform:uppercase;"></div>
           <div class="fld"><label>Back</label><input id="c-back" maxlength="3" inputmode="numeric" placeholder="Ex: 1, 2, 3"><div class="hint">Número para agrupar duplas</div></div>
         </div>
         <div class="frow" style="grid-template-columns:1fr;">
@@ -2124,6 +2125,177 @@ function goDashboard(){
   $('view-dashboard').style.display='flex';
   setTimeout(gerarDashboard, 100);
 }
+/* Mesma seleção do Relatório de Rota: status A EMBARCAR, "Precisa de rota",
+   com data de embarque; agrupado por data e por bairro (ordem alfabética). */
+function relatorioGrupos(){
+  var grupos = {};
+  state.colabs.forEach(function(c){
+    var si = statusInfo(c);
+    if(si.code !== 'AEMB') return;
+    if(c.precisa_rota === false) return;
+    var e = (c.embarques && c.embarques[0]) || null;
+    if(!e || !e.data_embarque) return;
+    var data = e.data_embarque, bairro = c.bairro || 'SEM BAIRRO';
+    (grupos[data] = grupos[data] || {});
+    (grupos[data][bairro] = grupos[data][bairro] || []).push(c);
+  });
+  return Object.keys(grupos).sort().map(function(data){
+    return { data: data, bairros: Object.keys(grupos[data]).sort().map(function(b){
+      return { bairro: b, colabs: grupos[data][b].slice().sort(function(x, y){ return String(x.nome||'').localeCompare(String(y.nome||''), 'pt-BR'); }) };
+    }) };
+  });
+}
+
+/* ---------- Excel da Rota (padrão Parente Andrade) ---------- */
+var EXCELJS_URL = 'https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js';
+function carregarExcelJS(){
+  if(window.ExcelJS) return Promise.resolve();
+  return new Promise(function(ok, falha){
+    var sc = document.createElement('script');
+    sc.src = EXCELJS_URL; sc.onload = ok;
+    sc.onerror = function(){ falha(new Error('não foi possível carregar o gerador de Excel (verifique a internet)')); };
+    document.head.appendChild(sc);
+  });
+}
+function logoPABase64(){
+  var css = Array.prototype.map.call(document.querySelectorAll('style'), function(st){ return st.textContent; }).join('\n');
+  var m = css.match(/\.brand-img\{background:url\("data:image\/png;base64,([^"]+)"/);
+  return m ? m[1] : null;
+}
+function baixarRelatorioExcel(){
+  var grupos = relatorioGrupos();
+  if(!grupos.length){ alert('⚠️ Nenhum colaborador a embarcar com rota para exportar.'); return; }
+  loading(true);
+  carregarExcelJS().then(function(){ return montarExcelRota(grupos); })
+    .then(function(buf){
+      var d = new Date();
+      var nome = 'Relatorio-Rota-' + String(d.getDate()).padStart(2,'0') + String(d.getMonth()+1).padStart(2,'0') + d.getFullYear() + '.xlsx';
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([buf], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }));
+      a.download = nome;
+      document.body.appendChild(a); a.click();
+      setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+      toast('Excel da rota gerado.');
+    })
+    .catch(function(err){ console.error(err); alert('Não foi possível gerar o Excel: ' + err.message); })
+    .then(function(){ loading(false); });
+}
+function montarExcelRota(grupos){
+  var VERDE = 'FF3B6A1F', VERDE2 = 'FF4A7A26', AMARELO = 'FFEAA837', VERDE_CLARO = 'FFEEF4E6', CINZA = 'FFD9DEE3', TEXTO = 'FF3D4A58';
+  var agora = new Date();
+  var quando = fmtBR(hoje()) + ' ' + String(agora.getHours()).padStart(2,'0') + ':' + String(agora.getMinutes()).padStart(2,'0');
+  var operador = (typeof EMB_CFG !== 'undefined' && EMB_CFG && EMB_CFG.nome) ? EMB_CFG.nome : '';
+  var total = grupos.reduce(function(t, g){ return t + g.bairros.reduce(function(u, b){ return u + b.colabs.length; }, 0); }, 0);
+
+  var wb = new ExcelJS.Workbook();
+  wb.creator = 'Parente Andrade'; wb.created = agora;
+  var fino = { style: 'thin', color: { argb: CINZA } };
+  var bordas = { top: fino, left: fino, bottom: fino, right: fino };
+  var logo = logoPABase64();
+  var logoId = logo ? wb.addImage({ base64: logo, extension: 'png' }) : null;
+
+  function cabecalho(ws, ncol, titulo){
+    ws.getRow(1).height = 24; ws.getRow(2).height = 22; ws.getRow(3).height = 18; ws.getRow(4).height = 6;
+    if(logoId !== null) ws.addImage(logoId, { tl: { col: 0.15, row: 0.25 }, ext: { width: 190, height: 52 } });
+    ws.mergeCells(1, 3, 1, ncol); ws.mergeCells(2, 3, 2, ncol); ws.mergeCells(3, 3, 3, ncol);
+    var t = ws.getCell(1, 3); t.value = titulo;
+    t.font = { name: 'Arial', size: 16, bold: true, color: { argb: VERDE } }; t.alignment = { vertical: 'middle', horizontal: 'right' };
+    var s2 = ws.getCell(2, 3); s2.value = 'Controle de Embarque e Desembarque - Taboca';
+    s2.font = { name: 'Arial', size: 11, color: { argb: TEXTO } }; s2.alignment = { vertical: 'middle', horizontal: 'right' };
+    var s3 = ws.getCell(3, 3); s3.value = 'Gerado em ' + quando + (operador ? ' por ' + operador : '') + '  |  ' + total + ' colaborador(es) a embarcar';
+    s3.font = { name: 'Arial', size: 9, italic: true, color: { argb: 'FF8A97A6' } }; s3.alignment = { vertical: 'middle', horizontal: 'right' };
+    for(var c = 1; c <= ncol; c++){ ws.getCell(4, c).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: AMARELO } }; }
+  }
+  function linhaCab(row, nomes){
+    row.values = nomes; row.height = 20;
+    row.eachCell(function(cell){
+      cell.font = { name: 'Arial', size: 10, bold: true, color: { argb: 'FFFFFFFF' } };
+      cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: VERDE2 } };
+      cell.alignment = { vertical: 'middle', horizontal: 'center', wrapText: true }; cell.border = bordas;
+    });
+  }
+  function linhaDado(row, zebra){
+    row.eachCell({ includeEmpty: true }, function(cell){
+      cell.font = { name: 'Arial', size: 10, color: { argb: TEXTO } };
+      cell.alignment = { vertical: 'middle', wrapText: true }; cell.border = bordas;
+      if(zebra) cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF7F9F4' } };
+    });
+  }
+  var COLS = ['Nº', 'Nome', 'Matrícula', 'Função', 'CC', 'Turma', 'Endereço', 'Complemento', 'Bairro', 'Município', 'Telefone'];
+  function valores(c, n){
+    var end = (c.logradouro || '') + (c.numero ? ', ' + c.numero : '');
+    return [n, c.nome || '', c.matricula || '', c.funcao || '', c.cc || '', c.turma || '', end || '—', c.complemento || '—', c.bairro || 'SEM BAIRRO', c.municipio || '', c.telefone || '—'];
+  }
+  var LARG = [5, 34, 11, 22, 10, 7, 36, 20, 20, 16, 16];
+  function configurar(ws){
+    ws.columns = LARG.map(function(w){ return { width: w }; });
+    ws.pageSetup = { orientation: 'landscape', paperSize: 9, fitToPage: true, fitToWidth: 1, fitToHeight: 0,
+                     margins: { left: 0.4, right: 0.4, top: 0.5, bottom: 0.6, header: 0.2, footer: 0.3 } };
+    ws.headerFooter.oddFooter = '&L&8Parente Andrade - Relatório de Rota&R&8Página &P de &N';
+    ws.properties.tabColor = { argb: VERDE2 };
+  }
+
+  /* Aba 1: Rota, agrupada por data e bairro (igual ao relatório da tela) */
+  var ws = wb.addWorksheet('Rota', { views: [{ showGridLines: false }] });
+  configurar(ws);
+  cabecalho(ws, COLS.length, 'RELATÓRIO DE ROTA - EMBARQUES');
+  var r = 6;
+  grupos.forEach(function(g, gi){
+    var qtd = g.bairros.reduce(function(t, b){ return t + b.colabs.length; }, 0);
+    if(gi > 0){ r++; }
+    ws.mergeCells(r, 1, r, COLS.length);
+    var h = ws.getCell(r, 1);
+    h.value = 'A EMBARCAR - ' + fmtBRComDia(g.data).toUpperCase() + '   (' + qtd + ' colaborador' + (qtd === 1 ? '' : 'es') + ')';
+    h.font = { name: 'Arial', size: 12, bold: true, color: { argb: 'FFFFFFFF' } };
+    h.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: VERDE } };
+    h.alignment = { vertical: 'middle', horizontal: 'left', indent: 1 };
+    ws.getRow(r).height = 24;
+    r++;
+    g.bairros.forEach(function(b){
+      ws.mergeCells(r, 1, r, COLS.length);
+      var hb = ws.getCell(r, 1);
+      hb.value = b.bairro + '  (' + b.colabs.length + ')';
+      hb.font = { name: 'Arial', size: 11, bold: true, color: { argb: VERDE } };
+      hb.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: VERDE_CLARO } };
+      hb.border = { left: { style: 'thick', color: { argb: AMARELO } }, bottom: fino };
+      hb.alignment = { vertical: 'middle', indent: 1 };
+      ws.getRow(r).height = 20;
+      r++;
+      linhaCab(ws.getRow(r), COLS); r++;
+      b.colabs.forEach(function(c, i){
+        var row = ws.getRow(r); row.values = valores(c, i + 1); linhaDado(row, i % 2 === 1);
+        row.getCell(1).alignment = { vertical: 'middle', horizontal: 'center' };
+        row.getCell(5).alignment = row.getCell(6).alignment = { vertical: 'middle', horizontal: 'center' };
+        r++;
+      });
+      r++;
+    });
+  });
+
+  /* Aba 2: lista corrida com filtros (para ordenar/filtrar no Excel) */
+  var COLS2 = ['Data de Embarque'].concat(COLS.slice(1));
+  var wl = wb.addWorksheet('Lista com filtros', { views: [{ state: 'frozen', ySplit: 6, showGridLines: false }] });
+  configurar(wl);
+  wl.columns = [14].concat(LARG.slice(1)).map(function(w){ return { width: w }; });
+  cabecalho(wl, COLS2.length, 'RELATÓRIO DE ROTA - LISTA');
+  linhaCab(wl.getRow(6), COLS2);
+  var r2 = 7, n = 0;
+  grupos.forEach(function(g){
+    g.bairros.forEach(function(b){
+      b.colabs.forEach(function(c){
+        var v = valores(c, 0); v[0] = fmtBR(g.data);
+        var row = wl.getRow(r2); row.values = v; linhaDado(row, n % 2 === 1);
+        row.getCell(1).alignment = row.getCell(5).alignment = row.getCell(6).alignment = { vertical: 'middle', horizontal: 'center' };
+        r2++; n++;
+      });
+    });
+  });
+  wl.autoFilter = { from: { row: 6, column: 1 }, to: { row: Math.max(6, r2 - 1), column: COLS2.length } };
+  wl.pageSetup.printTitlesRow = '6:6';
+
+  return wb.xlsx.writeBuffer();
+}
+
 function gerarRelatorio(){
   console.log('Gerando relatório...');
   console.log('Total de colaboradores:', state.colabs.length);
@@ -2372,11 +2544,10 @@ function previewCiclo(){
   box.innerHTML='Escala <b>'+N+'x'+M+'</b>: embarque em <b>'+fmtBR(emb)+'</b> &rarr; desembarque em <b>'+fmtBR(ciclo.des)+'</b> &rarr; reembarque em <b>'+fmtBR(ciclo.reemb)+'</b>';
   box.style.display='block';
 }
+/* CC aceita número (ex.: 3006) ou nome (ex.: ADMINISTRATIVO) */
 function limpaCC(){
-  var v='';
-  ($('c-cc').value||'').split('').forEach(function(ch){ if(ch>='0' && ch<='9'){ v+=ch; } });
-  if(v.length>4) v=v.substring(0,4);
-  $('c-cc').value=v;
+  var el=$('c-cc'), v=el.value||'';
+  if(v.length>60){ el.value=v.substring(0,60); }
 }
 function buscaCep(){
   var cep='';
@@ -2397,7 +2568,6 @@ function salvarColab(){
   var nome=($('c-nome').value||'').trim().toUpperCase();
   if(!nome){ toast('Informe o nome do colaborador', true); return; }
   var ccVal=($('c-cc').value||'').trim();
-  if(ccVal && ccVal.length!==4){ toast('O CC deve ter 4 números', true); return; }
   var backVal=(parseInt($('c-back').value||0,10))||null;
   var N=parseInt($('c-diasemb').value,10)||12, M=parseInt($('c-diasfolga').value,10); if(isNaN(M)) M=8;
   var escSel=$('c-escala').value;
@@ -2408,7 +2578,7 @@ function salvarColab(){
     funcao: ($('c-funcao').value||'').trim().toUpperCase()||null,
     telefone: $('c-telefone').value.trim()||null,
     turma: ($('c-turma').value||'').trim().toUpperCase()||null,
-    cc: ($('c-cc').value||'').trim()||null,
+    cc: ($('c-cc').value||'').trim().replace(/\s+/g,' ').toUpperCase()||null,
     back: backVal,
     observacoes: ($('c-obs').value||'').trim()||null,
     escala: (escSel==='PERS') ? (N+'x'+M) : escSel,
@@ -2670,7 +2840,7 @@ function processImport(){
     }
 
     var row=rows[idx];
-    var cc=String(row.CC||'').trim();
+    var cc=String(row.CC||'').trim().replace(/\s+/g,' ').toUpperCase();
     var mat=String(row.Matricula||'').trim();
 
     if(!mat){
