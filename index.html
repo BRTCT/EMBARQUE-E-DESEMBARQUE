@@ -971,6 +971,138 @@
   .rel-tipos .rel-tipo:first-child{border-radius:4px 0 0 4px;}
   .rel-tipos .rel-tipo:last-child{border-radius:0 4px 4px 0;margin-left:-1px;}
   .rel-tipos .rel-tipo.on{background:#4a7a26;border-color:#4a7a26;color:#fff;font-weight:bold;}
+
+  /* =================================================================
+     LAYOUT "TELA CHEIA" (padrão do print): menu escondido na borda
+     esquerda, tabela compacta com cabeçalho verde e faixas de CC
+     ================================================================= */
+  .main{position:relative;}
+  .main > .sidebar{
+    position:absolute;top:0;bottom:0;left:0;z-index:70;
+    transform:translateX(-100%);transition:transform .18s ease, box-shadow .18s ease;
+    box-shadow:none;
+  }
+  .main > .sidebar.aberta{transform:none;box-shadow:6px 0 24px rgba(0,0,0,.18);}
+  .sb-gatilho{
+    position:absolute;top:0;bottom:0;left:0;width:9px;z-index:69;cursor:pointer;
+    background:linear-gradient(90deg, rgba(74,122,38,.30), rgba(74,122,38,0));
+  }
+  .sb-gatilho span{
+    position:absolute;top:8px;left:0;background:#4a7a26;color:#fff;font-size:12px;line-height:1;
+    padding:6px 5px 6px 4px;border-radius:0 6px 6px 0;box-shadow:1px 1px 4px rgba(0,0,0,.2);
+  }
+  .sb-gatilho:hover{background:linear-gradient(90deg, rgba(74,122,38,.55), rgba(74,122,38,0));}
+
+  /* barra da rotina mais baixa */
+  #view-browse .routine-bar{padding:6px 14px 6px 18px !important;}
+  #view-browse .routine-bar h1{font-size:17px !important;}
+  #view-browse .routine-bar .crumb{font-size:11px;}
+  #view-browse .filters select,#view-browse .filters input{padding:4px 7px !important;font-size:12px !important;}
+
+  /* área da tabela ocupando tudo */
+  #view-browse .browse-wrap{margin:4px 6px 6px 12px !important;border-radius:6px !important;border:1px solid #d6dccf !important;}
+  #view-browse .browse-foot{margin:0 6px 6px 12px !important;padding:6px 12px !important;border-radius:6px !important;}
+
+  /* cabeçalho verde */
+  #view-browse table.browse thead th{
+    background:#4a7a26 !important;color:#fff !important;border-bottom:1px solid #3B6A1F !important;
+    border-right:1px solid rgba(255,255,255,.18) !important;
+    font-size:11px !important;font-weight:700 !important;text-transform:uppercase;letter-spacing:.3px;
+    padding:7px 8px !important;
+  }
+  #view-browse table.browse thead th .th-filt{
+    color:#fff !important;border:1px solid rgba(255,255,255,.55);border-radius:3px;background:rgba(255,255,255,.08);
+    width:18px;height:18px;line-height:15px;padding:0;font-size:11px;
+  }
+  #view-browse table.browse thead th .th-filt:hover{background:rgba(255,255,255,.22);}
+
+  /* linhas compactas com grade */
+  #view-browse table.browse tbody td{
+    padding:4px 8px !important;font-size:12px !important;color:#33402c;
+    border-bottom:1px solid #e6e9e2 !important;border-right:1px solid #eceee8 !important;
+    vertical-align:middle;
+  }
+  #view-browse table.browse tbody tr:nth-child(even){background:#fbfcf9 !important;}
+  #view-browse table.browse tbody tr:hover{background:#f1f6eb !important;}
+  #view-browse table.browse tbody tr.sel{background:#e3eed6 !important;}
+  #view-browse table.browse tbody tr.nao-embarcou{background:#ffebee !important;}
+  #view-browse .td-nome{font-weight:600;color:#1f2a18 !important;}
+  #view-browse .td-func{color:#5b6653 !important;}
+  #view-browse .td-cc,#view-browse .td-cen{text-align:center;}
+  #view-browse .td-back{text-align:center;background:#fdf6e6;font-weight:600;color:#7a5a12 !important;}
+  #view-browse .td-num{font-variant-numeric:tabular-nums;color:#4a5544 !important;}
+  #view-browse .td-data{font-variant-numeric:tabular-nums;font-family:Consolas,'Courier New',monospace;font-weight:600;letter-spacing:.2px;white-space:nowrap;}
+  #view-browse .td-obs{max-width:190px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#5b6653 !important;}
+  #view-browse table.browse select{padding:2px 4px !important;font-size:11.5px !important;border-radius:4px !important;min-width:110px;}
+  /* detalhe da situação: aparece ao parar o mouse (linha de uma altura só) */
+  #view-browse .st-detail{display:none;}
+  #view-browse table.browse{min-width:0 !important;}
+  #view-browse table.browse thead th{white-space:normal;line-height:1.15;vertical-align:middle;}
+  #view-browse table.browse thead th .th-lbl{white-space:normal;}
+  /* filtro da coluna: aparece ao passar o mouse no título (ou sempre, se houver filtro ativo) */
+  #view-browse table.browse thead th{position:sticky;}
+  #view-browse table.browse thead th .th-in{position:relative;}
+  #view-browse table.browse thead th .th-filt{
+    position:absolute;right:-5px;top:50%;transform:translateY(-50%);flex:none;
+    opacity:0;transition:opacity .12s;background:#3B6A1F !important;
+  }
+  #view-browse table.browse thead th:hover .th-filt,
+  #view-browse table.browse thead th .th-filt.on,
+  #view-browse table.browse thead th .th-filt.open{opacity:1;}
+  #view-browse table.browse thead th .th-filt.on{background:#EAA837 !important;color:#2b2111 !important;border-color:#EAA837;}
+  #view-browse .th-sort{color:#EAA837 !important;}
+  /* larguras mais justas para caber na tela */
+  #view-browse .td-data{font-size:11.5px !important;padding-left:6px !important;padding-right:6px !important;}
+  #view-browse .td-cc,#view-browse .td-back,#view-browse .td-cen{padding-left:5px !important;padding-right:5px !important;}
+  #view-browse table.browse tbody td{line-height:1.25;}
+  #view-browse .td-func{max-width:150px;overflow:hidden;text-overflow:ellipsis;}
+  #view-browse .td-nome{max-width:240px;overflow:hidden;text-overflow:ellipsis;}
+  #view-browse table.browse select{min-width:0 !important;width:auto !important;max-width:118px;height:22px;}
+  #view-browse table.browse input[type=checkbox]{margin:0;width:14px;height:14px;vertical-align:middle;}
+  #view-browse .dv-resp{font-size:11px !important;padding:2px 8px !important;letter-spacing:0 !important;text-transform:none !important;}
+  #view-browse .dv-titrow{gap:8px;}
+
+  /* situação: etiqueta clara com bolinha (como no print) */
+  #view-browse .badge.pill-st{
+    background:color-mix(in srgb, var(--c) 14%, #fff) !important;
+    color:color-mix(in srgb, var(--c) 78%, #000) !important;
+    border:1px solid color-mix(in srgb, var(--c) 30%, #fff);
+    border-radius:999px;padding:2px 9px 2px 8px !important;font-size:10.5px;font-weight:700;letter-spacing:.3px;
+  }
+  #view-browse .badge.pill-st::before{
+    content:'';display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--c);
+    margin-right:5px;vertical-align:1px;
+  }
+
+  /* telas menores (notebook 1366): letra e larguras um pouco menores, todas as colunas continuam */
+  @media (max-width:1500px){
+    #view-browse table.browse tbody td{font-size:11px !important;padding:3px 5px !important;}
+    #view-browse table.browse thead th{font-size:10px !important;padding:6px 5px !important;letter-spacing:0;}
+    #view-browse .td-data{font-size:10.5px !important;padding-left:4px !important;padding-right:4px !important;letter-spacing:0;}
+    #view-browse .td-nome{max-width:190px;}
+    #view-browse .td-func{max-width:115px;}
+    #view-browse .td-obs{max-width:130px;}
+    #view-browse table.browse select{max-width:96px;font-size:10.5px !important;}
+    #view-browse .badge.pill-st{font-size:9.5px;padding:2px 7px 2px 6px !important;letter-spacing:0;}
+    #view-browse .browse-wrap{margin:3px 3px 4px 11px !important;}
+  }
+
+  /* faixa do CC: verde-escuro com selo amarelo */
+  #view-browse table.browse tbody tr.grp-cc{background:#2f4a22 !important;}
+  #view-browse table.browse tbody tr.grp-cc td{
+    background:#2f4a22 !important;border-top:1px solid #243a1a !important;border-bottom:1px solid #243a1a !important;
+    padding:6px 12px !important;
+  }
+  #view-browse table.browse tbody tr.grp-cc:hover td{background:#38592a !important;}
+  #view-browse .grp-car{color:#cfe3b8;}
+  #view-browse .grp-nome{font-size:13px;}
+  #view-browse .grp-n{
+    background:#EAA837 !important;border:0 !important;color:#2b2111 !important;font-weight:700;
+    border-radius:5px !important;padding:1px 8px !important;font-size:12px;
+  }
+  #view-browse .grp-n-txt{font-size:12px;color:#d6e3c9;margin-left:-4px;}
+  #view-browse .grp-res{color:#e9f1df;font-size:12px;}
+  .emb-no-portal .subbar .sess{display:none !important;}
 </style>
 </head>
 <body>
@@ -988,8 +1120,10 @@
 </div>
 
 <div class="main">
+  <!-- faixa da borda esquerda: passar o mouse (ou tocar) abre o menu de rotinas -->
+  <div class="sb-gatilho" id="sb-gatilho" title="Rotinas" onclick="sbAbrir(true)" onmouseenter="sbAbrir()"><span>&#9776;</span></div>
   <!-- ==================== MENU LATERAL ==================== -->
-  <div class="sidebar">
+  <div class="sidebar" id="sb-menu" onmouseleave="sbFecharDepois()" onmouseenter="sbCancelarFechar()">
     <div class="logo-card">
       <div class="brand-img logo-aba" role="button" tabindex="0" title="Abrir nova aba" aria-label="Abrir nova aba" onclick="novaAba()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();novaAba();}" style="height:54px;"></div>
     </div>
@@ -1246,6 +1380,7 @@
           <button type="button" class="btn" id="dd-limpar" onclick="ddLimpar()" style="display:none;">&#10005; Limpar</button>
         </div>
         <button type="button" class="btn" onclick="recarregaDocs()">&#8635; Atualizar</button>
+        <button type="button" class="btn" onclick="ddExportarPDF()">&#128441; Exportar PDF</button>
         <button type="button" class="btn" onclick="goDocs(state.ddTipo)">Abrir rotina</button>
       </div>
       <div class="dash-body">
@@ -1611,6 +1746,23 @@ function fmtBRComDia(iso){
 }
 function calcCiclo(emb, N, M){ var des=addDays(emb, N-1); return { des: des, reemb: addDays(des, M+1) }; }
 
+/* ---------- Menu de rotinas escondido (tela cheia) ---------- */
+var sbTimer = null;
+function sbAbrir(fixo){ clearTimeout(sbTimer); var m = $('sb-menu'); if(m){ m.classList.add('aberta'); if(fixo) m.classList.add('fixa'); } }
+function sbFechar(){ var m = $('sb-menu'); if(m){ m.classList.remove('aberta'); m.classList.remove('fixa'); } }
+function sbFecharDepois(){ clearTimeout(sbTimer); sbTimer = setTimeout(sbFechar, 350); }
+function sbCancelarFechar(){ clearTimeout(sbTimer); }
+document.addEventListener('click', function(ev){
+  var m = $('sb-menu'); if(!m || !m.classList.contains('aberta')) return;
+  if(ev.target.closest && (ev.target.closest('.leaf') || ev.target.closest('.side-link'))){ setTimeout(sbFechar, 150); return; }
+  if(!m.contains(ev.target) && !(ev.target.closest && ev.target.closest('#sb-gatilho'))) sbFechar();
+});
+document.addEventListener('keydown', function(ev){ if(ev.key === 'Escape') sbFechar(); });
+document.addEventListener('mousemove', function(ev){
+  var m = $('sb-menu'); if(!m || !m.classList.contains('aberta') || m.classList.contains('fixa')) return;
+  if(ev.clientX > m.getBoundingClientRect().right + 30) sbFecharDepois();
+});
+
 function toast(msg, err){
   var t=$('toast'); t.textContent=msg; t.className=err?'err':''; t.style.display='block';
   clearTimeout(t._h); t._h=setTimeout(function(){ t.style.display='none'; }, 3500);
@@ -1910,7 +2062,7 @@ function linhaGrupoCC(g, info){
     +'<td colspan="15"><div class="grp-in">'
     +'<span class="grp-car" aria-hidden="true">&#9662;</span>'
     +'<span class="grp-nome">'+(g ? 'CC '+esc(g) : 'Sem CC')+'</span>'
-    +'<span class="grp-n">'+n+' colaborador'+(n===1?'':'es')+'</span>'
+    +'<span class="grp-n">'+n+'</span><span class="grp-n-txt">colaborador'+(n===1?'':'es')+'</span>'
     +'<span class="grp-res">'+resumo+'</span>'
     +'</div></td></tr>';
 }
@@ -1970,20 +2122,20 @@ function render(){
     var st=ST[si.code], e=si.e;
     rows+='<tr data-id="'+c.id+'" class="'+(state.sel===c.id?'sel':'')+' '+(c.nao_embarcou?'nao-embarcou':'')+'" onclick="selRow(this)" style="'+(c.nao_embarcou?'background-color:#ffebee;':'')+'">'
       +'<td style="text-align:center;"><span class="dot" style="background:'+st.hex+';" title="'+st.label+'"></span></td>'
-      +'<td>'+esc(c.cc||'—')+'</td>'
-      +'<td>'+esc(c.back||'—')+'</td>'
-      +'<td>'+esc(c.matricula||'—')+'</td>'
-      +'<td>'+esc(c.nome)+'</td>'
-      +'<td>'+esc(c.funcao||'—')+'</td>'
-      +'<td>'+esc(c.turma||'—')+'</td>'
-      +'<td>'+esc(c.escala)+'</td>'
-      +'<td>'+fmtBR(e?e.data_embarque:null)+'</td>'
-      +'<td>'+fmtBR(e?e.data_desembarque:null)+'</td>'
-      +'<td>'+fmtBR(e?e.data_reembarque:null)+'</td>'
+      +'<td class="td-cc">'+esc(c.cc||'—')+'</td>'
+      +'<td class="td-back">'+esc(c.back||'—')+'</td>'
+      +'<td class="td-num">'+esc(c.matricula||'—')+'</td>'
+      +'<td class="td-nome">'+esc(c.nome)+'</td>'
+      +'<td class="td-func">'+esc(c.funcao||'—')+'</td>'
+      +'<td class="td-cen">'+esc(c.turma||'—')+'</td>'
+      +'<td class="td-cen">'+esc(c.escala)+'</td>'
+      +'<td class="td-data">'+fmtBR(e?e.data_embarque:null)+'</td>'
+      +'<td class="td-data">'+fmtBR(e?e.data_desembarque:null)+'</td>'
+      +'<td class="td-data">'+fmtBR(e?e.data_reembarque:null)+'</td>'
       +'<td style="text-align:center;"><input type="checkbox" class="chk-nao-embarcou" data-colab="'+c.id+'" '+(c.nao_embarcou?'checked':'')+' onchange="marcarNaoEmbarcou(this, \''+c.id+'\')"></td>'
       +'<td><select class="sel-sit-folha sit-folha-'+(c.sit_folha?c.sit_folha.replace(/ /g,'-'):'vazio')+'" data-colab="'+c.id+'" onchange="salvarSitFolha(this, \''+c.id+'\')"><option value="">—</option><option value="AFASTADO INSS" '+(c.sit_folha==='AFASTADO INSS'?'selected':'')+'>AFASTADO INSS</option><option value="FÉRIAS" '+(c.sit_folha==='FÉRIAS'?'selected':'')+'>FÉRIAS</option></select></td>'
-      +'<td><span class="badge" style="background:'+st.hex+';">'+st.label+'</span><div class="st-detail">'+si.detalhe+'</div></td>'
-      +'<td style="cursor:pointer;" ondblclick="editarObs(this, '+c.id+')"><span class="obs-text">'+esc(c.observacoes||'—')+'</span></td>'
+      +'<td class="td-st" title="'+esc(si.detalhe)+'"><span class="badge pill-st" style="--c:'+st.hex+';">'+st.label+'</span><div class="st-detail">'+si.detalhe+'</div></td>'
+      +'<td class="td-obs" style="cursor:pointer;" title="'+esc(c.observacoes||'')+'" ondblclick="editarObs(this, \''+c.id+'\')"><span class="obs-text">'+esc(c.observacoes||'—')+'</span></td>'
       +'</tr>';
   });
   atualizaIconesColunas();
@@ -3255,6 +3407,15 @@ $('data-hoje').textContent = fmtBR(hoje());
 if(EMB_CFG){
   if(EMB_CFG.nome) $('emb-operador').textContent = EMB_CFG.nome;
   $('emb-logoff').style.display = 'none';   /* a saída é pelo Log Off do portal */
+  /* dentro do portal: a barra de cima (data, usuário, Log Off) é a do portal */
+  document.documentElement.classList.add('emb-no-portal');
+  var _tm = document.querySelector('.sidebar .trocar-modulo');
+  if(_tm){
+    _tm.innerHTML = '<span class="burger">&#9776;</span>Trocar ambiente';
+    _tm.onclick = function(){ try{ parent.ambVoltar(); }catch(e){} };
+  }
+  var _mt = document.querySelector('.sidebar .module-title');
+  if(_mt) _mt.textContent = 'Embarque Taboca';
 }
 
 /* ===== Colaboradores de uma função (clique no gráfico) ===== */
@@ -4156,6 +4317,97 @@ function ddFiltraST(v){ state.ddST=(v===undefined)?null:v; gerarDocsDash(); }
 function ddTrocaTipo(t){ state.ddTipo=t; state.ddST=null; gerarDocsDash(); if(typeof desenhaAbas==='function') desenhaAbas(); }
 function ddLimpar(){ state.ddCC=null; state.ddST=null; gerarDocsDash(); }
 var ddListas = {};
+/* ---------- PDF do Dashboard de Documentos (padrão Parente Andrade) ----------
+   Exporta o painel aberto (PCV, Carta ou Crachá), com os filtros aplicados. */
+function ddExportarPDF(){
+  var t = state.ddTipo, cfg = DOCS[t];
+  if(!state.docs[t]){ alert('⚠️ Aguarde o painel carregar.'); return; }
+  if(typeof html2pdf === 'undefined'){ alert('⚠️ O gerador de PDF ainda está carregando. Tente de novo em alguns segundos.'); return; }
+  var origem = document.querySelector('#view-docsdash .dash-body');
+  if(!origem) return;
+  loading(true);
+  var clone = origem.cloneNode(true);
+  clone.removeAttribute('id');
+  Array.prototype.forEach.call(clone.querySelectorAll('[id]'), function(el){ el.removeAttribute('id'); });
+  /* gráficos: troca cada canvas pela imagem do que está desenhado */
+  var orig = origem.querySelectorAll('canvas'), cop = clone.querySelectorAll('canvas');
+  Array.prototype.forEach.call(cop, function(c, i){
+    var o = orig[i], img = document.createElement('img');
+    try{ img.src = o.toDataURL('image/png'); }catch(e){}
+    img.style.cssText = 'width:100%;height:' + (o.clientHeight || 260) + 'px;object-fit:contain;display:block;';
+    c.parentNode.replaceChild(img, c);
+  });
+  /* tira o que só faz sentido na tela (botões, dicas, abas de tipo) */
+  Array.prototype.forEach.call(clone.querySelectorAll('.dhint, .dd-seg, .docs-aviso, .dchip button, .th-filt'), function(el){ el.remove(); });
+  /* cartões clicáveis (números do topo, pontos de atenção) viram blocos comuns, com o mesmo conteúdo */
+  Array.prototype.forEach.call(clone.querySelectorAll('button'), function(bt){
+    var dv = document.createElement('div');
+    dv.className = bt.className;
+    dv.setAttribute('style', (bt.getAttribute('style') || '') + ';text-align:left;');
+    dv.innerHTML = bt.innerHTML;
+    bt.parentNode.replaceChild(dv, bt);
+  });
+  Array.prototype.forEach.call(clone.querySelectorAll('.dcard, .kpi'), function(el){ el.style.breakInside = 'avoid'; el.style.pageBreakInside = 'avoid'; });
+  Array.prototype.forEach.call(clone.querySelectorAll('.kpis'), function(el){ el.style.setProperty('grid-template-columns', 'repeat(' + Math.max(1, el.children.length) + ', minmax(0, 1fr))', 'important'); });
+  Array.prototype.forEach.call(clone.querySelectorAll('.mini-wrap, .chart-box, .pt-list'), function(el){ el.style.maxHeight = 'none'; el.style.overflow = 'visible'; });
+  Array.prototype.forEach.call(clone.querySelectorAll('table'), function(tb){
+    tb.style.setProperty('width', '100%', 'important'); tb.style.setProperty('min-width', '0', 'important');
+    tb.style.tableLayout = 'auto'; tb.style.fontSize = '10px';
+    Array.prototype.forEach.call(tb.querySelectorAll('th, td'), function(c){ c.style.whiteSpace = 'normal'; c.style.padding = '5px 4px'; });
+  });
+  clone.style.cssText = 'overflow:visible;padding:0;flex:none;';
+  /* cartões em linhas de dois (os largos ocupam a linha toda), para a quebra de página não cortar nenhum */
+  Array.prototype.forEach.call(clone.querySelectorAll('.dash-grid'), function(grade){
+    var cards = Array.prototype.slice.call(grade.children), nova = document.createElement('div'), linha = null;
+    function novaLinha(){ linha = document.createElement('div'); linha.className = 'pdf-linha'; linha.style.cssText = 'display:flex;gap:12px;margin-bottom:12px;align-items:stretch;'; nova.appendChild(linha); }
+    cards.forEach(function(c){
+      var larga = c.classList.contains('wide');
+      if(larga || !linha || linha.children.length >= 2 || linha._larga) novaLinha();
+      c.style.flex = '1 1 0'; c.style.minWidth = '0'; c.style.margin = '0';
+      linha.appendChild(c);
+      if(larga) linha._larga = true;
+    });
+    grade.parentNode.replaceChild(nova, grade);
+  });
+
+  var d = new Date();
+  var quando = fmtBR(hoje()) + ' ' + String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+  var operador = (typeof EMB_CFG !== 'undefined' && EMB_CFG && EMB_CFG.nome) ? EMB_CFG.nome : '';
+  var filtros = [];
+  if(state.ddCC !== null) filtros.push('CC: ' + (state.ddCC === '' ? 'Sem CC' : nomeCC(state.ddCC) + (ccDesc(state.ddCC) ? ' - ' + ccDesc(state.ddCC) : '')));
+  if(state.ddST !== null) filtros.push('Status: ' + stLabel(state.ddST));
+  var logo = (typeof logoPABase64 === 'function') ? logoPABase64() : null;
+
+  var wrap = document.createElement('div');
+  wrap.style.cssText = 'width:100%;box-sizing:border-box;background:#fff;font-family:Arial,sans-serif;color:#3d4a58;';
+  wrap.innerHTML =
+      '<div style="display:flex;align-items:center;justify-content:space-between;padding:4px 4px 10px;">'
+    +   (logo ? '<img src="data:image/png;base64,' + logo + '" style="height:56px;">' : '<b style="font-size:20px;color:#3B6A1F;">PARENTE ANDRADE</b>')
+    +   '<div style="text-align:right;">'
+    +     '<div style="font-size:20px;font-weight:bold;color:#3B6A1F;">DASHBOARD DE DOCUMENTOS - ' + esc(String(cfg.titulo).toUpperCase()) + '</div>'
+    +     '<div style="font-size:12px;margin-top:2px;">Controle de Embarque e Desembarque - Taboca &nbsp;|&nbsp; Responsável: SESMT</div>'
+    +     '<div style="font-size:10.5px;color:#8a97a6;margin-top:2px;font-style:italic;">Gerado em ' + quando + (operador ? ' por ' + esc(operador) : '')
+    +       ' &nbsp;|&nbsp; ' + (filtros.length ? 'Filtros: ' + esc(filtros.join(' • ')) : 'Sem filtros (todos os CCs)') + '</div>'
+    +   '</div>'
+    + '</div>'
+    + '<div style="height:5px;background:#EAA837;margin-bottom:12px;"></div>';
+  wrap.appendChild(clone);
+  wrap.insertAdjacentHTML('beforeend', '<div style="margin-top:10px;font-size:9.5px;color:#8a97a6;border-top:1px solid #e1e8d8;padding-top:6px;">Parente Andrade - Dashboard de Documentos (' + esc(cfg.titulo) + ')</div>');
+
+  var nome = 'Dashboard-' + String(cfg.curto || cfg.titulo).replace(/[^A-Za-z0-9À-ú]+/g, '-') + '-' + String(d.getDate()).padStart(2,'0') + String(d.getMonth()+1).padStart(2,'0') + d.getFullYear() + '.pdf';
+  html2pdf().set({
+    margin: [8, 8, 10, 8],
+    filename: nome,
+    image: { type: 'jpeg', quality: 0.95 },
+    html2canvas: { scale: 2, useCORS: true, scrollX: 0, scrollY: 0, backgroundColor: '#ffffff' },
+    jsPDF: { orientation: 'landscape', unit: 'mm', format: 'a4' },
+    pagebreak: { mode: ['css', 'legacy'], avoid: ['.pdf-linha', '.kpis'] }
+  }).from(wrap).save()
+    .then(function(){ toast('PDF do dashboard gerado.'); })
+    .catch(function(e){ console.error(e); alert('Não foi possível gerar o PDF: ' + (e && e.message || e)); })
+    .then(function(){ loading(false); });
+}
+
 function gerarDocsDash(){
   var t=state.ddTipo, cfg=DOCS[t];
   $('dd-seg').innerHTML=DOC_TIPOS.map(function(k){ return '<button type="button" class="'+(k===t?'on':'')+'" onclick="ddTrocaTipo(\''+k+'\')">'+DOCS[k].ico+' '+esc(DOCS[k].titulo)+'</button>'; }).join('');
