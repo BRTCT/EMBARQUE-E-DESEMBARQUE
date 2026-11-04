@@ -1102,8 +1102,181 @@
   }
   #view-browse .grp-n-txt{font-size:12px;color:#d6e3c9;margin-left:-4px;}
   #view-browse .grp-res{color:#e9f1df;font-size:12px;}
+
+  /* ===== Botões modernos com movimentos leves ===== */
+  .btn, #view-browse .btn{
+    border-radius:8px !important;border:1px solid #d3dae2;background:#fff;color:#33402c;
+    padding:6px 14px;font-weight:600;letter-spacing:.1px;
+    box-shadow:0 1px 2px rgba(16,40,20,.06);
+    transition:transform .15s ease, box-shadow .15s ease, background-color .15s ease, border-color .15s ease, color .15s ease !important;
+  }
+  .btn:hover:not(:disabled), #view-browse .btn:hover:not(:disabled){
+    background:#f4f8ef;border-color:#b9cba7;transform:translateY(-1px);box-shadow:0 4px 10px rgba(16,40,20,.12);
+  }
+  .btn:active:not(:disabled), #view-browse .btn:active:not(:disabled){transform:translateY(0) scale(.97);box-shadow:0 1px 2px rgba(16,40,20,.10);}
+  .btn.primary, #view-browse .btn.primary{background:linear-gradient(135deg,#4a7a26,#3B6A1F) !important;border-color:#3B6A1F !important;color:#fff !important;}
+  .btn.primary:hover:not(:disabled), #view-browse .btn.primary:hover:not(:disabled){background:linear-gradient(135deg,#558a2d,#43772a) !important;box-shadow:0 5px 14px rgba(59,106,31,.35);}
+  .btn.danger, #view-browse .btn.danger{background:linear-gradient(135deg,#e05a52,#c8443c) !important;border-color:#b03a33 !important;color:#fff !important;}
+  .btn.danger:hover:not(:disabled){box-shadow:0 5px 14px rgba(200,68,60,.35);}
+  .btn:focus-visible{outline:2px solid #EAA837 !important;outline-offset:2px;}
+  .btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
+  @media (prefers-reduced-motion: reduce){ .btn,.btn:hover,.btn:active{transition:none !important;transform:none !important;} }
+
+  /* janelas abrindo com movimento suave */
+  .overlay.open{animation:ovIn .18s ease;}
+  .overlay.open .dlg{animation:dlgIn .22s cubic-bezier(.2,.8,.3,1);}
+  @keyframes ovIn{from{opacity:0;}to{opacity:1;}}
+  @keyframes dlgIn{from{opacity:0;transform:translateY(10px) scale(.98);}to{opacity:1;transform:none;}}
+  .dlg{border-radius:12px !important;border:0 !important;box-shadow:0 18px 50px rgba(10,30,10,.32) !important;}
+  .dlg-title{background:linear-gradient(135deg,#4a7a26,#3B6A1F) !important;padding:10px 14px !important;font-size:13.5px !important;}
+  .dlg-title .x{border-radius:6px !important;transition:background .15s;}
+
+  /* nome clicável */
+  #view-browse .nome-link{color:#1f2a18;cursor:pointer;text-decoration:none;border-bottom:1px dashed transparent;transition:color .15s, border-color .15s;}
+  #view-browse .nome-link:hover{color:#3B6A1F;border-bottom-color:#3B6A1F;}
+
+  /* data de embarque com calendário */
+  #view-browse .td-emb{white-space:nowrap;}
+  #view-browse table.browse tbody td.td-data{text-align:center !important;}
+  #view-browse table.browse thead th[data-col="dtemb"] .th-lbl,
+  #view-browse table.browse thead th[data-col="dtdes"] .th-lbl,
+  #view-browse table.browse thead th[data-col="dtree"] .th-lbl{text-align:center;}
+  .mc-tipo{display:inline-block;background:#EAA837;color:#2b2111;border-radius:4px;font-size:9.5px;padding:1px 5px;margin-right:6px;text-transform:uppercase;letter-spacing:.3px;}
+  .mc-d.faixa{background:#f4f8ef;}
+  .mc-dif{color:#b7791f;font-weight:600;}
+  .mc-chk{display:flex;align-items:center;gap:6px;font-size:11px;color:#4a5544;margin-top:6px;cursor:pointer;}
+  .mc-chk input{margin:0;}
+  #view-browse .cal-btn{
+    border:0;background:transparent;cursor:pointer;font-size:12px;line-height:1;padding:2px 3px;margin-left:4px;border-radius:5px;
+    opacity:.45;transition:opacity .15s, transform .15s, background .15s;vertical-align:middle;
+  }
+  #view-browse tr:hover .cal-btn{opacity:1;}
+  #view-browse .cal-btn:hover{background:#e3eed6;transform:scale(1.15);}
+
+  .mini-cal{
+    position:fixed;z-index:120;width:262px;background:#fff;border-radius:12px;padding:10px 10px 10px;
+    box-shadow:0 14px 40px rgba(10,30,10,.28);border:1px solid #e1e8d8;display:none;
+    font-family:inherit;color:#33402c;
+  }
+  .mini-cal.open{display:block;animation:dlgIn .18s cubic-bezier(.2,.8,.3,1);}
+  .mc-top{display:flex;align-items:center;gap:6px;margin-bottom:4px;}
+  .mc-nome{flex:1;font-size:11.5px;font-weight:700;color:#3B6A1F;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .mc-x{border:0;background:transparent;cursor:pointer;color:#7d8776;border-radius:6px;width:22px;height:22px;transition:background .15s;}
+  .mc-x:hover{background:#f1f4ee;}
+  .mc-nav{display:flex;align-items:center;justify-content:space-between;margin:2px 0 6px;font-size:13px;}
+  .mc-nav button{border:0;background:#f1f4ee;width:26px;height:26px;border-radius:8px;cursor:pointer;font-size:16px;line-height:1;color:#3B6A1F;transition:background .15s, transform .15s;}
+  .mc-nav button:hover{background:#e3eed6;transform:scale(1.06);}
+  .mc-sem,.mc-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center;}
+  .mc-sem span{font-size:10px;font-weight:700;color:#9aa596;padding:2px 0;}
+  .mc-d{border:0;background:transparent;border-radius:8px;height:30px;font-size:12px;cursor:pointer;color:#33402c;font-family:inherit;transition:background .12s, transform .12s, color .12s;}
+  .mc-d:hover{background:#eef4e6;transform:scale(1.06);}
+  .mc-d.hoje{box-shadow:inset 0 0 0 1.5px #EAA837;font-weight:700;}
+  .mc-d.atual{color:#3B6A1F;font-weight:700;background:#f4f8ef;}
+  .mc-d.sel{background:#4a7a26 !important;color:#fff !important;font-weight:700;}
+  .mc-prev{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-top:8px;background:#f6f9f2;border-radius:8px;padding:7px 6px;}
+  .mc-prev div{text-align:center;}
+  .mc-prev span{display:block;font-size:9.5px;color:#7d8776;text-transform:uppercase;letter-spacing:.3px;}
+  .mc-prev b{font-size:12px;font-variant-numeric:tabular-nums;color:#1f2a18;}
+  .mc-nota{font-size:10.5px;color:#8a937f;text-align:center;margin-top:4px;}
+  .mc-aviso{font-size:10.5px;color:#a32f28;background:#fdecea;border-radius:6px;padding:5px 7px;margin-top:6px;line-height:1.3;}
+  .mc-acts{display:flex;align-items:center;gap:6px;margin-top:9px;}
+  .mc-acts .btn{padding:5px 11px;font-size:12px;}
+  .mc-hoje{border:0;background:transparent;color:#3B6A1F;font-weight:700;font-size:12px;cursor:pointer;padding:4px 6px;border-radius:6px;}
+  .mc-hoje:hover{background:#f1f4ee;}
+
+  /* janela do histórico do colaborador */
+  .hc-dlg{width:820px;}
+  .hc-body{background:#f7f9f4;padding:14px 16px !important;overflow:auto;}
+  .hc-head{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #e1e8d8;border-radius:10px;padding:12px 14px;margin-bottom:12px;}
+  .hc-av{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#4a7a26,#3B6A1F);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:15px;flex:none;}
+  .hc-id{flex:1;min-width:0;}
+  .hc-nome{font-size:15px;font-weight:700;color:#1f2a18;}
+  .hc-meta{font-size:11.5px;color:#6b7563;margin-top:2px;}
+  .hc-st{text-align:right;}
+  .hc-st .badge.pill-st{background:color-mix(in srgb, var(--c) 14%, #fff);color:color-mix(in srgb, var(--c) 78%, #000);border:1px solid color-mix(in srgb, var(--c) 30%, #fff);border-radius:999px;padding:2px 9px;font-size:10.5px;font-weight:700;}
+  .hc-st .badge.pill-st::before{content:'';display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--c);margin-right:5px;vertical-align:1px;}
+  .hc-det{font-size:11px;color:#7d8776;margin-top:4px;}
+  .hc-sec{background:#fff;border:1px solid #e1e8d8;border-radius:10px;padding:10px 12px;margin-bottom:12px;}
+  .hc-sec h4{margin:0 0 8px;font-size:13px;color:#3B6A1F;display:flex;align-items:center;gap:6px;}
+  .hc-cnt{background:#EAA837;color:#2b2111;border-radius:5px;padding:0 7px;font-size:11px;}
+  .hc-cnt:empty{display:none;}
+  .hc-tab{width:100%;border-collapse:collapse;font-size:12px;}
+  .hc-tab th{background:#4a7a26;color:#fff;text-align:left;padding:6px 8px;font-size:10.5px;text-transform:uppercase;letter-spacing:.3px;}
+  .hc-tab th:first-child{border-radius:6px 0 0 0;} .hc-tab th:last-child{border-radius:0 6px 0 0;}
+  .hc-tab td{padding:6px 8px;border-bottom:1px solid #eef1ea;font-variant-numeric:tabular-nums;}
+  .hc-tab tr.atual td{background:#f4f8ef;font-weight:600;}
+  .hc-tag{background:#3B6A1F;color:#fff;border-radius:4px;font-size:9.5px;padding:1px 5px;margin-right:6px;font-weight:700;text-transform:uppercase;}
+  .hc-obs{color:#6b7563;}
+  .hc-acts{white-space:nowrap;text-align:right;}
+  .ic-btn{border:0;background:#f1f4ee;width:26px;height:26px;border-radius:7px;cursor:pointer;margin-left:4px;color:#3B6A1F;transition:transform .15s, background .15s;}
+  .ic-btn:hover{background:#e3eed6;transform:translateY(-1px);}
+  .ic-btn.del{color:#c13730;} .ic-btn.del:hover{background:#fdecea;}
+  .hc-vazio{text-align:center;color:#9aa596;font-size:12px;padding:12px;}
+  .hc-timeline{max-height:320px;overflow:auto;padding-right:4px;}
+  .hc-ev{display:flex;gap:10px;position:relative;padding:0 0 10px 2px;}
+  .hc-ev::before{content:'';position:absolute;left:7px;top:14px;bottom:0;width:2px;background:#e6ece0;}
+  .hc-ev:last-child::before{display:none;}
+  .hc-ev-dot{width:12px;height:12px;border-radius:50%;background:var(--c);box-shadow:0 0 0 3px color-mix(in srgb, var(--c) 20%, #fff);margin-top:3px;flex:none;}
+  .hc-ev-c{flex:1;background:#fbfcf9;border:1px solid #eef1ea;border-radius:8px;padding:6px 9px;transition:border-color .15s;}
+  .hc-ev-c:hover{border-color:#cfdcc2;}
+  .hc-ev-top{display:flex;justify-content:space-between;gap:10px;font-size:12px;color:#1f2a18;}
+  .hc-ev-top span{font-size:11px;color:#8a937f;white-space:nowrap;font-variant-numeric:tabular-nums;}
+  .hc-ev-det{font-size:11.5px;color:#4a5544;margin-top:2px;}
+  .hc-ev-por{font-size:10.5px;color:#8a937f;margin-top:2px;}
+
+  /* ===== Cabeçalho EFETIVO - TABOCA ===== */
+  #view-browse .routine-bar.efetivo-bar{
+    display:grid !important;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;
+    background:#fff;border:1px solid #e3e8dc;border-radius:12px;margin:6px 6px 2px 12px;
+    padding:8px 16px !important;box-shadow:0 1px 3px rgba(16,40,20,.06);
+  }
+  #view-browse .ef-logo{width:150px;height:46px;background-size:contain !important;background-repeat:no-repeat !important;background-position:left center !important;}
+  #view-browse .ef-centro{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0;}
+  #view-browse .ef-tit{
+    font-family:'Roboto Condensed','Arial Narrow','Helvetica Neue',Arial,sans-serif;font-weight:800;
+    font-size:40px;line-height:1;letter-spacing:1px;color:#1f2e1a;white-space:nowrap;
+  }
+  #view-browse .ef-upd{display:flex;flex-direction:column;align-items:center;margin-top:6px;}
+  #view-browse .ef-pill{
+    display:inline-flex;align-items:center;gap:7px;padding:4px 16px;border-radius:9px;
+    background:linear-gradient(135deg,#4a7a26,#6ea53a);color:#fff;
+    font-family:'Roboto Condensed','Arial Narrow',Arial,sans-serif;font-weight:700;font-size:14px;letter-spacing:1px;
+    box-shadow:0 4px 12px rgba(74,122,38,.35);transition:transform .2s ease, box-shadow .2s ease;
+  }
+  #view-browse .ef-pill:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(74,122,38,.42);}
+  #view-browse .ef-pill.erro{background:linear-gradient(135deg,#c8443c,#e05a52);box-shadow:0 4px 12px rgba(200,68,60,.35);}
+  #view-browse .ef-pill.pulsa{animation:efPulsa .6s ease;}
+  @keyframes efPulsa{0%{transform:scale(.92);opacity:.6;}60%{transform:scale(1.04);opacity:1;}100%{transform:scale(1);}}
+  #view-browse .ef-ico{font-size:13px;}
+  #view-browse .ef-em{font-size:10.5px;color:#7d8776;margin-top:3px;white-space:nowrap;}
+  #view-browse .efetivo-bar .filters{justify-content:flex-end;flex-wrap:wrap;}
+  @media (max-width:1500px){
+    #view-browse .ef-tit{font-size:32px;}
+    #view-browse .ef-logo{width:118px;height:38px;}
+    #view-browse .efetivo-bar .filters{gap:6px !important;}
+    #view-browse .efetivo-bar .filters label{font-size:11px !important;}
+    #view-browse .efetivo-bar .filters select{max-width:118px;}
+    #view-browse .efetivo-bar .filters input{width:150px !important;}
+  }
+
+  /* filtro de datas agrupado por mês */
+  .cf-mes{display:flex;align-items:center;gap:4px;padding:3px 4px;border-radius:6px;font-size:12.5px;}
+  .cf-mes:hover{background:#f4f8ef;}
+  .cf-mes label{flex:1;display:flex;align-items:center;gap:6px;cursor:pointer;}
+  .cf-mes b{color:#2f4a22;font-weight:700;}
+  .cf-car{border:0;background:transparent;cursor:pointer;width:18px;height:18px;border-radius:4px;color:#4a7a26;font-size:11px;line-height:1;transition:transform .15s, background .15s;}
+  .cf-car:hover{background:#e3eed6;}
+  .cf-mes.aberto .cf-car{transform:rotate(90deg);}
+  .cf-item.cf-dia{padding-left:30px !important;}
+  .cf-sem{font-size:10.5px;color:#8a937f;margin-left:2px;}
+  .colf .cf-list{max-height:340px !important;}
+  .colf .cf-foot .pri{background:linear-gradient(135deg,#4a7a26,#3B6A1F) !important;border-color:#3B6A1F !important;color:#fff !important;transition:transform .15s, box-shadow .15s;}
+  .colf .cf-foot .pri:hover{transform:translateY(-1px);box-shadow:0 4px 10px rgba(59,106,31,.3);}
+  .colf .cf-foot button{transition:transform .15s, box-shadow .15s, background .15s;}
   .emb-no-portal .subbar .sess{display:none !important;}
 </style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 <!-- ==================== SUB-BARRA ==================== -->
@@ -1248,12 +1421,11 @@
     <!-- ===== BROWSE ===== -->
     <div id="view-browse">
       <div class="conn-error" id="conn-error"></div>
-      <div class="routine-bar">
-        <div>
-          <div class="crumb">Gest&atilde;o de Pessoal &gt; Movimenta&ccedil;&otilde;es</div>
-          <div class="dv-titrow"><h1>Controle de Embarque e Desembarque</h1><span class="dv-resp">Respons&aacute;vel: <b>ADM Taboca</b></span></div>
+      <div class="routine-bar efetivo-bar">
+        <div class="ef-logo brand-img" role="img" aria-label="Parente Andrade"></div>
+        <div class="ef-centro">
+          <div class="ef-tit">EFETIVO - TABOCA</div>
         </div>
-        <div class="flex"></div>
         <div class="filters">
           <label>CC</label>
           <select id="f-cc" onchange="render()" style="width:100px;"><option value="">Todos</option></select>
@@ -1321,7 +1493,7 @@
         </div>
         <div class="flex"></div>
         <div class="rel-tipos" role="group" aria-label="Tipo de relatório">
-          <button type="button" class="btn rel-tipo" id="rel-tipo-embarque" onclick="trocaTipoRelatorio('embarque')">&#128676; Embarque</button>
+          <button type="button" class="btn rel-tipo" id="rel-tipo-embarque" onclick="trocaTipoRelatorio('embarque')">&#128652; Embarque</button>
           <button type="button" class="btn rel-tipo" id="rel-tipo-desembarque" onclick="trocaTipoRelatorio('desembarque')">&#127968; Desembarque</button>
         </div>
         <button class="btn" onclick="baixarRelatorioExcel()">&#128202; Baixar Excel</button>
@@ -1619,6 +1791,26 @@
   </div>
 </div>
 
+<!-- ==================== HISTÓRICO DO COLABORADOR (clique no nome) ==================== -->
+<div class="overlay" id="dlg-histc">
+  <div class="dlg hc-dlg">
+    <div class="dlg-title"><span>Histórico do colaborador</span><div class="flex"></div><div class="x" onclick="closeDlg('dlg-histc')">&#10005;</div></div>
+    <div class="dlg-body hc-body">
+      <div class="hc-head" id="hc-head"></div>
+      <div class="hc-sec"><h4>&#128652; Ciclos de embarque <span class="hc-cnt" id="hc-n-ciclos"></span></h4><div id="hc-ciclos"></div></div>
+      <div class="hc-sec"><h4>&#128221; Alterações <span class="hc-cnt" id="hc-n-alt"></span></h4><div id="hc-alt" class="hc-timeline"></div></div>
+    </div>
+    <div class="dlg-foot">
+      <button class="btn primary" id="hc-reg" onclick="hcRegistrarEmbarque()">&#128197; Registrar embarque</button>
+      <button class="btn" onclick="hcAbrirCadastro()">Abrir cadastro</button>
+      <button class="btn" onclick="closeDlg('dlg-histc')">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<!-- calendário pequeno da data de embarque (aberto pelo 📅 da tabela) -->
+<div class="mini-cal" id="mini-cal" role="dialog" aria-label="Alterar data de embarque"></div>
+
 <!-- ==================== LEGENDA ==================== -->
 <div class="overlay" id="dlg-legenda">
   <div class="dlg" style="width:380px;">
@@ -1763,6 +1955,18 @@ document.addEventListener('mousemove', function(ev){
   if(ev.clientX > m.getBoundingClientRect().right + 30) sbFecharDepois();
 });
 
+/* selo "ATUALIZADO" do cabeçalho EFETIVO - TABOCA (data/hora da última carga) */
+function efSelo(ok){
+  var pill = $('ef-pill'); if(!pill) return;
+  var d = new Date();
+  var quando = String(d.getDate()).padStart(2,'0') + '/' + String(d.getMonth()+1).padStart(2,'0') + '/' + d.getFullYear() + ', ' + String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+  pill.classList.toggle('erro', !ok);
+  pill.classList.remove('pulsa'); void pill.offsetWidth; pill.classList.add('pulsa');
+  $('ef-ico').innerHTML = ok ? '&#10003;' : '!';
+  $('ef-pill-txt').textContent = ok ? 'ATUALIZADO' : 'SEM CONEXÃO';
+  $('ef-em').innerHTML = (ok ? 'em ' + quando : 'última tentativa em ' + quando) + ' &middot; Respons&aacute;vel: ADM Taboca';
+}
+
 function toast(msg, err){
   var t=$('toast'); t.textContent=msg; t.className=err?'err':''; t.style.display='block';
   clearTimeout(t._h); t._h=setTimeout(function(){ t.style.display='none'; }, 3500);
@@ -1815,16 +2019,19 @@ function load(){
       (data||[]).forEach(function(c){ (c.embarques||[]).sort(function(a,b){ return b.data_embarque.localeCompare(a.data_embarque); }); });
       state.colabs = data || [];
       state.online = true;
+      efSelo(true);
       $('conn-error').style.display='none';
       console.log('[LOAD] Atualizando filtros e renderizando...');
       updateCCFilter();
       render();
       console.log('[LOAD] ✓ Renderização completa');
       if(state.histOpenId){ var c=byId(state.histOpenId); if(c){ fillHist(c,false); } else { closeDlg('dlg-colab'); } }
+      if(state.hcId && $('dlg-histc').classList.contains('open')){ if(byId(state.hcId)) abrirHistColab(state.hcId, true); else closeDlg('dlg-histc'); }
     })
     .catch(function(err){
       console.error('[LOAD] ✗ Erro ao carregar dados:', err);
       state.online = false;
+      efSelo(false);
       var ce=$('conn-error');
       ce.innerHTML='Não foi possível conectar ao banco de dados ('+esc(err.message)+'). Abra o sistema pelo endereço publicado: <a href="'+PUB_URL+'" target="_blank">'+PUB_URL+'</a>';
       ce.style.display='block';
@@ -1966,7 +2173,9 @@ function openColFilter(ev,k){
   var vals=Object.keys(cont).sort(function(a,b){ return cmpVal(keyOf[a],keyOf[b]); });
   var ativo=state.colF[k], checked={};
   vals.forEach(function(v){ checked[v] = ativo ? !!ativo[v] : true; });
-  colfState={k:k, vals:vals, cont:cont, checked:checked};
+  var abertos={};
+  if(ativo && COLF_DATAS[k]) vals.forEach(function(v){ if(!checked[v] && keyOf[v]) abertos[String(keyOf[v]).slice(0,7)]=true; });
+  colfState={k:k, vals:vals, cont:cont, checked:checked, keyOf:keyOf, abertos:abertos};
 
   var srt=state.colSort&&state.colSort.k===k ? state.colSort.dir : 0;
   var box=$('colf');
@@ -1994,11 +2203,66 @@ function openColFilter(ev,k){
 }
 function visiveisColf(){
   var q=($('cf-search')?$('cf-search').value:'').trim().toUpperCase();
-  return colfState.vals.filter(function(v){ return !q || (v||'(Vazias)').toUpperCase().indexOf(q)!==-1; });
+  return colfState.vals.filter(function(v){
+    if(!q) return true;
+    var txt=(v||'(Vazias)').toUpperCase();
+    if(COLF_DATAS[colfState.k] && colfState.keyOf && colfState.keyOf[v]){ var iso=String(colfState.keyOf[v]); txt+=' '+COLF_MESES[(+iso.slice(5,7))-1].toUpperCase()+' '+iso.slice(0,4); }
+    return txt.indexOf(q)!==-1;
+  });
 }
+/* colunas de data: filtro agrupado por mês e, dentro do mês, os dias (como no Excel) */
+var COLF_DATAS = { dtemb:true, dtdes:true, dtree:true };
+var COLF_SEM = ['dom','seg','ter','qua','qui','sex','sáb'];
+var COLF_MESES = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+function drawColfListDatas(vis){
+  var q = ($('cf-search') ? $('cf-search').value : '').trim();
+  var grupos = {}, ordem = [];
+  vis.forEach(function(v){
+    var iso = colfState.keyOf[v], ym = (v === '' || !iso) ? '' : String(iso).slice(0,7);
+    if(!grupos[ym]){ grupos[ym] = []; ordem.push(ym); }
+    grupos[ym].push(v);
+  });
+  ordem.sort(function(a, b){ if(a === '') return 1; if(b === '') return -1; return a < b ? -1 : a > b ? 1 : 0; });
+  var todos = vis.length && vis.every(function(v){ return colfState.checked[v]; });
+  var html = '<label class="cf-item all"><input type="checkbox" ' + (todos ? 'checked' : '') + ' onchange="toggleTodosColf(this.checked)"> (Selecionar tudo)</label>';
+  if(!vis.length) html += '<div class="cf-empty">Nada encontrado</div>';
+  ordem.forEach(function(ym){
+    var lista = grupos[ym], nSel = 0, tot = 0;
+    lista.forEach(function(v){ if(colfState.checked[v]) nSel++; tot += colfState.cont[v]; });
+    if(ym === ''){
+      var i0 = colfState.vals.indexOf('');
+      html += '<label class="cf-item"><input type="checkbox" data-i="' + i0 + '" ' + (colfState.checked[''] ? 'checked' : '') + ' onchange="toggleValColf(this)"> <span><i>(Vazias)</i></span><span class="cf-n">' + colfState.cont[''] + '</span></label>';
+      return;
+    }
+    var aberto = !!q || !!colfState.abertos[ym];
+    var p = ym.split('-'), rot = COLF_MESES[(+p[1]) - 1] + ' ' + p[0];
+    html += '<div class="cf-mes' + (aberto ? ' aberto' : '') + '">'
+      + '<button type="button" class="cf-car" onclick="toggleMesAbertoColf(\'' + ym + '\')" aria-label="Mostrar os dias">&#9656;</button>'
+      + '<label><input type="checkbox" data-ym="' + ym + '" ' + (nSel === lista.length ? 'checked' : '') + (nSel > 0 && nSel < lista.length ? ' data-parcial="1"' : '') + ' onchange="toggleMesColf(this)"> <b>' + rot + '</b></label>'
+      + '<span class="cf-n">' + tot + '</span></div>';
+    if(aberto){
+      lista.forEach(function(v){
+        var i = colfState.vals.indexOf(v), iso = String(colfState.keyOf[v]);
+        var d = new Date(+iso.slice(0,4), +iso.slice(5,7) - 1, +iso.slice(8,10));
+        html += '<label class="cf-item cf-dia"><input type="checkbox" data-i="' + i + '" ' + (colfState.checked[v] ? 'checked' : '') + ' onchange="toggleValColf(this)"> '
+          + '<span><b>' + iso.slice(8,10) + '</b> <span class="cf-sem">' + COLF_SEM[d.getDay()] + '</span></span><span class="cf-n">' + colfState.cont[v] + '</span></label>';
+      });
+    }
+  });
+  $('cf-list').innerHTML = html;
+  Array.prototype.forEach.call($('cf-list').querySelectorAll('input[data-parcial]'), function(el){ el.indeterminate = true; });
+}
+function toggleMesAbertoColf(ym){ colfState.abertos[ym] = !colfState.abertos[ym]; drawColfList(); }
+function toggleMesColf(el){
+  var ym = el.getAttribute('data-ym'), on = el.checked;
+  visiveisColf().forEach(function(v){ var iso = colfState.keyOf[v]; if(iso && String(iso).slice(0,7) === ym) colfState.checked[v] = on; });
+  drawColfList();
+}
+
 function drawColfList(){
   var vis=visiveisColf();
   if(!colfState.vals.length){ $('cf-list').innerHTML='<div class="cf-empty">Nenhum valor</div>'; return; }
+  if(COLF_DATAS[colfState.k]) return drawColfListDatas(vis);
   var todos=vis.length && vis.every(function(v){ return colfState.checked[v]; });
   var html='<label class="cf-item all"><input type="checkbox" '+(todos?'checked':'')+' onchange="toggleTodosColf(this.checked)"> (Selecionar tudo)</label>';
   if(!vis.length) html+='<div class="cf-empty">Nada encontrado</div>';
@@ -2125,12 +2389,12 @@ function render(){
       +'<td class="td-cc">'+esc(c.cc||'—')+'</td>'
       +'<td class="td-back">'+esc(c.back||'—')+'</td>'
       +'<td class="td-num">'+esc(c.matricula||'—')+'</td>'
-      +'<td class="td-nome">'+esc(c.nome)+'</td>'
+      +'<td class="td-nome"><a class="nome-link" title="Ver histórico de embarques e alterações" onclick="event.stopPropagation();selRow(this.closest(\'tr\'));abrirHistColab(\''+c.id+'\')">'+esc(c.nome)+'</a></td>'
       +'<td class="td-func">'+esc(c.funcao||'—')+'</td>'
       +'<td class="td-cen">'+esc(c.turma||'—')+'</td>'
       +'<td class="td-cen">'+esc(c.escala)+'</td>'
-      +'<td class="td-data">'+fmtBR(e?e.data_embarque:null)+'</td>'
-      +'<td class="td-data">'+fmtBR(e?e.data_desembarque:null)+'</td>'
+      +'<td class="td-data td-emb"><span class="emb-dt">'+fmtBR(e?e.data_embarque:null)+'</span><button type="button" class="cal-btn" title="Alterar a data de embarque" aria-label="Alterar a data de embarque" onclick="event.stopPropagation();abrirMiniCal(this,\''+c.id+'\')">&#128197;</button></td>'
+      +'<td class="td-data td-emb">'+(e ? '<span class="emb-dt">'+fmtBR(e.data_desembarque)+'</span><button type="button" class="cal-btn" title="Alterar a data de desembarque" aria-label="Alterar a data de desembarque" onclick="event.stopPropagation();abrirMiniCal(this,\''+c.id+'\',\'des\')">&#128197;</button>' : fmtBR(null))+'</td>'
       +'<td class="td-data">'+fmtBR(e?e.data_reembarque:null)+'</td>'
       +'<td style="text-align:center;"><input type="checkbox" class="chk-nao-embarcou" data-colab="'+c.id+'" '+(c.nao_embarcou?'checked':'')+' onchange="marcarNaoEmbarcou(this, \''+c.id+'\')"></td>'
       +'<td><select class="sel-sit-folha sit-folha-'+(c.sit_folha?c.sit_folha.replace(/ /g,'-'):'vazio')+'" data-colab="'+c.id+'" onchange="salvarSitFolha(this, \''+c.id+'\')"><option value="">—</option><option value="AFASTADO INSS" '+(c.sit_folha==='AFASTADO INSS'?'selected':'')+'>AFASTADO INSS</option><option value="FÉRIAS" '+(c.sit_folha==='FÉRIAS'?'selected':'')+'>FÉRIAS</option></select></td>'
@@ -2168,6 +2432,7 @@ function marcarNaoEmbarcou(checkbox, colabId){
     .then(function(){
       console.log('Sucesso ao salvar nao_embarcou');
       c.nao_embarcou = marcado;
+      registrarHist(c.id, c.nome, marcado ? 'Marcado como "não embarcou"' : 'Desmarcado "não embarcou"', null, {nao_embarcou:!marcado}, {nao_embarcou:marcado});
       loading(false);
       toast(marcado ? 'Marcado como não embarcou' : 'Desmarcado');
       render();
@@ -2188,6 +2453,7 @@ function salvarSitFolha(select, colabId){
   api('emb_colaboradores?id=eq.'+colabId, {method:'PATCH', body:{sit_folha: novoValor}})
     .then(function(){
       console.log('Sucesso ao salvar sit_folha');
+      registrarHist(c.id, c.nome, 'Situação da folha alterada', 'Sit. folha: '+histValor(c.sit_folha)+' → '+histValor(novoValor), {sit_folha:c.sit_folha||null}, {sit_folha:novoValor});
       c.sit_folha = novoValor;
       loading(false);
       toast('Situação folha atualizada com sucesso');
@@ -2229,6 +2495,7 @@ function editarObs(td, colabId){
     loading(true);
     api('emb_colaboradores?id=eq.'+colabId, {method:'PATCH', body:{observacoes: novaObs}})
       .then(function(){
+        registrarHist(c.id, c.nome, 'Observação alterada', 'Observação: '+histValor(obsAtual)+' → '+histValor(novaObs), {observacoes:obsAtual||null}, {observacoes:novaObs});
         c.observacoes = novaObs;
         loading(false);
         toast('Observação salva com sucesso');
@@ -2534,80 +2801,209 @@ function toggleEditMode(){
     alert('✅ Modo de edição ATIVADO - você pode editar normalmente');
   }
 }
+/* ================= BACKUP EM EXCEL (formatado, padrão Parente Andrade) ================= */
 function exportarBackup(){
-  if(typeof XLSX === 'undefined'){
-    loadXLSX(0);
-    setTimeout(function(){ exportarBackup(); }, 1000);
-    return;
-  }
+  if(!state.colabs.length){ toast('Nenhum colaborador carregado para exportar.', true); return; }
   loading(true);
-  try {
-    var workbook = XLSX.utils.book_new();
+  carregarExcelJS().then(function(){ return montarExcelBackup(); })
+    .then(function(buf){
+      var d = new Date();
+      var nome = 'Backup_Embarque_Taboca_' + d.getFullYear() + String(d.getMonth()+1).padStart(2,'0') + String(d.getDate()).padStart(2,'0') + '_' + String(d.getHours()).padStart(2,'0') + String(d.getMinutes()).padStart(2,'0') + '.xlsx';
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([buf], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }));
+      a.download = nome; document.body.appendChild(a); a.click();
+      setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+      toast('✅ Backup exportado: ' + nome);
+    })
+    .catch(function(err){ console.error('Erro ao exportar:', err); toast('Erro ao gerar backup: ' + err.message, true); })
+    .then(function(){ loading(false); });
+}
 
-    // Preparar dados dos colaboradores
-    var colabData = state.colabs.map(function(c){
-      var e = (c.embarques && c.embarques[0]) || {};
-      return {
-        'Matrícula': c.matricula || '',
-        'Nome': c.nome || '',
-        'Função': c.funcao || '',
-        'CC': c.cc || '',
-        'Back': c.back || '',
-        'Turma': c.turma || '',
-        'Escala': c.escala || '',
-        'Data Embarque': e.data_embarque ? fmtBR(e.data_embarque) : '',
-        'Data Desembarque': e.data_desembarque ? fmtBR(e.data_desembarque) : '',
-        'Data Reembarque': e.data_reembarque ? fmtBR(e.data_reembarque) : '',
-        'Não Embarcou': c.nao_embarcou ? 'SIM' : 'NÃO',
-        'Sit. Folha': c.sit_folha || '',
-        'Observações': c.observacoes || '',
-        'CEP': c.cep || '',
-        'Logradouro': c.logradouro || '',
-        'Número': c.numero || '',
-        'Complemento': c.complemento || '',
-        'Bairro': c.bairro || '',
-        'Município': c.municipio || '',
-        'UF': c.uf || ''
-      };
-    });
+function montarExcelBackup(){
+  var VERDE = 'FF3B6A1F', VERDE2 = 'FF4A7A26', VERDE_ESC = 'FF2F4A22', AMARELO = 'FFEAA837', CLARO = 'FFF7F9F4', CINZA = 'FFDDE3D6', TEXTO = 'FF33402C';
+  var agora = new Date();
+  var quando = fmtBR(hoje()) + ' ' + String(agora.getHours()).padStart(2,'0') + ':' + String(agora.getMinutes()).padStart(2,'0');
+  var operador = (typeof EMB_CFG !== 'undefined' && EMB_CFG && EMB_CFG.nome) ? EMB_CFG.nome : '';
+  var fino = { style:'thin', color:{ argb: CINZA } }, bordas = { top:fino, left:fino, bottom:fino, right:fino };
+  var wb = new ExcelJS.Workbook(); wb.creator = 'Parente Andrade'; wb.created = agora;
+  var logo = (typeof logoPABase64 === 'function') ? logoPABase64() : null;
+  var logoId = logo ? wb.addImage({ base64: logo, extension: 'png' }) : null;
 
-    var colabSheet = XLSX.utils.json_to_sheet(colabData);
-    XLSX.utils.book_append_sheet(workbook, colabSheet, 'Colaboradores');
+  var linhas = state.colabs.map(function(c){ return { c:c, si:statusInfo(c) }; })
+    .sort(function(a, b){ return String(a.c.cc||'').localeCompare(String(b.c.cc||''), 'pt-BR', {numeric:true}) || String(a.c.nome||'').localeCompare(String(b.c.nome||''), 'pt-BR'); });
 
-    // Preparar dados de embarques detalhados
-    var embData = [];
-    state.colabs.forEach(function(c){
-      if(c.embarques && c.embarques.length > 0){
-        c.embarques.forEach(function(e){
-          embData.push({
-            'Colaborador': c.nome || '',
-            'Matrícula': c.matricula || '',
-            'Data Embarque': e.data_embarque ? fmtBR(e.data_embarque) : '',
-            'Data Desembarque': e.data_desembarque ? fmtBR(e.data_desembarque) : '',
-            'Data Reembarque': e.data_reembarque ? fmtBR(e.data_reembarque) : '',
-            'Observação': e.observacao || ''
-          });
-        });
-      }
-    });
-
-    if(embData.length > 0){
-      var embSheet = XLSX.utils.json_to_sheet(embData);
-      XLSX.utils.book_append_sheet(workbook, embSheet, 'Embarques');
-    }
-
-    // Gerar arquivo
-    var dataHoje = new Date();
-    var nomeArquivo = 'Backup_Embarque_'+dataHoje.getFullYear()+(dataHoje.getMonth()+1).toString().padStart(2,'0')+dataHoje.getDate().toString().padStart(2,'0')+'.xlsx';
-    XLSX.writeFile(workbook, nomeArquivo);
-
-    loading(false);
-    toast('✅ Backup exportado com sucesso: '+nomeArquivo);
-  } catch(err){
-    loading(false);
-    console.error('Erro ao exportar:', err);
-    toast('Erro ao gerar backup: '+err.message, true);
+  function dataXl(iso){
+    if(!iso) return '';
+    var p = String(iso).split('-').map(Number);
+    if(!p[0] || p[0] < 1900) return fmtBR(iso);           /* data inválida: vai como texto para ninguém perder */
+    return new Date(Date.UTC(p[0], p[1]-1, p[2], 12));
   }
+  function cabecalho(ws, ncol, titulo, sub){
+    ws.getRow(1).height = 24; ws.getRow(2).height = 20; ws.getRow(3).height = 16; ws.getRow(4).height = 5;
+    if(logoId !== null) ws.addImage(logoId, { tl:{ col:0.1, row:0.2 }, ext:{ width:170, height:47 } });
+    var c0 = Math.min(3, ncol);
+    ws.mergeCells(1, c0, 1, ncol); ws.mergeCells(2, c0, 2, ncol); ws.mergeCells(3, c0, 3, ncol);
+    var t = ws.getCell(1, c0); t.value = titulo; t.font = { name:'Arial', size:16, bold:true, color:{ argb: VERDE } }; t.alignment = { horizontal:'right', vertical:'middle' };
+    var s2 = ws.getCell(2, c0); s2.value = sub; s2.font = { name:'Arial', size:10.5, color:{ argb: TEXTO } }; s2.alignment = { horizontal:'right', vertical:'middle' };
+    var s3 = ws.getCell(3, c0); s3.value = 'Gerado em ' + quando + (operador ? ' por ' + operador : '') + '  |  Controle de Embarque e Desembarque - Taboca';
+    s3.font = { name:'Arial', size:8.5, italic:true, color:{ argb:'FF8A97A6' } }; s3.alignment = { horizontal:'right', vertical:'middle' };
+    for(var c = 1; c <= ncol; c++) ws.getCell(4, c).fill = { type:'pattern', pattern:'solid', fgColor:{ argb: AMARELO } };
+  }
+  function linhaCab(row){
+    row.height = 30;
+    row.eachCell(function(cell){
+      cell.font = { name:'Arial', size:9.5, bold:true, color:{ argb:'FFFFFFFF' } };
+      cell.fill = { type:'pattern', pattern:'solid', fgColor:{ argb: VERDE2 } };
+      cell.alignment = { horizontal:'center', vertical:'middle', wrapText:true }; cell.border = bordas;
+    });
+  }
+  function configurar(ws, titulo, linhaTit){
+    ws.pageSetup = { orientation:'landscape', paperSize:9, fitToPage:true, fitToWidth:1, fitToHeight:0,
+                     margins:{ left:0.3, right:0.3, top:0.45, bottom:0.55, header:0.2, footer:0.25 }, printTitlesRow: linhaTit + ':' + linhaTit };
+    ws.headerFooter.oddFooter = '&L&8Parente Andrade - ' + titulo + '&R&8Página &P de &N';
+    ws.properties.tabColor = { argb: VERDE2 };
+  }
+  /* largura das colunas ajustada ao conteúdo (com limites) */
+  function ajustarLarguras(ws, cols, primeira, minimos, maximos){
+    cols.forEach(function(nome, i){
+      var max = String(nome).length * 0.9;
+      ws.getColumn(i+1).eachCell({ includeEmpty:false }, function(cell, r){
+        if(r < primeira) return;
+        var v = cell.value, len = (v instanceof Date) ? 10 : String(v == null ? '' : v).length;
+        if(len > max) max = len;
+      });
+      ws.getColumn(i+1).width = Math.min(maximos[i] || 45, Math.max(minimos[i] || 6, Math.ceil(max * 1.1) + 2));
+    });
+  }
+  function tabela(ws, linhaTit, cols, dados, estilo){
+    var rTit = ws.getRow(linhaTit); rTit.values = cols; linhaCab(rTit);
+    dados.forEach(function(vals, n){
+      var row = ws.getRow(linhaTit + 1 + n); row.values = vals; row.height = 17;
+      row.eachCell({ includeEmpty:true }, function(cell, ci){
+        if(ci > cols.length) return;
+        cell.font = { name:'Arial', size:9.5, color:{ argb: TEXTO } };
+        cell.border = bordas; cell.alignment = { vertical:'middle' };
+        if(n % 2 === 1) cell.fill = { type:'pattern', pattern:'solid', fgColor:{ argb: CLARO } };
+        if(cell.value instanceof Date){ cell.numFmt = 'dd/mm/yyyy'; cell.alignment = { horizontal:'center', vertical:'middle' }; }
+      });
+      if(estilo) estilo(row, n);
+    });
+    ws.autoFilter = { from:{ row: linhaTit, column: 1 }, to:{ row: linhaTit + Math.max(1, dados.length), column: cols.length } };
+    ws.views = [{ state:'frozen', ySplit: linhaTit, xSplit: 0, showGridLines:false }];
+  }
+  function corStatus(cell, code){
+    var hex = (ST[code] && ST[code].hex || '#9e9e9e').replace('#', '');
+    cell.font = { name:'Arial', size:9, bold:true, color:{ argb:'FF' + hex } };
+    cell.alignment = { horizontal:'center', vertical:'middle' };
+  }
+
+  /* ---------- Aba 1: Resumo ---------- */
+  var wr = wb.addWorksheet('Resumo', { views:[{ showGridLines:false }] });
+  var COD = ['EMB','TRANS','DES','AEMB','PEND','NAEMB','SEM'];
+  var totSt = {}; COD.forEach(function(k){ totSt[k] = 0; });
+  var porCC = {};
+  linhas.forEach(function(x){
+    totSt[x.si.code] = (totSt[x.si.code] || 0) + 1;
+    var g = x.c.cc ? String(x.c.cc) : 'Sem CC';
+    porCC[g] = porCC[g] || { total:0 }; porCC[g].total++; porCC[g][x.si.code] = (porCC[g][x.si.code] || 0) + 1;
+  });
+  var colsCC = ['CC', 'Total'].concat(COD.map(function(k){ return ST[k].label; }));
+  configurar(wr, 'Backup - Resumo', 6);
+  cabecalho(wr, colsCC.length, 'BACKUP - EFETIVO TABOCA', 'Resumo: ' + linhas.length + ' colaborador(es) e ' + linhas.reduce(function(t, x){ return t + (x.c.embarques || []).length; }, 0) + ' ciclo(s) de embarque');
+  /* cartões de situação */
+  var rk = wr.getRow(6); rk.height = 16; var rv = wr.getRow(7); rv.height = 26;
+  ['TOTAL'].concat(COD).forEach(function(k, i){
+    var cTit = rk.getCell(i + 2), cVal = rv.getCell(i + 2);
+    var hex = k === 'TOTAL' ? '3B6A1F' : (ST[k].hex || '#9e9e9e').replace('#','');
+    cTit.value = k === 'TOTAL' ? 'TOTAL' : ST[k].label; cVal.value = k === 'TOTAL' ? linhas.length : (totSt[k] || 0);
+    cTit.font = { name:'Arial', size:8, bold:true, color:{ argb:'FF' + hex } }; cTit.alignment = { horizontal:'center', vertical:'middle', wrapText:true };
+    cVal.font = { name:'Arial', size:16, bold:true, color:{ argb:'FF' + hex } }; cVal.alignment = { horizontal:'center', vertical:'middle' };
+    [cTit, cVal].forEach(function(cc){ cc.fill = { type:'pattern', pattern:'solid', fgColor:{ argb: CLARO } }; cc.border = { top:(cc === cTit ? { style:'medium', color:{ argb:'FF' + hex } } : fino), left:fino, right:fino, bottom:fino }; });
+  });
+  var ccs = Object.keys(porCC).sort(function(a, b){ return a === 'Sem CC' ? 1 : b === 'Sem CC' ? -1 : a.localeCompare(b, 'pt-BR', {numeric:true}); });
+  var dadosCC = ccs.map(function(g){ return [g, porCC[g].total].concat(COD.map(function(k){ return porCC[g][k] || 0; })); });
+  dadosCC.push(['TOTAL', linhas.length].concat(COD.map(function(k){ return totSt[k] || 0; })));
+  var rTitCC = 10;
+  wr.mergeCells(9, 1, 9, colsCC.length);
+  var tcc = wr.getCell(9, 1); tcc.value = 'Colaboradores por centro de custo e situação';
+  tcc.font = { name:'Arial', size:11, bold:true, color:{ argb:'FFFFFFFF' } }; tcc.fill = { type:'pattern', pattern:'solid', fgColor:{ argb: VERDE_ESC } }; tcc.alignment = { vertical:'middle', indent:1 };
+  wr.getRow(9).height = 20;
+  tabela(wr, rTitCC, colsCC, dadosCC, function(row, n){
+    for(var ci = 2; ci <= colsCC.length; ci++){ var cl = row.getCell(ci); cl.alignment = { horizontal:'center', vertical:'middle' }; if(cl.value === 0) cl.font = { name:'Arial', size:9.5, color:{ argb:'FFB5BDAF' } }; }
+    row.getCell(1).font = { name:'Arial', size:9.5, bold:true, color:{ argb: VERDE_ESC } };
+    if(n === dadosCC.length - 1) row.eachCell(function(cl){ cl.font = { name:'Arial', size:10, bold:true, color:{ argb:'FF1F2A18' } }; cl.fill = { type:'pattern', pattern:'solid', fgColor:{ argb:'FFE3EED6' } }; cl.border = { top:{ style:'medium', color:{ argb: VERDE2 } }, bottom:fino, left:fino, right:fino }; });
+  });
+  wr.views = [{ showGridLines:false }];
+  wr.autoFilter = null;
+  ajustarLarguras(wr, colsCC, rTitCC, [18, 8, 11, 11, 11, 11, 11, 11, 11], [40, 10, 14, 14, 14, 14, 16, 14, 14]);
+  wr.getColumn(1).width = Math.max(wr.getColumn(1).width, 20);
+
+  /* ---------- Aba 2: Colaboradores ---------- */
+  var COLS = ['Matrícula','Nome','Função','CC','Back','Turma','Escala','Situação','Data Embarque','Data Desembarque','Data Reembarque','Não Embarcou','Sit. Folha','Observações'];
+  var wc = wb.addWorksheet('Colaboradores');
+  configurar(wc, 'Backup - Colaboradores', 6);
+  cabecalho(wc, COLS.length, 'BACKUP - COLABORADORES', linhas.length + ' colaborador(es), ordenados por CC e nome');
+  var dadosC = linhas.map(function(x){
+    var c = x.c, e = (c.embarques && c.embarques[0]) || {};
+    return [c.matricula || '', c.nome || '', c.funcao || '', c.cc || '', c.back || '', c.turma || '', c.escala || '', ST[x.si.code].label,
+            dataXl(e.data_embarque), dataXl(e.data_desembarque), dataXl(e.data_reembarque), c.nao_embarcou ? 'SIM' : 'NÃO', c.sit_folha || '', c.observacoes || ''];
+  });
+  tabela(wc, 6, COLS, dadosC, function(row, n){
+    var x = linhas[n];
+    row.getCell(2).font = { name:'Arial', size:9.5, bold:true, color:{ argb:'FF1F2A18' } };
+    [1,4,5,6,7,12].forEach(function(ci){ row.getCell(ci).alignment = { horizontal:'center', vertical:'middle' }; });
+    corStatus(row.getCell(8), x.si.code);
+    if(x.c.nao_embarcou) row.getCell(12).font = { name:'Arial', size:9.5, bold:true, color:{ argb:'FFD9433B' } };
+    row.getCell(14).alignment = { vertical:'middle', wrapText:true };
+  });
+  wc.views = [{ state:'frozen', ySplit:6, xSplit:2, showGridLines:false }];
+  ajustarLarguras(wc, COLS, 6, [10, 26, 18, 7, 6, 7, 8, 16, 12, 13, 12, 11, 12, 24],
+                              [12, 40, 28, 22, 7, 7, 9, 18, 12, 13, 12, 11, 16, 46]);
+
+  /* ---------- Aba 3: Endereços e contato ---------- */
+  var COLS2 = ['Nome','Matrícula','CC','Telefone','CEP','Logradouro','Número','Complemento','Bairro','Município','UF','Precisa de Rota'];
+  var wd = wb.addWorksheet('Endereços e contato');
+  configurar(wd, 'Backup - Endereços e contato', 6);
+  cabecalho(wd, COLS2.length, 'BACKUP - ENDEREÇOS E CONTATO', 'Para a rota de embarque e desembarque');
+  var dadosD = linhas.map(function(x){
+    var c = x.c;
+    return [c.nome || '', c.matricula || '', c.cc || '', c.telefone || '', c.cep || '', c.logradouro || '', c.numero || '', c.complemento || '', c.bairro || '', c.municipio || '', c.uf || '', c.precisa_rota === false ? 'NÃO' : 'SIM'];
+  });
+  tabela(wd, 6, COLS2, dadosD, function(row, n){
+    row.getCell(1).font = { name:'Arial', size:9.5, bold:true, color:{ argb:'FF1F2A18' } };
+    [2,3,5,7,11,12].forEach(function(ci){ row.getCell(ci).alignment = { horizontal:'center', vertical:'middle' }; });
+    if(linhas[n].c.precisa_rota === false) row.getCell(12).font = { name:'Arial', size:9.5, bold:true, color:{ argb:'FF8A97A6' } };
+  });
+  wd.views = [{ state:'frozen', ySplit:6, xSplit:1, showGridLines:false }];
+  ajustarLarguras(wd, COLS2, 6, [26, 10, 7, 14, 10, 22, 7, 14, 16, 12, 5, 9], [40, 12, 22, 18, 11, 40, 9, 26, 26, 20, 5, 9]);
+
+  /* ---------- Aba 4: Embarques (todos os ciclos) ---------- */
+  var COLS3 = ['Colaborador','Matrícula','CC','Função','Data Embarque','Data Desembarque','Data Reembarque','Dias a bordo','Dias de folga','Ciclo','Observação'];
+  var we = wb.addWorksheet('Embarques');
+  configurar(we, 'Backup - Embarques', 6);
+  var dadosE = [], marca = [];
+  linhas.forEach(function(x){
+    var c = x.c, lista = (c.embarques || []);
+    lista.forEach(function(e, i){
+      var okD = e.data_embarque && e.data_desembarque && e.data_embarque >= '1900' && e.data_desembarque >= '1900';
+      var okR = okD && e.data_reembarque && e.data_reembarque >= '1900';
+      dadosE.push([c.nome || '', c.matricula || '', c.cc || '', c.funcao || '', dataXl(e.data_embarque), dataXl(e.data_desembarque), dataXl(e.data_reembarque),
+                   okD ? diffDays(e.data_embarque, e.data_desembarque) + 1 : '', okR ? diffDays(e.data_desembarque, e.data_reembarque) - 1 : '',
+                   i === 0 ? 'Atual' : 'Anterior', e.observacao || '']);
+      marca.push(i === 0);
+    });
+  });
+  cabecalho(we, COLS3.length, 'BACKUP - CICLOS DE EMBARQUE', dadosE.length + ' ciclo(s) de ' + linhas.length + ' colaborador(es)');
+  tabela(we, 6, COLS3, dadosE, function(row, n){
+    row.getCell(1).font = { name:'Arial', size:9.5, bold:true, color:{ argb:'FF1F2A18' } };
+    [2,3,8,9,10].forEach(function(ci){ row.getCell(ci).alignment = { horizontal:'center', vertical:'middle' }; });
+    if(marca[n]) row.getCell(10).font = { name:'Arial', size:9, bold:true, color:{ argb: VERDE } };
+    row.getCell(11).alignment = { vertical:'middle', wrapText:true };
+  });
+  we.views = [{ state:'frozen', ySplit:6, xSplit:1, showGridLines:false }];
+  ajustarLarguras(we, COLS3, 6, [24, 9, 7, 16, 11, 11, 11, 8, 8, 8, 18], [42, 12, 22, 30, 12, 12, 12, 9, 9, 9, 50]);
+
+  return wb.xlsx.writeBuffer();
 }
 function toggleTree(el){ el.classList.toggle('closed'); }
 
@@ -2740,14 +3136,19 @@ function salvarColab(){
   loading(true);
   var p;
   if(state.editId){
-    p = api('emb_colaboradores?id=eq.'+state.editId, {method:'PATCH', body:payload});
+    var antesC = byId(state.editId), dif = histDiff(antesC, payload), idAlt = state.editId;
+    p = api('emb_colaboradores?id=eq.'+state.editId, {method:'PATCH', body:payload})
+      .then(function(){ if(dif.n) return registrarHist(idAlt, payload.nome, 'Cadastro alterado', dif.texto, dif.antes, dif.depois); });
   } else {
     p = api('emb_colaboradores', {method:'POST', body:payload, prefer:'return=representation'})
       .then(function(rows){
+        var novo = rows && rows[0];
+        if(novo) registrarHist(novo.id, payload.nome, 'Colaborador incluído', 'CC '+histValor(payload.cc)+' • '+histValor(payload.funcao)+' • escala '+payload.escala, null, payload);
         var emb=$('c-priemb').value;
-        if(emb && rows && rows[0]){
+        if(emb && novo){
           var ciclo=calcCiclo(emb,N,M);
-          return api('emb_embarques', {method:'POST', body:{ colaborador_id:rows[0].id, data_embarque:emb, data_desembarque:ciclo.des, data_reembarque:ciclo.reemb, observacao:'1º embarque' }});
+          return api('emb_embarques', {method:'POST', body:{ colaborador_id:novo.id, data_embarque:emb, data_desembarque:ciclo.des, data_reembarque:ciclo.reemb, observacao:'1º embarque' }})
+            .then(function(){ return registrarHist(novo.id, payload.nome, 'Embarque registrado', textoCiclo(emb, ciclo.des, ciclo.reemb)+' • 1º embarque', null, {data_embarque:emb, data_desembarque:ciclo.des, data_reembarque:ciclo.reemb}); });
         }
       });
   }
@@ -2763,10 +3164,186 @@ function excluirColab(){
   confirmDlg('Confirma a exclusão do colaborador <b>'+esc(c.nome)+'</b>?<br><br>Todos os embarques dele também serão excluídos.', function(){
     loading(true);
     api('emb_colaboradores?id=eq.'+c.id, {method:'DELETE'})
-      .then(function(){ state.sel=null; toast('Registro excluído com sucesso'); return load(); })
+      .then(function(){ registrarHist(c.id, c.nome, 'Colaborador excluído', 'CC '+histValor(c.cc)+' • '+histValor(c.funcao)+' • '+(c.embarques||[]).length+' ciclo(s) de embarque excluído(s) junto', c, null); state.sel=null; toast('Registro excluído com sucesso'); return load(); })
       .catch(function(err){ loading(false); toast('Erro ao excluir: '+err.message, true); });
   });
 }
+
+
+/* ================= HISTÓRICO DE ALTERAÇÕES (tabela emb_historico) ================= */
+var HIST_ROTULOS = { matricula:'Matrícula', nome:'Nome', cpf:'CPF', funcao:'Função', telefone:'Telefone', turma:'Turma', cc:'CC', back:'Back',
+  observacoes:'Observação', escala:'Escala', dias_embarcado:'Dias embarcado', dias_folga:'Dias de folga', precisa_rota:'Precisa de rota',
+  cep:'CEP', logradouro:'Logradouro', numero:'Número', complemento:'Complemento', bairro:'Bairro', municipio:'Município', uf:'UF',
+  nao_embarcou:'Não embarcou', sit_folha:'Sit. folha', data_embarque:'Embarque', data_desembarque:'Desembarque', data_reembarque:'Reembarque', observacao:'Observação do ciclo' };
+function histUsuario(){ return (typeof EMB_CFG !== 'undefined' && EMB_CFG && (EMB_CFG.nome || EMB_CFG.usuario)) || 'Link externo'; }
+function histOrigem(){ return (typeof EMB_CFG !== 'undefined' && EMB_CFG) ? 'Portal' : 'Link externo'; }
+function histValor(v){
+  if(v === null || v === undefined || v === '') return '—';
+  if(typeof v === 'boolean') return v ? 'Sim' : 'Não';
+  if(/^\d{4}-\d{2}-\d{2}$/.test(String(v))) return fmtBR(String(v));
+  return String(v);
+}
+function histDiff(antes, depois){
+  var m = [], a = {}, d = {};
+  Object.keys(depois || {}).forEach(function(k){
+    if(k === 'colaborador_id') return;
+    var x = antes ? antes[k] : undefined, y = depois[k];
+    var nx = (x === undefined || x === '') ? null : x, ny = (y === undefined || y === '') ? null : y;
+    if(String(nx) !== String(ny)){ m.push((HIST_ROTULOS[k] || k) + ': ' + histValor(nx) + ' → ' + histValor(ny)); a[k] = nx; d[k] = ny; }
+  });
+  return { texto: m.join(' • '), antes: a, depois: d, n: m.length };
+}
+function registrarHist(colabId, nome, acao, detalhe, antes, depois){
+  var body = { colaborador_id: colabId || null, colaborador_nome: nome || null, acao: acao, detalhe: detalhe || null,
+               antes: antes || null, depois: depois || null, usuario: histUsuario(), origem: histOrigem() };
+  return api('emb_historico', { method:'POST', body: body })
+    .catch(function(err){ console.warn('Histórico não registrado (rode o embarque_historico.sql no Supabase):', err.message); });
+}
+
+/* ================= JANELA: HISTÓRICO DO COLABORADOR (clique no nome) ================= */
+function abrirHistColab(id, silencioso){
+  var c = byId(id); if(!c) return;
+  state.hcId = id;
+  var si = statusInfo(c), st = ST[si.code];
+  $('hc-head').innerHTML =
+      '<div class="hc-av">' + esc(String(c.nome || '?').split(' ').slice(0,2).map(function(p){ return p[0] || ''; }).join('')) + '</div>'
+    + '<div class="hc-id"><div class="hc-nome">' + esc(c.nome) + '</div>'
+    + '<div class="hc-meta">' + [c.matricula ? 'Matrícula ' + esc(c.matricula) : '', c.cc ? 'CC ' + esc(c.cc) : '', esc(c.funcao || ''), c.turma ? 'Turma ' + esc(c.turma) : '', 'Escala ' + esc(c.escala || (c.dias_embarcado + 'x' + c.dias_folga))].filter(Boolean).join(' &nbsp;•&nbsp; ') + '</div></div>'
+    + '<div class="hc-st"><span class="badge pill-st" style="--c:' + st.hex + ';">' + st.label + '</span><div class="hc-det">' + esc(si.detalhe) + '</div></div>';
+  var pode = state.editMode;
+  var ciclos = (c.embarques || []).map(function(e, i){
+    return '<tr' + (i === 0 ? ' class="atual"' : '') + '><td>' + (i === 0 ? '<span class="hc-tag">atual</span>' : '') + fmtBR(e.data_embarque) + '</td><td>' + fmtBR(e.data_desembarque) + '</td><td>' + fmtBR(e.data_reembarque) + '</td><td class="hc-obs">' + esc(e.observacao || '') + '</td>'
+      + '<td class="hc-acts">' + (pode ? '<button type="button" class="ic-btn" title="Alterar datas" onclick="editarEmb(\'' + e.id + '\')">&#9998;</button><button type="button" class="ic-btn del" title="Excluir ciclo" onclick="excluirEmb(\'' + e.id + '\')">&#10005;</button>' : '') + '</td></tr>';
+  }).join('');
+  $('hc-ciclos').innerHTML = '<table class="hc-tab"><thead><tr><th>Embarque</th><th>Desembarque</th><th>Reembarque</th><th>Observação</th><th></th></tr></thead><tbody>'
+    + (ciclos || '<tr><td colspan="5" class="hc-vazio">Nenhum embarque registrado</td></tr>') + '</tbody></table>';
+  $('hc-n-ciclos').textContent = (c.embarques || []).length;
+  $('hc-reg').style.display = pode ? '' : 'none';
+  if(!silencioso) $('hc-alt').innerHTML = '<div class="hc-vazio">Carregando alterações…</div>';
+  if(!$('dlg-histc').classList.contains('open')) openDlg('dlg-histc');
+  api('emb_historico?colaborador_id=eq.' + encodeURIComponent(id) + '&select=*&order=created_at.desc&limit=300')
+    .then(function(lista){
+      if(state.hcId !== id) return;
+      lista = lista || [];
+      $('hc-n-alt').textContent = lista.length;
+      $('hc-alt').innerHTML = lista.length ? lista.map(function(h){
+        var d = new Date(h.created_at);
+        var quando = String(d.getDate()).padStart(2,'0') + '/' + String(d.getMonth()+1).padStart(2,'0') + '/' + d.getFullYear() + ' ' + String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+        var cor = /exclu/i.test(h.acao) ? '#d9433b' : /inclu|registrad/i.test(h.acao) ? '#2e9e44' : /embarque/i.test(h.acao) ? '#2563eb' : '#e5a800';
+        return '<div class="hc-ev" style="--c:' + cor + ';"><div class="hc-ev-dot"></div><div class="hc-ev-c">'
+          + '<div class="hc-ev-top"><b>' + esc(h.acao) + '</b><span>' + quando + '</span></div>'
+          + (h.detalhe ? '<div class="hc-ev-det">' + esc(h.detalhe) + '</div>' : '')
+          + '<div class="hc-ev-por">por <b>' + esc(h.usuario || '—') + '</b>' + (h.origem && h.origem !== h.usuario ? ' · pelo ' + esc(h.origem) : '') + '</div></div></div>';
+      }).join('') : '<div class="hc-vazio">Nenhuma alteração registrada ainda. A partir de agora, toda mudança neste colaborador aparece aqui.</div>';
+    })
+    .catch(function(){
+      $('hc-n-alt').textContent = '';
+      $('hc-alt').innerHTML = '<div class="hc-vazio">Não foi possível carregar as alterações. Confira se o arquivo <b>embarque_historico.sql</b> já foi rodado no Supabase.</div>';
+    });
+}
+function hcRegistrarEmbarque(){ var c = byId(state.hcId); if(c) abrirDlgEmb(c, null); }
+function hcAbrirCadastro(){ if(!state.hcId) return; state.sel = state.hcId; closeDlg('dlg-histc'); openColab(state.editMode ? 'alt' : 'ver'); }
+
+/* ================= MINI CALENDÁRIO: DATA DE EMBARQUE DIRETO NA TABELA ================= */
+var MC = { colabId: null, mes: null, sel: null, campo: 'emb', manterReemb: true };
+var MC_MESES = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+function abrirMiniCal(btn, colabId, campo){
+  if(!state.editMode){ toast('Modo de edição desativado.', true); return; }
+  var c = byId(colabId); if(!c) return;
+  var e = (c.embarques && c.embarques[0]) || null;
+  MC.campo = (campo === 'des' && e) ? 'des' : 'emb';
+  MC.manterReemb = true;
+  MC.colabId = colabId;
+  var atualCampo = e ? (MC.campo === 'des' ? e.data_desembarque : e.data_embarque) : null;
+  MC.sel = (atualCampo && atualCampo >= '2000-01-01') ? atualCampo : null;
+  var base = MC.sel || hoje();
+  MC.mes = base.slice(0,7);
+  desenhaMiniCal();
+  var pop = $('mini-cal'), r = btn.getBoundingClientRect();
+  pop.classList.add('open');
+  var w = pop.offsetWidth, h = pop.offsetHeight;
+  var left = Math.min(Math.max(8, r.left - w / 2 + r.width / 2), window.innerWidth - w - 8);
+  var top = r.bottom + 6; if(top + h > window.innerHeight - 8) top = Math.max(8, r.top - h - 6);
+  pop.style.left = left + 'px'; pop.style.top = top + 'px';
+}
+function fecharMiniCal(){ $('mini-cal').classList.remove('open'); MC.colabId = null; }
+function mcMes(delta){ var p = MC.mes.split('-').map(Number), d = new Date(p[0], p[1]-1+delta, 1); MC.mes = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0'); desenhaMiniCal(); }
+function mcEscolher(iso){ MC.sel = iso; desenhaMiniCal(); }
+function desenhaMiniCal(){
+  var c = byId(MC.colabId); if(!c) return;
+  var e = (c.embarques && c.embarques[0]) || null;
+  var p = MC.mes.split('-').map(Number), ano = p[0], mes = p[1];
+  var primeiro = new Date(ano, mes-1, 1).getDay(), dias = new Date(ano, mes, 0).getDate(), h = hoje();
+  var cel = '';
+  for(var i = 0; i < primeiro; i++) cel += '<span class="mc-v"></span>';
+  for(var d = 1; d <= dias; d++){
+    var iso = ano + '-' + String(mes).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+    var marcado = e ? (MC.campo === 'des' ? e.data_desembarque : e.data_embarque) : null;
+    var noCiclo = (MC.campo === 'des' && e && iso >= e.data_embarque && iso < (MC.sel || e.data_desembarque)) ? ' faixa' : '';
+    var cls = 'mc-d' + (iso === h ? ' hoje' : '') + (iso === MC.sel ? ' sel' : '') + (iso === marcado ? ' atual' : '') + noCiclo;
+    cel += '<button type="button" class="' + cls + '" onclick="mcEscolher(\'' + iso + '\')">' + d + '</button>';
+  }
+  var prev = '', bloqueio = '';
+  var anterior = (c.embarques && c.embarques[1]) || null;
+  if(MC.campo === 'emb' && MC.sel && anterior && anterior.data_desembarque && MC.sel <= anterior.data_desembarque){
+    bloqueio = 'Esta data cai dentro do ciclo anterior (desembarque em ' + fmtBR(anterior.data_desembarque) + '). Escolha um dia depois disso ou ajuste pelo histórico.';
+  }
+  if(MC.campo === 'des' && e){
+    var novoDes = MC.sel, reembDes = novoDes ? (MC.manterReemb ? e.data_reembarque : addDays(novoDes, c.dias_folga + 1)) : null;
+    if(novoDes && novoDes < e.data_embarque) bloqueio = 'O desembarque não pode ser antes do embarque (' + fmtBR(e.data_embarque) + ').';
+    else if(novoDes && reembDes && reembDes <= novoDes) bloqueio = 'O desembarque precisa ser antes do reembarque (' + fmtBR(reembDes) + '). Desmarque "manter reembarque" para recalcular.';
+    if(novoDes){
+      var diasBordo = diffDays(e.data_embarque, novoDes) + 1, diasFolga = diffDays(novoDes, reembDes) - 1;
+      prev = '<div class="mc-prev"><div><span>Embarque</span><b>' + fmtBR(e.data_embarque) + '</b></div><div><span>Desembarque</span><b>' + fmtBR(novoDes) + '</b></div><div><span>Reembarque</span><b>' + fmtBR(reembDes) + '</b></div></div>'
+        + '<div class="mc-nota"><b>' + diasBordo + '</b> dia(s) a bordo • <b>' + Math.max(0, diasFolga) + '</b> dia(s) de folga' + (diasFolga !== c.dias_folga ? ' <span class="mc-dif">(escala: ' + c.dias_embarcado + 'x' + c.dias_folga + ')</span>' : '') + '</div>';
+    }
+    prev += '<label class="mc-chk"><input type="checkbox" ' + (MC.manterReemb ? 'checked' : '') + ' onchange="MC.manterReemb=this.checked;desenhaMiniCal()"> Manter o reembarque em ' + fmtBR(e.data_reembarque) + '</label>'
+      + (bloqueio ? '<div class="mc-aviso">' + bloqueio + '</div>' : '');
+  } else if(MC.sel){
+    var ciclo = calcCiclo(MC.sel, c.dias_embarcado, c.dias_folga);
+    prev = '<div class="mc-prev"><div><span>Embarque</span><b>' + fmtBR(MC.sel) + '</b></div><div><span>Desembarque</span><b>' + fmtBR(ciclo.des) + '</b></div><div><span>Reembarque</span><b>' + fmtBR(ciclo.reemb) + '</b></div></div>'
+      + '<div class="mc-nota">Escala ' + c.dias_embarcado + 'x' + c.dias_folga + (e ? ' • altera o ciclo atual' : ' • cria o primeiro ciclo') + '</div>'
+      + (bloqueio ? '<div class="mc-aviso">' + bloqueio + '</div>' : '');
+  }
+  $('mini-cal').innerHTML =
+      '<div class="mc-top"><div class="mc-nome" title="' + esc(c.nome) + '"><span class="mc-tipo">' + (MC.campo === 'des' ? 'Desembarque' : 'Embarque') + '</span>' + esc(c.nome) + '</div><button type="button" class="mc-x" onclick="fecharMiniCal()" aria-label="Fechar">&#10005;</button></div>'
+    + '<div class="mc-nav"><button type="button" onclick="mcMes(-1)" aria-label="Mês anterior">&#8249;</button><b>' + MC_MESES[mes-1] + ' ' + ano + '</b><button type="button" onclick="mcMes(1)" aria-label="Próximo mês">&#8250;</button></div>'
+    + '<div class="mc-sem"><span>D</span><span>S</span><span>T</span><span>Q</span><span>Q</span><span>S</span><span>S</span></div>'
+    + '<div class="mc-grid">' + cel + '</div>' + prev
+    + '<div class="mc-acts"><button type="button" class="mc-hoje" onclick="MC.mes=hoje().slice(0,7);mcEscolher(hoje())">Hoje</button><div style="flex:1"></div>'
+    + '<button type="button" class="btn" onclick="fecharMiniCal()">Cancelar</button><button type="button" class="btn primary" onclick="mcSalvar()"' + (MC.sel && !bloqueio && (!e || MC.sel !== (MC.campo === 'des' ? e.data_desembarque : e.data_embarque) || (MC.campo === 'des' && !MC.manterReemb)) ? '' : ' disabled') + '>Confirmar</button></div>';
+}
+function mcSalvar(){
+  var c = byId(MC.colabId); if(!c || !MC.sel) return;
+  var e = (c.embarques && c.embarques[0]) || null, novo = MC.sel;
+  if(MC.campo === 'des' && e){
+    var reemb = MC.manterReemb ? e.data_reembarque : addDays(novo, c.dias_folga + 1);
+    var pd = { data_desembarque: novo, data_reembarque: reemb };
+    var folga = diffDays(novo, reemb) - 1;
+    fecharMiniCal();
+    loading(true);
+    api('emb_embarques?id=eq.' + e.id, { method:'PATCH', body: pd })
+      .then(function(){ var dif = histDiff(e, pd); return registrarHist(c.id, c.nome, 'Data de desembarque alterada (calendário)', dif.texto + ' • folga de ' + folga + ' dia(s)', dif.antes, dif.depois); })
+      .then(function(){ toast('Desembarque de ' + c.nome + ' alterado para ' + fmtBR(novo)); return load(); })
+      .catch(function(err){ loading(false); toast('Erro ao salvar: ' + err.message, true); });
+    return;
+  }
+  var ciclo = calcCiclo(novo, c.dias_embarcado, c.dias_folga);
+  var payload = { data_embarque: novo, data_desembarque: ciclo.des, data_reembarque: ciclo.reemb };
+  fecharMiniCal();
+  loading(true);
+  var p = e ? api('emb_embarques?id=eq.' + e.id, { method:'PATCH', body: payload })
+              .then(function(){ var dif = histDiff(e, payload); return registrarHist(c.id, c.nome, 'Data de embarque alterada (calendário)', dif.texto, dif.antes, dif.depois); })
+            : api('emb_embarques', { method:'POST', body: Object.assign({ colaborador_id: c.id, observacao: '1º embarque' }, payload) })
+              .then(function(){ return registrarHist(c.id, c.nome, 'Embarque registrado (calendário)', textoCiclo(novo, ciclo.des, ciclo.reemb), null, payload); });
+  p.then(function(){ toast('Embarque de ' + c.nome + ' alterado para ' + fmtBR(novo)); return load(); })
+   .catch(function(err){ loading(false); toast('Erro ao salvar: ' + err.message, true); });
+}
+document.addEventListener('mousedown', function(ev){
+  var pop = $('mini-cal'); if(!pop || !pop.classList.contains('open')) return;
+  if(!pop.contains(ev.target) && !(ev.target.closest && ev.target.closest('.cal-btn'))) fecharMiniCal();
+});
+document.addEventListener('keydown', function(ev){ if(ev.key === 'Escape' && $('mini-cal') && $('mini-cal').classList.contains('open')) fecharMiniCal(); });
 
 /* ================= HISTÓRICO ================= */
 function fillHist(c, podeEditar){
@@ -2778,20 +3355,24 @@ function fillHist(c, podeEditar){
   });
   $('hist-body').innerHTML = rows || '<tr><td colspan="5" style="text-align:center;color:#999;">Nenhum embarque registrado</td></tr>';
 }
+function colabDoEmb(embId){
+  var achou = null;
+  state.colabs.forEach(function(c){ (c.embarques||[]).forEach(function(e){ if(e.id===embId) achou = {c:c, e:e}; }); });
+  return achou;
+}
+function textoCiclo(emb, des, re){ return 'Embarque '+fmtBR(emb)+' → desembarque '+fmtBR(des)+' → reembarque '+fmtBR(re); }
 function excluirEmb(id){
   confirmDlg('Confirma a exclusão deste ciclo de embarque?', function(){
+    var ce = colabDoEmb(id);
     loading(true);
     api('emb_embarques?id=eq.'+id, {method:'DELETE'})
-      .then(function(){ toast('Ciclo excluído'); return load(); })
+      .then(function(){ if(ce) registrarHist(ce.c.id, ce.c.nome, 'Ciclo de embarque excluído', textoCiclo(ce.e.data_embarque, ce.e.data_desembarque, ce.e.data_reembarque), ce.e, null); toast('Ciclo excluído'); return load(); })
       .catch(function(err){ loading(false); toast('Erro ao excluir: '+err.message, true); });
   });
 }
 function editarEmb(id){
-  var c = byId(state.histOpenId); if(!c) return;
-  var e = null;
-  (c.embarques||[]).forEach(function(x){ if(x.id===id) e=x; });
-  if(!e) return;
-  abrirDlgEmb(c, e);
+  var ce = colabDoEmb(id); if(!ce) return;
+  abrirDlgEmb(ce.c, ce.e);
 }
 
 /* ================= DIÁLOGO EMBARQUE ================= */
@@ -2853,13 +3434,20 @@ function salvarEmb(){
   console.log('salvarEmb - Payload:', payload);
   loading(true);
   var p;
+  var cH = state.embColab;
   if(state.embEditId){
     console.log('Atualizando embarque ID:', state.embEditId);
-    p = api('emb_embarques?id=eq.'+state.embEditId, {method:'PATCH', body:payload});
+    var ceA = colabDoEmb(state.embEditId), eA = ceA ? ceA.e : null;
+    p = api('emb_embarques?id=eq.'+state.embEditId, {method:'PATCH', body:payload})
+      .then(function(){
+        var dif = histDiff(eA, payload);
+        if(dif.n) return registrarHist(cH.id, cH.nome, 'Embarque alterado', dif.texto, dif.antes, dif.depois);
+      });
   } else {
     payload.colaborador_id = state.embColab.id;
     console.log('Criando novo embarque para colaborador:', state.embColab.id);
-    p = api('emb_embarques', {method:'POST', body:payload});
+    p = api('emb_embarques', {method:'POST', body:payload})
+      .then(function(){ return registrarHist(cH.id, cH.nome, 'Embarque registrado', textoCiclo(emb, des, re)+(payload.observacao ? ' • '+payload.observacao : ''), null, payload); });
   }
   p.then(function(){
       console.log('Embarque salvo com sucesso, carregando dados...');
@@ -3011,8 +3599,9 @@ function processImport(){
 
     if(!colab){
       console.log('Linha '+idx+': criando novo colaborador '+mat);
-      api('emb_colaboradores', {method:'POST', body:payload})
+      api('emb_colaboradores', {method:'POST', body:payload, prefer:'return=representation'})
         .then(function(res){
+          if(res && res[0]) registrarHist(res[0].id, payload.nome, 'Colaborador incluído pela importação', 'Matrícula '+histValor(payload.matricula), null, payload);
           updated++;
           console.log('✓ Inserido novo: '+mat);
           processNext(idx+1);
@@ -3025,8 +3614,10 @@ function processImport(){
         });
     } else {
       console.log('Atualizando '+mat+' :', payload);
+      var difImp = histDiff(colab, payload);
       api('emb_colaboradores?id=eq.'+colab.id, {method:'PATCH', body:payload})
         .then(function(res){
+          if(difImp.n) registrarHist(colab.id, payload.nome || colab.nome, 'Cadastro atualizado pela importação', difImp.texto, difImp.antes, difImp.depois);
           updated++;
           console.log('✓ Atualizado: '+mat);
           processNext(idx+1);
@@ -4907,7 +5498,7 @@ document.addEventListener('keydown', function(ev){ if(ev.key==='Escape' && $('dl
 var ABAS = { lista:[], ativa:null, seq:0, trocando:false };
 var VIEW_INFO = {
   home:      { ico:'🏠', tit:'Início' },
-  browse:    { ico:'⚓', tit:'Controle de Embarque' },
+  browse:    { ico:'🚌', tit:'Controle de Embarque' },
   relatorio: { ico:'📄', tit:'Relatório de Embarques' },
   dashboard: { ico:'📊', tit:'Análise de Embarques' },
   docs:      { ico:'📋', tit:'Controle de Documentos' },
