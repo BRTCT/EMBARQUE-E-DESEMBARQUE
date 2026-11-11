@@ -1356,6 +1356,38 @@
   .nrc-c b{color:#17456e;}
   .nrc-c select,.nrc-c input{height:32px;border:1px solid #d3dae2;border-radius:7px;padding:0 8px;font-family:inherit;font-size:12.5px;}
   .nrc-c input:disabled{background:#f4f6f8;color:#aab4bf;}
+  .nr-row .nr-car{transform:none !important;color:#9fb3c7;font-size:12px;}
+  .nr-row:hover .nr-car{color:var(--azul);}
+  .nr-tab tbody tr.nr-row{animation:nrEntra .3s ease both;}
+  .nr-tab td.nr-obs{max-width:260px;overflow:hidden;text-overflow:ellipsis;font-size:12px;color:#6b7785;}
+  /* cadastro com a lista de NRs */
+  .nrc-dlg{width:min(1180px,96vw) !important;max-height:92vh;}
+  .nrc-dlg .df-body{padding:16px 20px;}
+  .nrc-sec{margin-top:18px !important;display:flex;gap:10px;align-items:baseline;}
+  .nrc-sec span{font-size:11.5px;font-weight:600;color:#8a97a6;text-transform:none;letter-spacing:0;}
+  .nrc-wrap{overflow-x:auto;margin-top:8px;}
+  .nrc-t{width:100%;border-collapse:separate;border-spacing:0 6px;}
+  .nrc-t th{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#6b7785;text-align:left;padding:0 8px;white-space:nowrap;}
+  .nrc-t td{background:#fff;padding:8px;border-top:1px solid #e3e8ee;border-bottom:1px solid #e3e8ee;vertical-align:middle;font-size:12.5px;white-space:nowrap;transition:background .3s;}
+  .nrc-t td:first-child{border-left:1px solid #e3e8ee;border-radius:10px 0 0 10px;}
+  .nrc-t td:last-child{border-right:1px solid #e3e8ee;border-radius:0 10px 10px 0;}
+  .nrc-t.anim tbody tr{animation:nrEntra .3s ease both;}
+  .nrc-t tr.off td{background:#f7f8fa;color:#9aa6b2;}
+  .nrc-t tr.pisca td{background:#eef6ff;}
+  .nrc-t select,.nrc-t input{height:32px;border:1px solid #d3dae2;border-radius:8px;padding:0 8px;font-family:inherit;font-size:12.5px;color:#2b3f55;background:#fff;}
+  .nrc-t select:focus,.nrc-t input:focus{outline:none;border-color:var(--azul);box-shadow:0 0 0 3px rgba(18,114,185,.15);}
+  .nrc-t input:disabled,.nrc-t select:disabled{background:#f4f6f8;color:#aab4bf;}
+  .nrc-t input[type=date]{width:140px;}
+  .nrc-anos{display:inline-flex;align-items:center;gap:5px;}
+  .nrc-anos input{width:62px;text-align:center;font-weight:700;}
+  .nrc-anos span{font-size:12px;color:#6b7785;}
+  .nrc-curso{width:90px;font-weight:700;}
+  .nrc-venc b{color:#17456e;font-size:13px;} .nrc-venc small{display:block;font-size:10.5px;color:#9aa6b2;}
+  .nrc-dias{text-align:center;} .nrc-dias b{display:block;font-size:17px;line-height:1.1;} .nrc-dias small{font-size:10.5px;color:#8a97a6;}
+  .nrc-dias.k-OK b{color:#2e9e44;} .nrc-dias.k-V30 b{color:#e07b39;} .nrc-dias.k-VENC b{color:#d9433b;}
+  .nrc-obs{width:100%;min-width:200px;}
+  .nrc-x{width:28px;height:28px;border-radius:8px;border:0;background:#fbe1df;color:#b3261e;cursor:pointer;font-weight:700;}
+  .nrc-addb{margin-top:6px;}
   .nr-leg{display:flex;gap:5px;align-items:center;margin-right:10px;}
   .nr-leg .nrp{min-width:0;font-size:10.5px;padding:2px 7px;}
   @keyframes nrEntra{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
@@ -1633,7 +1665,7 @@
         <div>
           <div class="crumb">Controle de Documentos &gt; Crach&aacute; Cr&iacute;tico</div>
           <div class="dv-titrow"><h1>Crach&aacute; Cr&iacute;tico</h1><span class="dv-resp">Respons&aacute;vel: <b>SESMT</b></span></div>
-          <div class="nr-sub">NRs do Sistema Rainbow &middot; clique no nome do colaborador para ver os cursos, as etapas e o status de cada um</div>
+          <div class="nr-sub">NRs do Sistema Rainbow &middot; clique no colaborador para abrir o cadastro com a data de realiza&ccedil;&atilde;o e a validade de cada NR</div>
         </div>
         <div class="flex"></div>
         <div class="filters">
@@ -1653,11 +1685,9 @@
         <button type="button" class="btn primary" onclick="nrAbrirColab()">+ Incluir colaborador</button>
         <button type="button" class="btn" onclick="nrImportar()" title="Atualiza vencimentos pela planilha CONTROLE DE NR - SISTEMA RAINBOW">&#11014; Importar planilha</button>
         <button type="button" class="btn" onclick="nrExportar()">&#11015; Exportar Excel</button>
-        <button type="button" class="btn" onclick="nrExpandir(true)">Abrir todos</button>
-        <button type="button" class="btn" onclick="nrExpandir(false)">Fechar todos</button>
         <button type="button" class="btn" onclick="nrRecarregar()" title="Atualizar dados">&#8635;</button>
         <div class="flex"></div>
-        <div class="nr-leg"><span class="nrp k-VENC">Vencida</span><span class="nrp k-V30">A vencer</span><span class="nrp k-OK">Em dia</span><span class="nrp k-NA">N.A</span><span class="nrp k-SEM">&mdash; sem dados</span></div>
+        <div class="nr-leg"><span class="nrp k-VENC">Vencido</span><span class="nrp k-V30">A vencer</span><span class="nrp k-OK">V&aacute;lido</span><span class="nrp k-NA">N.A</span><span class="nrp k-SEM">&mdash; sem dados</span></div>
         <div class="dv-counts" id="nr-counts"></div>
       </div>
     </div>
@@ -5787,55 +5817,48 @@ function loadXLSX(cdnIndex){
 // Carregar XLSX apenas quando necessário
 setTimeout(function(){ loadXLSX(0); }, 2000);
 
-/* ================= CRACHÁ CRÍTICO - CURSOS (NRs do Sistema Rainbow) =================
-   Uma linha por colaborador. Clicando no nome abre, logo abaixo, a lista dos
-   cursos dele com vencimento, situação, etapas da renovação e status.
+/* ================= CRACHÁ CRÍTICO - NRs (Sistema Rainbow) =================
+   Uma linha por colaborador. Clicando no nome abre o cadastro dele com uma
+   linha por NR: data de realização + anos de validade = vencimento, a
+   situação (válido / vence em breve / vencido) e os dias que faltam.
    Tabela no banco: emb_cracha_nr (um registro por colaborador + curso). */
 var NR_PADRAO = ['NR-10','NR-11','NR-12','NR-18','NR-20','NR-35'];
-var NR_ETAPAS = [
-  ['data_solicitacao','Solicitação do treinamento','Solicitação'],
-  ['data_treinamento','Treinamento realizado','Treinamento'],
-  ['data_certificado','Certificado emitido','Certificado'],
-  ['data_envio_rainbow','Enviado no Rainbow','Envio Rainbow'],
-  ['data_aprovacao_rainbow','Aprovado no Rainbow','Aprovação Rainbow']
-];
+/* anos de validade padrão (tirados da planilha; podem ser trocados em cada colaborador) */
+var NR_ANOS = {'NR-10':2, 'NR-11':1, 'NR-12':1, 'NR-18':2, 'NR-20':3, 'NR-35':3};
+function nrAnosPadrao(curso){ return NR_ANOS[curso] || 2; }
 var NR_SIT = {
-  VENC:{l:'Vencida', hex:'#d9433b', ord:0},
-  V30: {l:'A vencer (30 dias)', hex:'#e07b39', ord:1},
-  SEM: {l:'Sem dados', hex:'#9aa6b2', ord:2},
-  OK:  {l:'Em dia', hex:'#2e9e44', ord:3},
+  VENC:{l:'Vencido', hex:'#d9433b', ord:0},
+  V30: {l:'Vence em até 30 dias', hex:'#e07b39', ord:1},
+  SEM: {l:'Sem data', hex:'#9aa6b2', ord:2},
+  OK:  {l:'Válido', hex:'#2e9e44', ord:3},
   NA:  {l:'N.A', hex:'#b3bcc6', ord:4}
 };
-var NR = { rows:null, erro:null, form:null, colForm:null,
-           ui:{ q:'', cc:'', curso:'', sit:'', abertos:{}, sort:null } };
+var NR = { rows:null, erro:null, cad:null, ui:{ q:'', cc:'', curso:'', sit:'', sort:null } };
 
 /* ---------- regras ---------- */
+function nrSomaAnos(iso, anos){
+  if(!iso || !anos) return null;
+  var p=String(iso).slice(0,10).split('-').map(Number), meses=Math.round(Number(anos)*12);
+  var alvo=new Date(Date.UTC(p[0], p[1]-1+meses, 1));
+  var ultimo=new Date(Date.UTC(alvo.getUTCFullYear(), alvo.getUTCMonth()+1, 0)).getUTCDate();
+  alvo.setUTCDate(Math.min(p[2], ultimo));
+  return alvo.toISOString().slice(0,10);
+}
 function nrSit(r){
   if(r.marcacao==='NA') return {k:'NA', l:'N.A', dias:null};
-  if(r.marcacao==='EM_DIA') return {k:'OK', l:'Em dia', dias:null};
-  if(!r.vencimento) return {k:'SEM', l:'Sem dados', dias:null};
-  var d=diffDays(hoje(), String(r.vencimento).slice(0,10));
-  if(d<0) return {k:'VENC', l:'Vencida', dias:d};
-  if(d<=30) return {k:'V30', l:'A vencer', dias:d};
-  return {k:'OK', l:'Em dia', dias:d};
+  if(r.marcacao==='EM_DIA') return {k:'OK', l:'Válido', dias:null};
+  var v=r.vencimento ? String(r.vencimento).slice(0,10) : null;
+  if(!v) return {k:'SEM', l:'Sem data', dias:null};
+  var d=diffDays(hoje(), v);
+  if(d<0) return {k:'VENC', l:'Vencido', dias:d};
+  if(d<=30) return {k:'V30', l:'Vence em breve', dias:d};
+  return {k:'OK', l:'Válido', dias:d};
 }
-function nrFeitas(r){ return NR_ETAPAS.filter(function(e){ return !!r[e[0]]; }).length; }
-/* renovação "ativa": já começou, ou o curso está vencido / a vencer / sem dados */
-function nrRenovando(r){ var k=nrSit(r).k; return nrFeitas(r)>0 || k==='VENC' || k==='V30' || k==='SEM'; }
-function nrEtapaAtual(r){
-  for(var i=0;i<NR_ETAPAS.length;i++){ if(!r[NR_ETAPAS[i][0]]) return i; }
-  return NR_ETAPAS.length;
-}
-/* status do curso: o escolhido no cadastro ou, se vazio, calculado */
-function nrStatus(r){
-  if(r.status) return normSt(r.status);
-  var s=nrSit(r), f=nrFeitas(r);
-  if(s.k==='NA') return '';
-  if(f===NR_ETAPAS.length) return 'Concluído';
-  if(f>0) return 'Em Andamento';
-  if(s.k==='VENC') return 'Atrasado';
-  if(s.k==='V30' || s.k==='SEM') return 'Pendente';
-  return 'Concluído';
+function nrDiasTexto(s){
+  if(s.dias==null) return '';
+  if(s.dias<0) return 'vencido há '+(-s.dias)+' dia'+(s.dias===-1?'':'s');
+  if(s.dias===0) return 'vence hoje';
+  return 'faltam '+s.dias+' dia'+(s.dias===1?'':'s');
 }
 function nrSitColab(cursos){
   var tem={};
@@ -5863,25 +5886,16 @@ function nrCarregar(forcar){
   }
   return busca(0).then(function(rows){
     rows.forEach(function(r){ r.colaborador=nrNome(r.colaborador); });
-    NR.rows=rows; NR.erro=null; return rows;
+    NR.rows=rows; NR.erro=null;
+    NR.semColunas = rows.length>0 && rows[0].data_realizacao===undefined;
+    return rows;
   }).catch(function(e){ NR.rows=NR.rows||[]; NR.erro=e.message||String(e); return NR.rows; });
 }
 function nrUsuario(){ try{ return (EMB_CFG && (EMB_CFG.nome||EMB_CFG.usuario)) || 'link externo'; }catch(e){ return 'link externo'; } }
-function nrSalvar(dados, id){
-  dados.atualizado_por = nrUsuario();
-  var p = id ? api('emb_cracha_nr?id=eq.'+encodeURIComponent(id), {method:'PATCH', body:dados, prefer:'return=representation'})
-             : api('emb_cracha_nr', {method:'POST', body:dados, prefer:'return=representation'});
-  return p.then(function(rows){
-    var novo=rows&&rows[0]; if(!novo) throw new Error('o banco não confirmou a gravação');
-    novo.colaborador=nrNome(novo.colaborador);
-    var i=NR.rows.findIndex(function(x){ return String(x.id)===String(novo.id); });
-    if(i>=0) NR.rows[i]=novo; else NR.rows.push(novo);
-    return novo;
-  });
-}
 function nrErroBanco(e){
   var m=String(e&&e.message||e);
   if(/emb_cracha_nr/.test(m) && /exist|schema cache|relation/i.test(m)) return 'A tabela emb_cracha_nr ainda não existe. Rode o arquivo embarque_cracha_critico.sql no Supabase.';
+  if(/data_realizacao|validade_anos/.test(m)) return 'Faltam as colunas de realização e validade. Rode o arquivo embarque_cracha_validade.sql no Supabase.';
   if(/duplicate|23505|unique/i.test(m)) return 'Esse colaborador já tem esse curso cadastrado.';
   return m;
 }
@@ -5919,7 +5933,7 @@ function nrColaboradores(){
     c.sit=nrSitColab(c.cursos);
     c.nVenc=c.cursos.filter(function(r){ return nrSit(r).k==='VENC'; }).length;
     c.nV30=c.cursos.filter(function(r){ return nrSit(r).k==='V30'; }).length;
-    c.nAnd=c.cursos.filter(function(r){ return nrStatus(r)==='Em Andamento'; }).length;
+    c.obs=c.cursos.filter(function(r){ return r.observacoes; }).map(function(r){ return r.curso+': '+r.observacoes; });
     c.porCurso={}; c.cursos.forEach(function(r){ c.porCurso[r.curso]=r; });
     return c;
   });
@@ -5965,69 +5979,28 @@ function nrCelulaCurso(r){
   if(!r) return '<span class="nrp k-NONE" title="Curso não cadastrado">·</span>';
   var s=nrSit(r), t;
   if(s.k==='NA') t='N.A'; else if(r.marcacao==='EM_DIA') t='EM DIA'; else if(s.k==='SEM') t='—'; else t=nrData(r.vencimento);
-  var and = nrStatus(r)==='Em Andamento' ? '<i class="nrp-and" title="Renovação em andamento">&#8635;</i>' : '';
-  var tip = r.curso+': '+s.l+(s.dias!=null?(s.dias<0?' há '+(-s.dias)+' dia(s)':' - faltam '+s.dias+' dia(s)'):'');
-  return '<span class="nrp '+nrSitClasse(s.k)+'" title="'+esc(tip)+'">'+t+and+'</span>';
-}
-function nrStepper(r, pode){
-  var atual=nrEtapaAtual(r), cancel=normSt(r.status)==='Cancelado';
-  return '<div class="nrs'+(cancel?' canc':'')+'">'+NR_ETAPAS.map(function(e, i){
-    var v=r[e[0]], cls=v?'on':(i===atual&&!cancel&&nrRenovando(r)?'prox':'');
-    return '<button type="button" class="nrs-p '+cls+'"'+(pode?' onclick="event.stopPropagation();nrMarcarEtapa('+r.id+','+i+')"':' disabled')
-      +' title="'+esc((i+1)+'. '+e[1]+(v?' - concluída em '+fmtBR(String(v).slice(0,10)):' - pendente')+(pode?' (clique para '+(v?'desmarcar':'marcar hoje')+')':''))+'">'
-      +(v?'&#10003;':(i+1))+'</button>'+(i<NR_ETAPAS.length-1?'<i class="nrs-l'+(r[NR_ETAPAS[i+1][0]]||v&&r[NR_ETAPAS[i+1][0]]?' on':(v?' meio':''))+'"></i>':'');
-  }).join('')+'</div>';
-}
-function nrDetalheHTML(c){
-  var pode=state.editMode;
-  var ord=c.cursos.slice().sort(function(a,b){
-    var ia=nrCursosTodos().indexOf(a.curso), ib=nrCursosTodos().indexOf(b.curso);
-    return ia-ib;
-  });
-  var h='<div class="nrd"><table class="nrd-t"><thead><tr><th>Curso</th><th>Vencimento</th><th>Situação</th><th>Etapas da renovação</th><th>Etapa atual</th><th>Status</th><th>Observações</th><th></th></tr></thead><tbody>';
-  ord.forEach(function(r, i){
-    var s=nrSit(r), at=nrEtapaAtual(r), st=nrStatus(r);
-    var venc = r.marcacao==='NA' ? 'Não se aplica' : r.marcacao==='EM_DIA' ? 'Em dia (sem data)' : (r.vencimento ? fmtBR(String(r.vencimento).slice(0,10)) : '—');
-    var dias = s.dias==null ? '' : '<small class="nrd-dias '+nrSitClasse(s.k)+'">'+(s.dias<0?'vencida há '+(-s.dias)+' dia'+(s.dias===-1?'':'s'):(s.dias===0?'vence hoje':'faltam '+s.dias+' dia'+(s.dias===1?'':'s')))+'</small>';
-    var etapaTx = s.k==='NA' ? '—' : (at>=NR_ETAPAS.length ? 'Concluídas' : (nrRenovando(r) ? NR_ETAPAS[at][1] : 'Nenhuma renovação pendente'));
-    h+='<tr style="animation-delay:'+(i*35)+'ms" onclick="nrAbrirCurso('+r.id+')" title="'+(pode?'Clique para alterar este curso':'Clique para ver o curso')+'">'
-      +'<td><span class="nrd-curso">'+esc(r.curso)+'</span></td>'
-      +'<td>'+venc+dias+'</td>'
-      +'<td><span class="nrsit '+nrSitClasse(s.k)+'"><span class="dot"></span>'+esc(s.l)+'</span></td>'
-      +'<td>'+nrStepper(r, pode)+'</td>'
-      +'<td class="nrd-et">'+esc(etapaTx)+'</td>'
-      +'<td>'+(st?badgeSt(st):'<span class="nrd-na">—</span>')+(r.status?'':'<small class="nrd-auto" title="Calculado pela situação e pelas etapas">auto</small>')+'</td>'
-      +'<td class="nrd-obs">'+esc(r.observacoes||'')+'</td>'
-      +'<td><span class="nrd-ed">'+(pode?'&#9998;':'&#128065;')+'</span></td></tr>';
-  });
-  h+='</tbody></table>';
-  if(pode){
-    h+='<div class="nrd-acoes">'
-      +'<button type="button" class="btn" onclick="event.stopPropagation();nrNovoCurso(\''+esc(c.nome).replace(/'/g,"\\'")+'\')">+ Adicionar curso</button>'
-      +'<button type="button" class="btn" onclick="event.stopPropagation();nrAbrirColab(\''+esc(c.nome).replace(/'/g,"\\'")+'\')">&#9998; Dados do colaborador</button>'
-      +'</div>';
-  }
-  return h+'</div>';
+  var tip = r.curso+': '+s.l+(r.data_realizacao?' · realizado em '+fmtBR(String(r.data_realizacao).slice(0,10)):'')+(r.validade_anos?' · validade '+String(r.validade_anos).replace('.',',')+' ano(s)':'')+(s.dias!=null?' · '+nrDiasTexto(s):'');
+  return '<span class="nrp '+nrSitClasse(s.k)+'" title="'+esc(tip)+'">'+t+'</span>';
 }
 function nrRender(){
   var ui=NR.ui, cursos=nrCursosTodos();
-  var ncol=5+cursos.length+1;
+  var ncol=4+cursos.length+2;
   var seta=function(k){ return ui.sort&&ui.sort.k===k ? (ui.sort.dir===1?'▲':'▼') : ''; };
   $('nr-head').innerHTML='<tr><th style="width:34px;"></th>'
     +[['nome','Colaborador'],['cargo','Cargo'],['cc','CC']].map(function(c){ return '<th class="srt" onclick="nrOrdenar(\''+c[0]+'\')">'+c[1]+' <span class="srt-i">'+seta(c[0])+'</span></th>'; }).join('')
     +cursos.map(function(c){ return '<th class="srt nr-thc'+(ui.curso===c?' on':'')+'" onclick="nrOrdenar(\'c:'+esc(c)+'\')">'+esc(c)+' <span class="srt-i">'+seta('c:'+c)+'</span></th>'; }).join('')
     +'<th class="srt" onclick="nrOrdenar(\'sit\')">Situação <span class="srt-i">'+seta('sit')+'</span></th>'
-    +'<th>Renovação</th></tr>';
+    +'<th>Observações</th></tr>';
   var av=$('nr-aviso');
-  if(NR.erro){ av.innerHTML='<b>Não foi possível ler os cursos do banco.</b> '+esc(nrErroBanco(NR.erro)); av.style.display='block'; } else av.style.display='none';
+  if(NR.erro){ av.innerHTML='<b>Não foi possível ler os cursos do banco.</b> '+esc(nrErroBanco(NR.erro)); av.style.display='block'; }
+  else if(NR.semColunas){ av.innerHTML='<b>Atualização do banco pendente.</b> Rode o arquivo <b>embarque_cracha_validade.sql</b> no SQL Editor do Supabase e clique em &#8635;. Até lá, a data de realização e os anos de validade não são gravados.'; av.style.display='block'; }
+  else av.style.display='none';
   $('nr-limpar').style.display = (ui.q||ui.cc||ui.curso||ui.sit||ui.sort) ? '' : 'none';
   if(!NR.rows){ $('nr-grid').innerHTML='<tr><td colspan="'+ncol+'" class="dv-vazio">Carregando...</td></tr>'; $('nr-resumo').innerHTML=''; return; }
   var todos=nrColaboradores();
-  /* resumo (mesmos indicadores da planilha) */
   var base=todos.filter(function(c){ return (!ui.cc||c.cc===ui.cc); });
-  var nVencCol=base.filter(function(c){ return c.nVenc; }).length;
-  var nVenc=0, nV30=0, nAnd=0, nSem=0;
-  base.forEach(function(c){ nVenc+=c.nVenc; nV30+=c.nV30; nAnd+=c.nAnd; if(c.sit==='SEM') nSem++; });
+  var nVencCol=base.filter(function(c){ return c.nVenc; }).length, nVenc=0, nV30=0, nSem=0, nOk=0;
+  base.forEach(function(c){ nVenc+=c.nVenc; nV30+=c.nV30; if(c.sit==='SEM') nSem++; if(c.sit==='OK') nOk++; });
   var kpi=function(k, tit, val, sub, cor){
     return '<button type="button" class="nrk'+(ui.sit===k?' on':'')+'" style="--c:'+cor+'" onclick="nrChip(\''+k+'\')"><span class="nrk-v">'+val+'</span><span class="nrk-t">'+tit+'</span>'+(sub?'<span class="nrk-s">'+sub+'</span>':'')+'</button>';
   };
@@ -6035,9 +6008,8 @@ function nrRender(){
     '<div class="nrk tot"><span class="nrk-v">'+base.length+'</span><span class="nrk-t">Total de colaboradores</span></div>'
     + kpi('VENC','Colaboradores com NR vencida', nVencCol, nVenc+' NR'+(nVenc===1?'':'s')+' vencida'+(nVenc===1?'':'s')+' no total', '#d9433b')
     + kpi('V30','NRs a vencer (30 dias)', nV30, 'renovar antes de vencer', '#e07b39')
-    + '<div class="nrk" style="--c:#1272b9"><span class="nrk-v">'+nAnd+'</span><span class="nrk-t">Renovações em andamento</span><span class="nrk-s">cursos com etapas iniciadas</span></div>'
-    + kpi('SEM','Sem dados', nSem, 'nenhum curso informado', '#9aa6b2');
-  /* lista */
+    + kpi('OK','Colaboradores com tudo válido', nOk, 'nenhuma NR vencida ou a vencer', '#2e9e44')
+    + kpi('SEM','Sem dados', nSem, 'nenhuma data informada', '#9aa6b2');
   var lista=todos.filter(nrPassa);
   if(ui.sort){
     var k=ui.sort.k, d=ui.sort.dir;
@@ -6045,223 +6017,136 @@ function nrRender(){
       var x, y;
       if(k==='sit'){ x=NR_SIT[a.sit].ord; y=NR_SIT[b.sit].ord; }
       else if(k.indexOf('c:')===0){
-        var ca=a.porCurso[k.slice(2)], cb=b.porCurso[k.slice(2)];
         var v=function(r){ if(!r) return '9999'; var s=nrSit(r); return s.k==='NA'?'9998':(s.k==='SEM'?'9997':(r.marcacao==='EM_DIA'?'9996':String(r.vencimento))); };
-        x=v(ca); y=v(cb);
+        x=v(a.porCurso[k.slice(2)]); y=v(b.porCurso[k.slice(2)]);
       } else { x=a[k]||''; y=b[k]||''; }
       if(x<y) return -d; if(x>y) return d; return a.nome.localeCompare(b.nome,'pt-BR');
     });
   }
   var html='';
-  lista.forEach(function(c){
-    var aberto=!!ui.abertos[c.nome], s=NR_SIT[c.sit];
-    var prog = c.nAnd ? '<span class="nr-and">&#8635; '+c.nAnd+' em andamento</span>' : '';
-    html+='<tr class="drow nr-row'+(aberto?' aberto':'')+'" data-nome="'+esc(c.nome)+'" onclick="nrToggle(this.getAttribute(\'data-nome\'))">'
-      +'<td><span class="nr-car">&#9656;</span></td>'
-      +'<td class="nm"><span class="nr-nome">'+esc(c.nome)+'</span><span class="nr-qtd">'+c.cursos.length+' curso'+(c.cursos.length===1?'':'s')+'</span></td>'
+  lista.forEach(function(c, i){
+    html+='<tr class="drow nr-row" style="animation-delay:'+Math.min(i,20)*12+'ms" data-nome="'+esc(c.nome)+'" onclick="nrAbrirCadastro(this.getAttribute(\'data-nome\'))" title="Clique para abrir o cadastro de NRs">'
+      +'<td><span class="nr-car">&#9998;</span></td>'
+      +'<td class="nm"><span class="nr-nome">'+esc(c.nome)+'</span></td>'
       +'<td class="nr-cargo" title="'+esc(c.cargo||'')+'">'+esc(c.cargo||'—')+'</td><td>'+esc(c.cc||'—')+'</td>'
       +cursos.map(function(cu){ return '<td class="nr-tdc">'+nrCelulaCurso(c.porCurso[cu])+'</td>'; }).join('')
-      +'<td><span class="nrsit '+nrSitClasse(c.sit)+'"><span class="dot"></span>'+(c.sit==='VENC'?'Vencida':c.sit==='V30'?'A vencer':c.sit==='OK'?'Em dia':c.sit==='SEM'?'Sem dados':'N.A')+'</span></td>'
-      +'<td>'+prog+'</td></tr>';
-    if(aberto) html+='<tr class="nr-det"><td colspan="'+ncol+'">'+nrDetalheHTML(c)+'</td></tr>';
+      +'<td><span class="nrsit '+nrSitClasse(c.sit)+'"><span class="dot"></span>'+{VENC:'Vencida',V30:'A vencer',OK:'Válido',SEM:'Sem dados',NA:'N.A'}[c.sit]+'</span></td>'
+      +'<td class="nr-obs" title="'+esc(c.obs.join('\n'))+'">'+esc(c.obs.join(' · '))+'</td></tr>';
   });
   if(!lista.length) html='<tr><td colspan="'+ncol+'" class="dv-vazio">'+(todos.length?'Nenhum colaborador com esses filtros.':'Nenhum curso cadastrado. Use <b>Importar planilha</b> ou <b>Incluir colaborador</b>.')+'</td></tr>';
   $('nr-grid').innerHTML=html;
   $('nr-counts').textContent='Mostrando '+lista.length+' de '+todos.length+' colaboradores';
 }
-function nrToggle(nome){ if(NR.ui.abertos[nome]) delete NR.ui.abertos[nome]; else NR.ui.abertos[nome]=true; nrRender(); }
-function nrExpandir(todos){
-  NR.ui.abertos={};
-  if(todos) nrColaboradores().filter(nrPassa).forEach(function(c){ NR.ui.abertos[c.nome]=true; });
-  nrRender();
-}
 
-/* ---------- marcar etapa direto na lista ---------- */
-function nrMarcarEtapa(id, i){
-  if(!state.editMode){ toast('Ative o Modo Edição para alterar.', true); return; }
-  var r=NR.rows.find(function(x){ return String(x.id)===String(id); }); if(!r) return;
-  var k=NR_ETAPAS[i][0], dados={};
-  if(r[k]){
-    /* desmarca esta e as seguintes */
-    for(var j=i;j<NR_ETAPAS.length;j++) if(r[NR_ETAPAS[j][0]]) dados[NR_ETAPAS[j][0]]=null;
-  } else {
-    /* marca hoje esta e as anteriores que estiverem em branco */
-    for(var j2=0;j2<=i;j2++) if(!r[NR_ETAPAS[j2][0]]) dados[NR_ETAPAS[j2][0]]=hoje();
-  }
-  nrSalvar(dados, id).then(function(){ nrRender(); toast(r.colaborador+' - '+r.curso+': '+(dados[k]?'etapa "'+NR_ETAPAS[i][1]+'" concluída.':'etapa desmarcada.')); })
-    .catch(function(e){ toast('Não foi possível salvar: '+nrErroBanco(e), true); });
-}
-
-/* ---------- cadastro do curso ---------- */
-function nrAbrirCurso(id){
-  var r=NR.rows.find(function(x){ return String(x.id)===String(id); }); if(!r) return;
-  nrFormCurso(r, state.editMode ? 'alt' : 'ver');
-}
-function nrNovoCurso(nome){
-  var c=nrColaboradores().find(function(x){ return x.nome===nome; }) || {cargo:'', cc:''};
-  nrFormCurso({colaborador:nome, cargo:c.cargo, cc:c.cc, curso:''}, 'inc');
-}
-function nrFormCurso(r, modo){
-  NR.form={id:r.id||null, modo:modo, r:r};
-  var ro = modo==='ver';
-  var dis = ro ? ' disabled' : '';
-  var marc = r.marcacao==='NA' ? 'NA' : r.marcacao==='EM_DIA' ? 'EM_DIA' : 'DATA';
-  var usados=(NR.rows||[]).filter(function(x){ return x.colaborador===r.colaborador; }).map(function(x){ return x.curso; });
-  var opcoes=nrCursosTodos().filter(function(c){ return modo!=='inc' || usados.indexOf(c)<0; });
-  $('nrf-tit').textContent = modo==='inc' ? 'Adicionar curso' : (r.curso+' - '+(ro?'Visualizar':'Alterar'));
-  $('nrf-sub').textContent = r.colaborador + (r.cargo?' · '+r.cargo:'') + (r.cc?' · CC '+r.cc:'');
-  var h='<div class="fsec">Curso</div>'
-    +'<div class="ff"><label>Curso <span class="req">*</span></label>'
-    +(modo==='inc'
-      ? '<input id="nrf-curso" list="nrf-cursos" placeholder="Ex.: NR-33" oninput="this.value=this.value.toUpperCase()"><datalist id="nrf-cursos">'+opcoes.map(function(c){ return '<option value="'+esc(c)+'">'; }).join('')+'</datalist>'
-      : '<input id="nrf-curso" value="'+esc(r.curso)+'" disabled>')
-    +'</div>'
-    +'<div class="ff w2"><label>Validade</label><div class="nrf-seg">'
-      +[['DATA','Com data de vencimento'],['EM_DIA','Em dia (sem data)'],['NA','Não se aplica']].map(function(o){
-        return '<label class="nrf-op'+(marc===o[0]?' on':'')+'"><input type="radio" name="nrf-marc" value="'+o[0]+'"'+(marc===o[0]?' checked':'')+dis+' onchange="nrFormMarc()">'+o[1]+'</label>';
-      }).join('')+'</div></div>'
-    +'<div class="ff" id="nrf-venc-box"><label>Data de vencimento</label><input type="date" id="nrf-venc" value="'+esc(r.vencimento?String(r.vencimento).slice(0,10):'')+'"'+dis+' onchange="nrFormSit()"></div>'
-    +'<div class="ff w2"><label>Situação</label><div id="nrf-sit" class="nrf-sit"></div></div>'
-    +'<div class="fsec">Etapas da renovação</div>'
-    +'<div class="ff w3"><div class="etl" id="nrf-etapas">'+NR_ETAPAS.map(function(e, i){
-        var v=r[e[0]]?String(r[e[0]]).slice(0,10):'';
-        return '<div class="etl-item'+(v?' on':'')+'" id="nrf-et-'+e[0]+'">'
-          +'<button type="button" class="etl-chk" role="checkbox" aria-checked="'+(v?'true':'false')+'" onclick="nrFormEtapa(\''+e[0]+'\')"'+dis+'>&#10003;</button>'
-          +'<span class="etl-num">'+(i+1)+'</span><label class="etl-lbl" for="nrf-'+e[0]+'">'+esc(e[1])+'</label>'
-          +'<span class="etl-st">'+(v?'Concluída':'Pendente')+'</span>'
-          +'<input type="date" id="nrf-'+e[0]+'" value="'+esc(v)+'"'+dis+' onchange="nrFormEtapaData(\''+e[0]+'\')"></div>';
-      }).join('')+'</div></div>'
-    +'<div class="fsec">Status e observações</div>'
-    +'<div class="ff"><label>Status</label><select id="nrf-status"'+dis+' onchange="nrFormSit()"><option value="">Automático</option>'
-      +DOC_ST.filter(function(s){ return s.v; }).map(function(s){ return '<option'+(normSt(r.status)===s.v?' selected':'')+'>'+s.v+'</option>'; }).join('')+'</select></div>'
-    +'<div class="ff w2"><label>Status que vai aparecer</label><div id="nrf-stv" class="nrf-sit"></div></div>'
-    +'<div class="ff w3"><label>Observações</label><textarea id="nrf-obs" rows="3"'+dis+' placeholder="Ex.: treinamento agendado para 20/11">'+esc(r.observacoes||'')+'</textarea></div>'
-    +(r.updated_at?'<div class="ff w3 nrf-rod">Última alteração: '+new Date(r.updated_at).toLocaleString('pt-BR')+(r.atualizado_por?' por '+esc(r.atualizado_por):'')+'</div>':'');
-  $('nrf-body').innerHTML=h;
-  $('nrf-excluir').style.display = modo==='alt' ? '' : 'none';
-  $('nrf-renovar').style.display = modo==='alt' ? '' : 'none';
-  $('nrf-salvar').style.display = ro ? 'none' : '';
-  nrFormMarc();
-  openDlg('dlg-nr');
-}
-function nrFormDados(){
-  var marc=(document.querySelector('input[name="nrf-marc"]:checked')||{}).value||'DATA';
-  var d={ marcacao: marc==='DATA'?null:marc, vencimento: marc==='DATA' ? ($('nrf-venc').value||null) : null,
-          status: $('nrf-status').value||null, observacoes: $('nrf-obs').value.trim()||null };
-  NR_ETAPAS.forEach(function(e){ d[e[0]]=$('nrf-'+e[0]).value||null; });
-  return d;
-}
-function nrFormMarc(){
-  var marc=(document.querySelector('input[name="nrf-marc"]:checked')||{}).value||'DATA';
-  document.querySelectorAll('#nrf-body .nrf-op').forEach(function(l){ l.classList.toggle('on', l.querySelector('input').checked); });
-  $('nrf-venc-box').style.opacity = marc==='DATA' ? '1' : '.4';
-  $('nrf-venc').disabled = marc!=='DATA' || NR.form.modo==='ver';
-  nrFormSit();
-}
-function nrFormSit(){
-  var d=Object.assign({}, NR.form.r, nrFormDados()), s=nrSit(d), st=nrStatus(d);
-  $('nrf-sit').innerHTML='<span class="nrsit '+nrSitClasse(s.k)+'"><span class="dot"></span>'+esc(s.l)+'</span>'
-    +(s.dias!=null?' <small style="color:#6b7785;">'+(s.dias<0?'vencida há '+(-s.dias)+' dia(s)':'faltam '+s.dias+' dia(s)')+'</small>':'');
-  $('nrf-stv').innerHTML=(st?badgeSt(st):'—')+(d.status?'':' <small style="color:#9aa6b2;">(automático)</small>');
-}
-function nrFormEtapa(k){
-  var inp=$('nrf-'+k);
-  inp.value = inp.value ? '' : hoje();
-  nrFormEtapaData(k);
-}
-function nrFormEtapaData(k){
-  var v=$('nrf-'+k).value, it=$('nrf-et-'+k);
-  it.classList.toggle('on', !!v);
-  it.querySelector('.etl-chk').setAttribute('aria-checked', v?'true':'false');
-  it.querySelector('.etl-st').textContent = v?'Concluída':'Pendente';
-  nrFormSit();
-}
-function nrNovaRenovacao(){
-  NR_ETAPAS.forEach(function(e){ $('nrf-'+e[0]).value=''; nrFormEtapaData(e[0]); });
-  $('nrf-status').value=''; nrFormSit();
-  toast('Etapas limpas para uma nova renovação. Informe o novo vencimento quando sair o certificado e clique em Salvar.');
-}
-function nrSalvarCurso(){
-  var f=NR.form, d=nrFormDados();
-  if(f.modo==='inc'){
-    var curso=nrNome($('nrf-curso').value);
-    if(!curso){ toast('Informe o curso.', true); $('nrf-curso').focus(); return; }
-    if((NR.rows||[]).some(function(x){ return x.colaborador===f.r.colaborador && x.curso===curso; })){ toast('Esse colaborador já tem o curso '+curso+'.', true); return; }
-    d.curso=curso; d.colaborador=f.r.colaborador; d.cargo=f.r.cargo||null; d.cc=f.r.cc||null;
-  }
-  loading(true);
-  nrSalvar(d, f.id).then(function(){
-    closeDlg('dlg-nr'); NR.ui.abertos[f.r.colaborador]=true; nrMontarFiltros(); nrRender(); toast('Curso salvo.');
-  }).catch(function(e){ toast('Não foi possível salvar: '+nrErroBanco(e), true); }).then(function(){ loading(false); });
-}
-function nrExcluirCurso(){
-  var f=NR.form, b=$('nrf-excluir');
-  if(!b.dataset.conf){ b.dataset.conf='1'; b.textContent='Confirmar exclusão'; setTimeout(function(){ delete b.dataset.conf; b.textContent='Excluir curso'; }, 4000); return; }
-  delete b.dataset.conf; b.textContent='Excluir curso';
-  loading(true);
-  api('emb_cracha_nr?id=eq.'+encodeURIComponent(f.id), {method:'DELETE'}).then(function(){
-    NR.rows=NR.rows.filter(function(x){ return String(x.id)!==String(f.id); });
-    closeDlg('dlg-nr'); nrMontarFiltros(); nrRender(); toast('Curso excluído.');
-  }).catch(function(e){ toast('Não foi possível excluir: '+nrErroBanco(e), true); }).then(function(){ loading(false); });
-}
-
-/* ---------- cadastro do colaborador ---------- */
-function nrAbrirColab(nome){
-  if(!state.editMode){ toast('Ative o Modo Edição para incluir ou alterar.', true); return; }
+/* ---------- cadastro do colaborador (lista de NRs) ---------- */
+function nrAbrirCadastro(nome){
   var c = nome ? nrColaboradores().find(function(x){ return x.nome===nome; }) : null;
-  NR.colForm={ nome: nome||null };
-  $('nrc-tit').textContent = c ? 'Dados do colaborador' : 'Incluir colaborador';
-  $('nrc-sub').textContent = c ? 'Muda nome, cargo e CC em todos os cursos dele' : 'Informe os cursos já feitos: data de vencimento, "EM DIA" ou N.A';
-  var nomes = (state.colabs||state.colaboradores||[]).map(function(x){ return x.nome; }).filter(Boolean);
-  var h='<div class="fsec">Colaborador</div>'
-    +'<div class="ff w2"><label>Nome <span class="req">*</span></label><input id="nrc-nome" list="nrc-nomes" value="'+esc(c?c.nome:'')+'" oninput="this.value=this.value.toUpperCase()"><datalist id="nrc-nomes">'+nomes.map(function(n){ return '<option value="'+esc(String(n).toUpperCase())+'">'; }).join('')+'</datalist></div>'
-    +'<div class="ff"><label>CC</label><input id="nrc-cc" list="dl-ccs" value="'+esc(c?c.cc:'')+'"></div>'
-    +'<div class="ff w3"><label>Cargo</label><input id="nrc-cargo" value="'+esc(c?c.cargo:'')+'" oninput="this.value=this.value.toUpperCase()"></div>';
-  if(!c){
-    h+='<div class="fsec">Cursos</div><div class="ff w3"><div class="nrc-grid">'+NR_PADRAO.map(function(cu){
-      return '<div class="nrc-c"><b>'+cu+'</b><select id="nrc-m-'+cu+'" onchange="$(\'nrc-v-'+cu+'\').disabled=this.value!==\'DATA\'">'
-        +'<option value="SEM">Sem dados</option><option value="DATA">Data de vencimento</option><option value="EM_DIA">Em dia</option><option value="NA">N.A</option></select>'
-        +'<input type="date" id="nrc-v-'+cu+'" disabled></div>';
-    }).join('')+'</div></div>';
+  var pode = state.editMode;
+  var linhas;
+  if(c){
+    var ordem=nrCursosTodos();
+    linhas=c.cursos.slice().sort(function(a,b){ return ordem.indexOf(a.curso)-ordem.indexOf(b.curso); }).map(function(r){
+      return { id:r.id, curso:r.curso, padrao:NR_PADRAO.indexOf(r.curso)>=0,
+        aplica: r.marcacao==='NA'?'NA':(r.marcacao==='EM_DIA'?'EM_DIA':'SIM'),
+        realizacao: r.data_realizacao?String(r.data_realizacao).slice(0,10):'',
+        anos: r.validade_anos!=null&&r.validade_anos!==''?Number(r.validade_anos):nrAnosPadrao(r.curso),
+        vencOrig: r.vencimento?String(r.vencimento).slice(0,10):'',
+        obs: r.observacoes||'' };
+    });
+  } else {
+    linhas=NR_PADRAO.map(function(cu){ return {id:null, curso:cu, padrao:true, aplica:'SIM', realizacao:'', anos:nrAnosPadrao(cu), vencOrig:'', obs:''}; });
   }
-  $('nrc-body').innerHTML=h;
-  $('nrc-excluir').style.display = c ? '' : 'none';
+  NR.cad={ nome:c?c.nome:null, linhas:linhas, removidos:[], pode:pode };
+  $('nrc-tit').textContent = c ? c.nome : 'Incluir colaborador';
+  $('nrc-sub').textContent = c ? 'Cadastro de NRs do crachá crítico' + (pode?'':' · somente leitura (ative o Modo Edição para alterar)') : 'Preencha a data de realização de cada NR: o vencimento é calculado pelos anos de validade';
+  var dis = pode ? '' : ' disabled';
+  $('nrc-dados').innerHTML =
+    '<div class="ff w2"><label>Nome <span class="req">*</span></label><input id="nrc-nome" list="nrc-nomes" value="'+esc(c?c.nome:'')+'"'+dis+' oninput="this.value=this.value.toUpperCase()"><datalist id="nrc-nomes">'
+      +((state.colabs||[]).map(function(x){ return '<option value="'+esc(String(x.nome||'').toUpperCase())+'">'; }).join(''))+'</datalist></div>'
+    +'<div class="ff"><label>CC</label><input id="nrc-cc" list="dl-ccs" value="'+esc(c?c.cc:'')+'"'+dis+'></div>'
+    +'<div class="ff w3"><label>Cargo</label><input id="nrc-cargo" value="'+esc(c?c.cargo:'')+'"'+dis+' oninput="this.value=this.value.toUpperCase()"></div>';
+  nrCadRender(true);
+  $('nrc-excluir').style.display = c && pode ? '' : 'none';
+  $('nrc-salvar').style.display = pode ? '' : 'none';
+  $('nrc-add').style.display = pode ? '' : 'none';
   openDlg('dlg-nrcol');
 }
+function nrCadVenc(l){
+  if(l.aplica!=='SIM') return null;
+  if(l.realizacao && l.anos) return nrSomaAnos(l.realizacao, l.anos);
+  return l.realizacao ? null : (l.vencOrig || null);
+}
+function nrCadRender(primeira){
+  var cad=NR.cad, dis=cad.pode?'':' disabled';
+  var h='<table class="nrc-t'+(primeira?' anim':'')+'"><thead><tr><th>NR</th><th>Aplica?</th><th>Data de realização</th><th>Validade</th><th>Vencimento</th><th>Situação</th><th>Dias p/ vencer</th><th>Observações</th><th></th></tr></thead><tbody>';
+  cad.linhas.forEach(function(l, i){
+    var venc=nrCadVenc(l), s=nrSit({marcacao:l.aplica==='SIM'?null:l.aplica, vencimento:venc}), off=l.aplica!=='SIM';
+    h+='<tr class="'+(off?'off':'')+'" id="nrc-l-'+i+'">'
+      +'<td>'+(l.id||l.padrao ? '<span class="nrd-curso">'+esc(l.curso)+'</span>' : '<input class="nrc-curso" value="'+esc(l.curso)+'" placeholder="Ex.: NR-33" oninput="this.value=this.value.toUpperCase();NR.cad.linhas['+i+'].curso=this.value"'+dis+'>')+'</td>'
+      +'<td><select onchange="nrCadMuda('+i+',\'aplica\',this.value)"'+dis+'>'
+        +[['SIM','Sim'],['NA','N.A'],['EM_DIA','Em dia (sem data)']].map(function(o){ return '<option value="'+o[0]+'"'+(l.aplica===o[0]?' selected':'')+'>'+o[1]+'</option>'; }).join('')+'</select></td>'
+      +'<td><input type="date" value="'+esc(l.realizacao)+'" max="'+hoje()+'" onchange="nrCadMuda('+i+',\'realizacao\',this.value)"'+(off?' disabled':dis)+'></td>'
+      +'<td><div class="nrc-anos"><input type="number" min="0.5" max="10" step="0.5" value="'+esc(l.anos)+'" onchange="nrCadMuda('+i+',\'anos\',this.value)"'+(off?' disabled':dis)+'><span>ano'+(Number(l.anos)===1?'':'s')+'</span></div></td>'
+      +'<td class="nrc-venc">'+(off?'—':(venc?'<b>'+fmtBR(venc)+'</b>'+(!l.realizacao&&l.vencOrig?'<small title="Vencimento importado da planilha; informe a realização para recalcular">da planilha</small>':''):'<span class="nrd-na">informe a realização</span>'))+'</td>'
+      +'<td><span class="nrsit '+nrSitClasse(s.k)+'"><span class="dot"></span>'+esc(s.l)+'</span></td>'
+      +'<td class="nrc-dias '+nrSitClasse(s.k)+'">'+(s.dias==null?'—':(s.dias<0?'<b>'+s.dias+'</b><small>vencido há '+(-s.dias)+' dia'+(s.dias===-1?'':'s')+'</small>':'<b>'+s.dias+'</b><small>dia'+(s.dias===1?'':'s')+'</small>'))+'</td>'
+      +'<td><input class="nrc-obs" value="'+esc(l.obs)+'" placeholder="Observação" oninput="NR.cad.linhas['+i+'].obs=this.value"'+dis+'></td>'
+      +'<td>'+(cad.pode && !l.padrao ? '<button type="button" class="nrc-x" title="Remover este curso" onclick="nrCadRemove('+i+')">&#10005;</button>' : '')+'</td>'
+      +'</tr>';
+  });
+  $('nrc-body').innerHTML=h+'</tbody></table>';
+}
+function nrCadMuda(i, campo, v){
+  var l=NR.cad.linhas[i];
+  if(campo==='anos'){ v=parseFloat(String(v).replace(',','.')); if(!(v>0)) v=nrAnosPadrao(l.curso); }
+  l[campo]=v;
+  /* redesenha depois do evento (o campo que disparou ainda está em uso) */
+  setTimeout(function(){
+    nrCadRender();
+    var tr=$('nrc-l-'+i); if(tr){ tr.classList.add('pisca'); setTimeout(function(){ tr.classList.remove('pisca'); }, 700); }
+  }, 0);
+}
+function nrCadAdd(){ NR.cad.linhas.push({id:null, curso:'', padrao:false, aplica:'SIM', realizacao:'', anos:2, vencOrig:'', obs:''}); nrCadRender(); var ins=document.querySelectorAll('#nrc-body .nrc-curso'); if(ins.length) ins[ins.length-1].focus(); }
+function nrCadRemove(i){ var l=NR.cad.linhas.splice(i,1)[0]; if(l.id) NR.cad.removidos.push(l.id); nrCadRender(); }
 function nrSalvarColab(){
-  var antigo=NR.colForm.nome, nome=nrNome($('nrc-nome').value), cc=$('nrc-cc').value.trim()||null, cargo=nrNome($('nrc-cargo').value)||null;
-  if(!nome){ toast('Informe o nome.', true); return; }
+  var cad=NR.cad, antigo=cad.nome;
+  var nome=nrNome($('nrc-nome').value), cc=$('nrc-cc').value.trim()||null, cargo=nrNome($('nrc-cargo').value)||null;
+  if(!nome){ toast('Informe o nome do colaborador.', true); $('nrc-nome').focus(); return; }
+  if(nome!==antigo && (NR.rows||[]).some(function(x){ return x.colaborador===nome; })){ toast('Já existe um colaborador com esse nome no controle.', true); return; }
+  var vistos={}, erro=null;
+  cad.linhas.forEach(function(l){ l.curso=nrNome(l.curso).replace(/^NR\s?-?\s?(\d)/,'NR-$1'); if(!l.curso) erro='Informe o nome de todos os cursos adicionados.'; else if(vistos[l.curso]) erro='O curso '+l.curso+' aparece duas vezes.'; vistos[l.curso]=1; });
+  if(erro){ toast(erro, true); return; }
+  var regs=cad.linhas.map(function(l){
+    var o={colaborador:nome, cargo:cargo, cc:cc, curso:l.curso,
+      marcacao: l.aplica==='SIM'?null:l.aplica,
+      vencimento: nrCadVenc(l),
+      observacoes: (l.obs||'').trim()||null, atualizado_por:nrUsuario()};
+    if(!NR.semColunas){ o.data_realizacao = l.aplica==='SIM' ? (l.realizacao||null) : null; o.validade_anos = l.anos ? Number(l.anos) : null; }
+    return o;
+  });
   loading(true);
-  var p;
-  if(antigo){
-    if(nome!==antigo && (NR.rows||[]).some(function(x){ return x.colaborador===nome; })){ loading(false); toast('Já existe um colaborador com esse nome.', true); return; }
-    p = api('emb_cracha_nr?colaborador=eq.'+encodeURIComponent(antigo), {method:'PATCH', body:{colaborador:nome, cc:cc, cargo:cargo, atualizado_por:nrUsuario()}, prefer:'return=representation'})
-      .then(function(rows){
-        NR.rows=NR.rows.filter(function(x){ return x.colaborador!==antigo; }).concat((rows||[]).map(function(r){ r.colaborador=nrNome(r.colaborador); return r; }));
-        if(NR.ui.abertos[antigo]){ delete NR.ui.abertos[antigo]; NR.ui.abertos[nome]=true; }
-      });
-  } else {
-    if((NR.rows||[]).some(function(x){ return x.colaborador===nome; })){ loading(false); toast('Esse colaborador já está no controle. Abra a linha dele para adicionar cursos.', true); return; }
-    var novos=NR_PADRAO.map(function(cu){
-      var m=$('nrc-m-'+cu).value, v=$('nrc-v-'+cu).value||null;
-      return {colaborador:nome, cc:cc, cargo:cargo, curso:cu, marcacao:(m==='NA'||m==='EM_DIA')?m:null, vencimento:m==='DATA'?v:null, atualizado_por:nrUsuario()};
-    });
-    p = api('emb_cracha_nr', {method:'POST', body:novos, prefer:'return=representation'}).then(function(rows){
-      (rows||[]).forEach(function(r){ r.colaborador=nrNome(r.colaborador); NR.rows.push(r); });
-      NR.ui.abertos[nome]=true;
-    });
-  }
-  p.then(function(){ closeDlg('dlg-nrcol'); nrMontarFiltros(); nrRender(); toast('Colaborador salvo.'); })
-   .catch(function(e){ toast('Não foi possível salvar: '+nrErroBanco(e), true); }).then(function(){ loading(false); });
+  var p=Promise.resolve();
+  if(antigo && nome!==antigo) p=p.then(function(){ return api('emb_cracha_nr?colaborador=eq.'+encodeURIComponent(antigo), {method:'PATCH', body:{colaborador:nome}}); });
+  cad.removidos.forEach(function(id){ p=p.then(function(){ return api('emb_cracha_nr?id=eq.'+encodeURIComponent(id), {method:'DELETE'}); }); });
+  p.then(function(){ return api('emb_cracha_nr?on_conflict=colaborador,curso', {method:'POST', body:regs, prefer:'resolution=merge-duplicates,return=representation'}); })
+   .then(function(){ return nrCarregar(true); })
+   .then(function(){ closeDlg('dlg-nrcol'); nrMontarFiltros(); nrRender(); toast('Cadastro de '+nome+' salvo.'); })
+   .catch(function(e){ toast('Não foi possível salvar: '+nrErroBanco(e), true); })
+   .then(function(){ loading(false); });
 }
 function nrExcluirColab(){
-  var nome=NR.colForm.nome, b=$('nrc-excluir');
-  if(!b.dataset.conf){ b.dataset.conf='1'; b.textContent='Confirmar: excluir todos os cursos'; setTimeout(function(){ delete b.dataset.conf; b.textContent='Excluir colaborador'; }, 4000); return; }
+  var nome=NR.cad.nome, b=$('nrc-excluir');
+  if(!b.dataset.conf){ b.dataset.conf='1'; b.textContent='Confirmar: excluir todas as NRs'; setTimeout(function(){ delete b.dataset.conf; b.textContent='Excluir colaborador'; }, 4000); return; }
+  delete b.dataset.conf; b.textContent='Excluir colaborador';
   loading(true);
   api('emb_cracha_nr?colaborador=eq.'+encodeURIComponent(nome), {method:'DELETE'}).then(function(){
-    NR.rows=NR.rows.filter(function(x){ return x.colaborador!==nome; }); delete NR.ui.abertos[nome];
+    NR.rows=NR.rows.filter(function(x){ return x.colaborador!==nome; });
     closeDlg('dlg-nrcol'); nrMontarFiltros(); nrRender(); toast(nome+' saiu do controle de crachá crítico.');
   }).catch(function(e){ toast('Não foi possível excluir: '+nrErroBanco(e), true); }).then(function(){ loading(false); });
+}
+function nrAbrirColab(){
+  if(!state.editMode){ toast('Ative o Modo Edição para incluir.', true); return; }
+  nrAbrirCadastro(null);
 }
 
 /* ---------- importar a planilha (CONTROLE DE NR - SISTEMA RAINBOW) ---------- */
@@ -6298,6 +6183,7 @@ function nrLerPlanilha(wb){
   var hd=linhas[hi].map(function(c){ return String(c||'').trim().toUpperCase(); });
   var iN=hd.indexOf('NOME'), iCg=hd.indexOf('CARGO'), iCc=hd.indexOf('CC');
   var cursos=[]; hd.forEach(function(h, i){ if(/^NR[\s-]?\d+/.test(h)) cursos.push({i:i, nome:h.replace(/^NR\s?-?\s?/,'NR-')}); });
+  var atuais={}; (NR.rows||[]).forEach(function(r){ atuais[r.colaborador+'|'+r.curso]=r; });
   var regs=[];
   linhas.slice(hi+1).forEach(function(l){
     var n=nrNome(l[iN]); if(!n) return;
@@ -6312,7 +6198,11 @@ function nrLerPlanilha(wb){
         else if(t.indexOf('EM DIA')===0) marc='EM_DIA';
         else venc=nrIsoDe(v);
       }
-      regs.push({colaborador:n, cargo:cargo, cc:cc, curso:c.nome, vencimento:venc, marcacao:marc, atualizado_por:nrUsuario()});
+      var ant=atuais[n+'|'+c.nome], anos=(ant && ant.validade_anos) ? Number(ant.validade_anos) : nrAnosPadrao(c.nome);
+      var o={colaborador:n, cargo:cargo, cc:cc, curso:c.nome, vencimento:venc, marcacao:marc, atualizado_por:nrUsuario()};
+      /* a planilha traz o vencimento: a realização é o vencimento menos os anos de validade */
+      if(!NR.semColunas){ o.validade_anos=anos; o.data_realizacao = venc ? nrSomaAnos(venc, -anos) : null; }
+      regs.push(o);
     });
   });
   return regs;
@@ -6325,7 +6215,7 @@ function nrEnviarImportacao(regs, arquivo){
   var p=Promise.resolve();
   lotes.forEach(function(l){ p=p.then(function(){ return api('emb_cracha_nr?on_conflict=colaborador,curso', {method:'POST', body:l, prefer:'resolution=merge-duplicates,return=minimal', timeout:60000}); }); });
   p.then(function(){ return nrCarregar(true); })
-   .then(function(){ nrMontarFiltros(); nrRender(); toast(arquivo+': '+np+' colaboradores e '+regs.length+' cursos atualizados. Etapas, status e observações foram mantidos.'); })
+   .then(function(){ nrMontarFiltros(); nrRender(); toast(arquivo+': '+np+' colaboradores e '+regs.length+' NRs atualizadas. As observações foram mantidas.'); })
    .catch(function(e){ toast('Importação interrompida: '+nrErroBanco(e), true); })
    .then(function(){ loading(false); });
 }
@@ -6336,6 +6226,7 @@ function nrExportar(){
   loading(true);
   carregarExcelJS().then(nrMontarExcel).catch(function(e){ toast('Não foi possível gerar o Excel: '+e.message, true); }).then(function(){ loading(false); });
 }
+function nrDataExcel(iso){ var p=String(iso).slice(0,10).split('-'); return new Date(Date.UTC(+p[0],+p[1]-1,+p[2])); }
 function nrMontarExcel(){
   var cursos=nrCursosTodos(), lista=nrColaboradores().filter(nrPassa), agora=new Date();
   var wb=new ExcelJS.Workbook(); wb.creator='Parente Andrade'; wb.created=agora;
@@ -6354,56 +6245,56 @@ function nrMontarExcel(){
   }
   /* aba 1: controle (igual à planilha) */
   var ws=wb.addWorksheet('Crachá Crítico', {views:[{state:'frozen', ySplit:4, xSplit:1}]});
-  var ncol=3+cursos.length+1;
+  var ncol=3+cursos.length+2;
   cabecalho(ws, 'CRACHÁ CRÍTICO - CONTROLE DE NRs (SISTEMA RAINBOW)', ncol);
-  linhaTitulo(ws, 4, ['NOME','CARGO','CC'].concat(cursos).concat(['SITUAÇÃO']));
+  linhaTitulo(ws, 4, ['NOME','CARGO','CC'].concat(cursos).concat(['SITUAÇÃO','OBSERVAÇÕES']));
   lista.forEach(function(c, i){
     var row=ws.getRow(5+i);
     row.getCell(1).value=c.nome; row.getCell(2).value=c.cargo||''; row.getCell(3).value=c.cc?Number(c.cc)||c.cc:'';
     cursos.forEach(function(cu, j){
       var r=c.porCurso[cu], cel=row.getCell(4+j);
-      if(!r){ cel.value=''; }
-      else{
+      if(r){
         var s=nrSit(r);
         if(r.marcacao==='NA') cel.value='N.A'; else if(r.marcacao==='EM_DIA') cel.value='EM DIA';
-        else if(r.vencimento){ var p=String(r.vencimento).slice(0,10).split('-'); cel.value=new Date(Date.UTC(+p[0],+p[1]-1,+p[2])); cel.numFmt='dd/mm/yyyy'; }
+        else if(r.vencimento){ cel.value=nrDataExcel(r.vencimento); cel.numFmt='dd/mm/yyyy'; }
         cel.fill={type:'pattern',pattern:'solid',fgColor:{argb:CORES[s.k]}}; cel.font={color:{argb:TXT[s.k]},bold:s.k==='VENC'||s.k==='V30'};
       }
       cel.alignment={horizontal:'center'};
     });
-    var sc=row.getCell(ncol), k=c.sit;
+    var sc=row.getCell(ncol-1), k=c.sit;
     sc.value={VENC:'VENCIDA',V30:'A VENCER',OK:'EM DIA',SEM:'SEM DADOS',NA:'N.A'}[k];
     sc.fill={type:'pattern',pattern:'solid',fgColor:{argb:CORES[k]}}; sc.font={bold:true,color:{argb:TXT[k]}}; sc.alignment={horizontal:'center'};
+    row.getCell(ncol).value=c.obs.join(' · '); row.getCell(ncol).alignment={wrapText:true, vertical:'top'};
     row.eachCell({includeEmpty:true}, function(cel, col){ if(col<=ncol) cel.border=borda; });
   });
   ws.getColumn(1).width=40; ws.getColumn(2).width=32; ws.getColumn(3).width=8;
-  cursos.forEach(function(cu, j){ ws.getColumn(4+j).width=12; }); ws.getColumn(ncol).width=13;
+  cursos.forEach(function(cu, j){ ws.getColumn(4+j).width=12; }); ws.getColumn(ncol-1).width=13; ws.getColumn(ncol).width=40;
   ws.autoFilter={from:{row:4,column:1}, to:{row:4+lista.length, column:ncol}};
   ws.pageSetup={orientation:'landscape', fitToPage:true, fitToWidth:1, fitToHeight:0, paperSize:9};
-  /* aba 2: um curso por linha, com etapas e status */
-  var w2=wb.addWorksheet('Etapas por curso', {views:[{state:'frozen', ySplit:4}]});
-  var cab=['NOME','CARGO','CC','CURSO','VENCIMENTO','SITUAÇÃO','DIAS'].concat(NR_ETAPAS.map(function(e){ return e[2].toUpperCase(); })).concat(['ETAPA ATUAL','STATUS','OBSERVAÇÕES']);
-  cabecalho(w2, 'CRACHÁ CRÍTICO - ETAPAS E STATUS POR CURSO', cab.length);
+  /* aba 2: uma NR por linha */
+  var w2=wb.addWorksheet('NRs por colaborador', {views:[{state:'frozen', ySplit:4}]});
+  var cab=['NOME','CARGO','CC','NR','REALIZAÇÃO','VALIDADE (ANOS)','VENCIMENTO','SITUAÇÃO','DIAS P/ VENCER','OBSERVAÇÕES'];
+  cabecalho(w2, 'CRACHÁ CRÍTICO - VALIDADE DE CADA NR', cab.length);
   linhaTitulo(w2, 4, cab);
   var n=5;
   lista.forEach(function(c){
     c.cursos.slice().sort(function(a,b){ return cursos.indexOf(a.curso)-cursos.indexOf(b.curso); }).forEach(function(r){
-      var s=nrSit(r), at=nrEtapaAtual(r), row=w2.getRow(n++);
-      var vals=[c.nome, c.cargo||'', c.cc?Number(c.cc)||c.cc:'', r.curso,
+      var s=nrSit(r), row=w2.getRow(n++);
+      row.values=[c.nome, c.cargo||'', c.cc?Number(c.cc)||c.cc:'', r.curso,
+        r.marcacao==='NA'?'N.A':(r.data_realizacao?nrDataExcel(r.data_realizacao):''),
+        r.marcacao==='NA'?'':(r.validade_anos!=null?Number(r.validade_anos):nrAnosPadrao(r.curso)),
         r.marcacao==='NA'?'N.A':(r.marcacao==='EM_DIA'?'EM DIA':(r.vencimento?nrDataExcel(r.vencimento):'')),
-        s.l.toUpperCase(), s.dias==null?'':s.dias]
-        .concat(NR_ETAPAS.map(function(e){ return r[e[0]]?nrDataExcel(r[e[0]]):''; }))
-        .concat([s.k==='NA'?'—':(at>=NR_ETAPAS.length?'Concluídas':(nrRenovando(r)?NR_ETAPAS[at][1]:'Nenhuma renovação pendente')), nrStatus(r)||'—', r.observacoes||'']);
-      row.values=vals;
+        s.l.toUpperCase(), s.dias==null?'':s.dias, r.observacoes||''];
       row.eachCell({includeEmpty:true}, function(cel, col){
         if(col>cab.length) return; cel.border=borda;
         if(cel.value instanceof Date) cel.numFmt='dd/mm/yyyy';
-        if(col>=5) cel.alignment={horizontal: col===cab.length?'left':'center', wrapText: col===cab.length};
+        if(col>=4 && col<cab.length) cel.alignment={horizontal:'center'};
       });
-      var sc=row.getCell(6); sc.fill={type:'pattern',pattern:'solid',fgColor:{argb:CORES[s.k]}}; sc.font={bold:true,color:{argb:TXT[s.k]}};
+      var sc=row.getCell(8); sc.fill={type:'pattern',pattern:'solid',fgColor:{argb:CORES[s.k]}}; sc.font={bold:true,color:{argb:TXT[s.k]}};
+      row.getCell(10).alignment={wrapText:true};
     });
   });
-  [38,30,8,10,13,20,8,13,13,13,14,16,26,15,40].forEach(function(w, i){ w2.getColumn(i+1).width=w; });
+  [38,30,8,9,13,11,13,17,10,40].forEach(function(w, i){ w2.getColumn(i+1).width=w; });
   w2.autoFilter={from:{row:4,column:1}, to:{row:n-1, column:cab.length}};
   w2.pageSetup={orientation:'landscape', fitToPage:true, fitToWidth:1, fitToHeight:0, paperSize:9};
   return wb.xlsx.writeBuffer().then(function(buf){
@@ -6412,7 +6303,6 @@ function nrMontarExcel(){
     toast('Excel gerado: '+lista.length+' colaboradores.');
   });
 }
-function nrDataExcel(iso){ var p=String(iso).slice(0,10).split('-'); return new Date(Date.UTC(+p[0],+p[1]-1,+p[2])); }
 
 /* ---------- Crachá Crítico abre esta tela ---------- */
 (function(){
@@ -6423,7 +6313,7 @@ function nrDataExcel(iso){ var p=String(iso).slice(0,10).split('-'); return new 
     return orig.apply(this, arguments);
   };
   var origEsc=escondeDocs;
-  escondeDocs=function(){ origEsc.apply(this, arguments); var v=$('view-nr'); if(v) v.style.display='none'; ['dlg-nr','dlg-nrcol'].forEach(function(id){ var d=$(id); if(d) d.classList.remove('open'); }); };
+  escondeDocs=function(){ origEsc.apply(this, arguments); var v=$('view-nr'); if(v) v.style.display='none'; var d=$('dlg-nrcol'); if(d) d.classList.remove('open'); };
 })();
 
 </script>
@@ -6477,38 +6367,25 @@ function nrDataExcel(iso){ var p=String(iso).slice(0,10).split('-'); return new 
   </div>
 </div>
 <datalist id="dl-colabs"></datalist><datalist id="dl-ccs"></datalist><datalist id="dl-funcs"></datalist>
-<!-- ==================== CRACHÁ CRÍTICO: CURSO ==================== -->
-<div class="overlay" id="dlg-nr" onclick="if(event.target===this)closeDlg('dlg-nr')">
-  <div class="mdlg" role="dialog" aria-modal="true" aria-labelledby="nrf-tit" style="width:780px;">
-    <div class="mdlg-head">
-      <div><h2 id="nrf-tit"></h2><div class="mdlg-sub" id="nrf-sub"></div></div>
-      <div class="flex"></div>
-      <button type="button" class="mdlg-x" onclick="closeDlg('dlg-nr')" aria-label="Fechar">&#10005;</button>
-    </div>
-    <div class="mdlg-body df-body"><div class="fgrid" id="nrf-body"></div></div>
-    <div class="mdlg-foot">
-      <button type="button" class="mbtn danger" id="nrf-excluir" onclick="nrExcluirCurso()">Excluir curso</button>
-      <button type="button" class="mbtn renov" id="nrf-renovar" onclick="nrNovaRenovacao()">&#8635; Nova renova&ccedil;&atilde;o</button>
-      <div class="flex"></div>
-      <button type="button" class="mbtn" onclick="closeDlg('dlg-nr')">Cancelar</button>
-      <button type="button" class="mbtn pri" id="nrf-salvar" onclick="nrSalvarCurso()">Salvar</button>
-    </div>
-  </div>
-</div>
-<!-- ==================== CRACHÁ CRÍTICO: COLABORADOR ==================== -->
+<!-- ==================== CRACHÁ CRÍTICO: CADASTRO DO COLABORADOR (NRs) ==================== -->
 <div class="overlay" id="dlg-nrcol" onclick="if(event.target===this)closeDlg('dlg-nrcol')">
-  <div class="mdlg" role="dialog" aria-modal="true" aria-labelledby="nrc-tit" style="width:720px;">
+  <div class="mdlg nrc-dlg" role="dialog" aria-modal="true" aria-labelledby="nrc-tit">
     <div class="mdlg-head">
       <div><h2 id="nrc-tit"></h2><div class="mdlg-sub" id="nrc-sub"></div></div>
       <div class="flex"></div>
       <button type="button" class="mdlg-x" onclick="closeDlg('dlg-nrcol')" aria-label="Fechar">&#10005;</button>
     </div>
-    <div class="mdlg-body df-body"><div class="fgrid" id="nrc-body"></div></div>
+    <div class="mdlg-body df-body">
+      <div class="fgrid" id="nrc-dados"></div>
+      <div class="fsec nrc-sec">NRs <span>data de realiza&ccedil;&atilde;o + anos de validade = vencimento</span></div>
+      <div class="nrc-wrap" id="nrc-body"></div>
+      <button type="button" class="btn nrc-addb" id="nrc-add" onclick="nrCadAdd()">+ Adicionar outro curso</button>
+    </div>
     <div class="mdlg-foot">
       <button type="button" class="mbtn danger" id="nrc-excluir" onclick="nrExcluirColab()">Excluir colaborador</button>
       <div class="flex"></div>
-      <button type="button" class="mbtn" onclick="closeDlg('dlg-nrcol')">Cancelar</button>
-      <button type="button" class="mbtn pri" onclick="nrSalvarColab()">Salvar</button>
+      <button type="button" class="mbtn" onclick="closeDlg('dlg-nrcol')">Fechar</button>
+      <button type="button" class="mbtn pri" id="nrc-salvar" onclick="nrSalvarColab()">Salvar</button>
     </div>
   </div>
 </div>
