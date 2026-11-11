@@ -1274,6 +1274,96 @@
   .colf .cf-foot .pri:hover{transform:translateY(-1px);box-shadow:0 4px 10px rgba(59,106,31,.3);}
   .colf .cf-foot button{transition:transform .15s, box-shadow .15s, background .15s;}
   .emb-no-portal .subbar .sess{display:none !important;}
+  /* ===== Crachá Crítico: cursos por colaborador ===== */
+  .nr-sub{font-size:12px;color:#6b7785;margin-top:3px;}
+  .nr-kpis{display:grid;grid-template-columns:repeat(5,minmax(150px,1fr));gap:10px;margin:12px 14px 0;}
+  .nrk{position:relative;overflow:hidden;text-align:left;background:#fff;border:1px solid #e3e8ee;border-radius:12px;padding:11px 14px 10px;box-shadow:0 1px 3px rgba(16,40,70,.06);
+       display:flex;flex-direction:column;gap:1px;font-family:inherit;cursor:pointer;transition:transform .18s, box-shadow .18s, border-color .18s;animation:nrEntra .4s ease both;}
+  .nrk::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--c,#17456e);}
+  .nrk.tot{cursor:default;--c:#17456e;}
+  button.nrk:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(16,40,70,.12);border-color:var(--c);}
+  .nrk.on{background:var(--c);border-color:var(--c);} .nrk.on *{color:#fff !important;}
+  .nrk-v{font-size:25px;font-weight:800;color:var(--c,#17456e);line-height:1.1;}
+  .nrk-t{font-size:12px;font-weight:700;color:#2b3f55;}
+  .nrk-s{font-size:11px;color:#8a97a6;}
+  .nrk:nth-child(2){animation-delay:.04s}.nrk:nth-child(3){animation-delay:.08s}.nrk:nth-child(4){animation-delay:.12s}.nrk:nth-child(5){animation-delay:.16s}
+  @media (max-width:1100px){ .nr-kpis{grid-template-columns:repeat(3,1fr);} }
+  .nr-tab th.nr-thc{text-align:center;}
+  .nr-tab th.nr-thc.on{background:#dcebf9;}
+  .nr-tab td.nr-cargo{max-width:210px;overflow:hidden;text-overflow:ellipsis;font-size:12px;}
+  .nrd-et{white-space:normal !important;max-width:190px;}
+  .nr-tab td.nr-tdc{text-align:center;padding:7px 6px;}
+  .nr-row .nr-car{display:inline-block;color:#8a97a6;font-size:13px;transition:transform .2s ease;}
+  .nr-row.aberto .nr-car{transform:rotate(90deg);color:var(--azul);}
+  .nr-row.aberto td{background:#eef5fc;border-bottom-color:#d6e5f3;}
+  .nr-nome{color:#1f3347;transition:color .15s;} .nr-row:hover .nr-nome{color:var(--azul);text-decoration:underline;text-underline-offset:3px;}
+  .nr-qtd{margin-left:8px;font-size:11px;font-weight:600;color:#8a97a6;background:#f1f4f7;border-radius:999px;padding:1px 8px;}
+  .nrp{display:inline-flex;align-items:center;gap:3px;min-width:70px;justify-content:center;font-size:11.5px;font-weight:700;border-radius:7px;padding:3px 7px;border:1px solid transparent;}
+  .nrp.k-VENC{background:#fbe1df;color:#b3261e;border-color:#f3b7b2;}
+  .nrp.k-V30{background:#fdebd9;color:#b35a12;border-color:#f6c999;}
+  .nrp.k-OK{background:#e2f2df;color:#1e6b2d;}
+  .nrp.k-NA{background:#f1f3f5;color:#98a3ae;font-weight:600;}
+  .nrp.k-SEM{background:#fff;color:#aab4bf;border:1px dashed #cfd6dd;}
+  .nrp.k-NONE{background:transparent;color:#cfd6dd;min-width:0;}
+  .nrp-and{font-style:normal;color:#1272b9;animation:nrGira 2.4s linear infinite;display:inline-block;}
+  .nr-and{font-size:11.5px;font-weight:700;color:#1272b9;background:#e3effa;border-radius:999px;padding:3px 9px;}
+  .nrsit{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;border-radius:999px;padding:3px 10px;}
+  .nrsit .dot{width:8px;height:8px;border:0;}
+  .nrsit.k-VENC{background:#fbe1df;color:#b3261e;} .nrsit.k-VENC .dot{background:#d9433b;animation:nrPulso 1.6s ease-out infinite;}
+  .nrsit.k-V30{background:#fdebd9;color:#b35a12;} .nrsit.k-V30 .dot{background:#e07b39;}
+  .nrsit.k-OK{background:#e2f2df;color:#1e6b2d;} .nrsit.k-OK .dot{background:#2e9e44;}
+  .nrsit.k-SEM,.nrsit.k-NA{background:#f1f3f5;color:#7d8a97;} .nrsit.k-SEM .dot,.nrsit.k-NA .dot{background:#aab4bf;}
+  /* lista de cursos que abre embaixo do nome */
+  .nr-tab tr.nr-det > td{padding:0 0 0 34px !important;background:#f7fafd;border-bottom:2px solid #d6e5f3;white-space:normal;}
+  .nrd{padding:10px 14px 12px 0;animation:nrAbre .28s ease both;transform-origin:top;}
+  .nrd-t{width:100%;border-collapse:separate;border-spacing:0 5px;}
+  .nrd-t th{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#6b7785;text-align:left;padding:0 10px 2px;background:none !important;position:static !important;border:0 !important;}
+  .nrd-t tbody tr{cursor:pointer;animation:nrEntra .3s ease both;}
+  .nrd-t tbody td{background:#fff;padding:9px 10px;border-top:1px solid #e3e8ee;border-bottom:1px solid #e3e8ee;font-size:12.5px;color:#3d4a58;vertical-align:middle;transition:background .15s;}
+  .nrd-t tbody td:first-child{border-left:1px solid #e3e8ee;border-radius:10px 0 0 10px;}
+  .nrd-t tbody td:last-child{border-right:1px solid #e3e8ee;border-radius:0 10px 10px 0;}
+  .nrd-t tbody tr:hover td{background:#eef5fc;}
+  .nrd-curso{display:inline-block;font-weight:800;color:#17456e;background:#e8f0f8;border-radius:8px;padding:4px 10px;}
+  .nrd-dias{display:block;font-size:11px;font-weight:700;margin-top:2px;}
+  .nrd-dias.k-VENC{color:#b3261e;} .nrd-dias.k-V30{color:#b35a12;} .nrd-dias.k-OK{color:#5c8a3a;}
+  .nrd-et{font-weight:600;color:#2b3f55;}
+  .nrd-obs{max-width:240px;white-space:normal !important;color:#6b7785;font-size:12px;}
+  .nrd-auto{margin-left:5px;font-size:10px;color:#9aa6b2;}
+  .nrd-na{color:#aab4bf;}
+  .nrd-ed{display:inline-flex;width:28px;height:28px;border-radius:8px;align-items:center;justify-content:center;color:#1272b9;background:#e8f0f8;transition:transform .15s;}
+  .nrd-t tbody tr:hover .nrd-ed{transform:scale(1.12);}
+  .nrd-acoes{display:flex;gap:8px;margin-top:6px;}
+  /* etapas (bolinhas) */
+  .nrs{display:inline-flex;align-items:center;}
+  .nrs-p{width:24px;height:24px;border-radius:50%;border:2px solid #d3dae2;background:#fff;color:#9aa6b2;font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;
+         cursor:pointer;padding:0;font-family:inherit;transition:transform .15s, box-shadow .15s;}
+  .nrs-p:disabled{cursor:default;}
+  .nrs-p:not(:disabled):hover{transform:scale(1.15);box-shadow:0 0 0 4px rgba(18,114,185,.12);}
+  .nrs-p.on{background:#2e9e44;border-color:#2e9e44;color:#fff;}
+  .nrs-p.prox{border-color:#1272b9;color:#1272b9;animation:nrPulsoAz 1.8s ease-out infinite;}
+  .nrs-l{width:16px;height:3px;background:#e1e7ed;display:block;}
+  .nrs-l.on{background:#2e9e44;} .nrs-l.meio{background:linear-gradient(90deg,#2e9e44,#e1e7ed);}
+  .nrs.canc{opacity:.45;}
+  /* formulário */
+  .nrf-seg{display:flex;gap:6px;flex-wrap:wrap;}
+  .nrf-op{display:inline-flex;align-items:center;gap:6px;border:1.5px solid #d3dae2;border-radius:9px;padding:7px 11px;font-size:12.5px;cursor:pointer;color:#4e5d6c;transition:all .15s;}
+  .nrf-op input{accent-color:#1272b9;width:auto !important;height:auto !important;margin:0;}
+  .nrf-op.on{border-color:#1272b9;background:#e8f2fb;color:#17456e;font-weight:700;}
+  .nrf-sit{min-height:34px;display:flex;align-items:center;gap:6px;}
+  .nrf-rod{font-size:11.5px;color:#9aa6b2;}
+  .nrc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+  .nrc-c{border:1px solid #e3e8ee;border-radius:10px;padding:9px;display:flex;flex-direction:column;gap:6px;}
+  .nrc-c b{color:#17456e;}
+  .nrc-c select,.nrc-c input{height:32px;border:1px solid #d3dae2;border-radius:7px;padding:0 8px;font-family:inherit;font-size:12.5px;}
+  .nrc-c input:disabled{background:#f4f6f8;color:#aab4bf;}
+  .nr-leg{display:flex;gap:5px;align-items:center;margin-right:10px;}
+  .nr-leg .nrp{min-width:0;font-size:10.5px;padding:2px 7px;}
+  @keyframes nrEntra{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+  @keyframes nrAbre{from{opacity:0;transform:scaleY(.92);}to{opacity:1;transform:none;}}
+  @keyframes nrGira{to{transform:rotate(360deg);}}
+  @keyframes nrPulso{0%{box-shadow:0 0 0 0 rgba(217,67,59,.55);}70%{box-shadow:0 0 0 6px rgba(217,67,59,0);}100%{box-shadow:0 0 0 0 rgba(217,67,59,0);}}
+  @keyframes nrPulsoAz{0%{box-shadow:0 0 0 0 rgba(18,114,185,.45);}70%{box-shadow:0 0 0 6px rgba(18,114,185,0);}100%{box-shadow:0 0 0 0 rgba(18,114,185,0);}}
+  @media (prefers-reduced-motion: reduce){ .nrk,.nrd,.nrd-t tbody tr,.nrp-and,.nrs-p.prox,.nrsit .dot{animation:none !important;} }
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700;800&display=swap" rel="stylesheet">
@@ -1406,7 +1496,7 @@
       </div>
       <div class="home-sec">
         <h2>Controle de Documentos</h2>
-        <div class="sub">PCV, cartas de designa&ccedil;&atilde;o e crach&aacute;s cr&iacute;ticos por centro de custo</div>
+        <div class="sub">PCV, cartas de designa&ccedil;&atilde;o e crach&aacute; cr&iacute;tico (cursos NR) por centro de custo</div>
         <div class="home-links">
           <a onclick="goDocs('pcv')">PCV</a>
           <a onclick="goDocs('carta')">Carta de Designa&ccedil;&atilde;o</a>
@@ -1534,6 +1624,41 @@
         <button type="button" class="btn" onclick="recarregaDocs()" title="Atualizar dados">&#8635;</button>
         <div class="flex"></div>
         <div class="dv-counts" id="dv-counts"></div>
+      </div>
+    </div>
+
+    <!-- ===== CRACHÁ CRÍTICO: CURSOS (NRs) POR COLABORADOR ===== -->
+    <div id="view-nr" class="docv" style="display:none;flex:1;flex-direction:column;overflow:hidden;">
+      <div class="routine-bar">
+        <div>
+          <div class="crumb">Controle de Documentos &gt; Crach&aacute; Cr&iacute;tico</div>
+          <div class="dv-titrow"><h1>Crach&aacute; Cr&iacute;tico</h1><span class="dv-resp">Respons&aacute;vel: <b>SESMT</b></span></div>
+          <div class="nr-sub">NRs do Sistema Rainbow &middot; clique no nome do colaborador para ver os cursos, as etapas e o status de cada um</div>
+        </div>
+        <div class="flex"></div>
+        <div class="filters">
+          <label for="nr-cc">CC</label><select id="nr-cc" onchange="nrFiltro('cc',this.value)"></select>
+          <label for="nr-curso">Curso</label><select id="nr-curso" onchange="nrFiltro('curso',this.value)"></select>
+          <label for="nr-sit">Situa&ccedil;&atilde;o</label><select id="nr-sit" onchange="nrFiltro('sit',this.value)"></select>
+          <input id="nr-q" type="text" placeholder="&#128269; Colaborador, cargo, curso..." oninput="nrFiltro('q',this.value)">
+          <button type="button" class="btn" id="nr-limpar" onclick="nrLimpar()" style="display:none;">&#10005; Limpar filtros</button>
+        </div>
+      </div>
+      <div class="docs-aviso" id="nr-aviso" style="display:none;"></div>
+      <div class="nr-kpis" id="nr-resumo"></div>
+      <div class="dv-wrap">
+        <table class="dtab nr-tab"><thead id="nr-head"></thead><tbody id="nr-grid"></tbody></table>
+      </div>
+      <div class="dv-foot">
+        <button type="button" class="btn primary" onclick="nrAbrirColab()">+ Incluir colaborador</button>
+        <button type="button" class="btn" onclick="nrImportar()" title="Atualiza vencimentos pela planilha CONTROLE DE NR - SISTEMA RAINBOW">&#11014; Importar planilha</button>
+        <button type="button" class="btn" onclick="nrExportar()">&#11015; Exportar Excel</button>
+        <button type="button" class="btn" onclick="nrExpandir(true)">Abrir todos</button>
+        <button type="button" class="btn" onclick="nrExpandir(false)">Fechar todos</button>
+        <button type="button" class="btn" onclick="nrRecarregar()" title="Atualizar dados">&#8635;</button>
+        <div class="flex"></div>
+        <div class="nr-leg"><span class="nrp k-VENC">Vencida</span><span class="nrp k-V30">A vencer</span><span class="nrp k-OK">Em dia</span><span class="nrp k-NA">N.A</span><span class="nrp k-SEM">&mdash; sem dados</span></div>
+        <div class="dv-counts" id="nr-counts"></div>
       </div>
     </div>
 
@@ -5661,6 +5786,646 @@ function loadXLSX(cdnIndex){
 
 // Carregar XLSX apenas quando necessário
 setTimeout(function(){ loadXLSX(0); }, 2000);
+
+/* ================= CRACHÁ CRÍTICO - CURSOS (NRs do Sistema Rainbow) =================
+   Uma linha por colaborador. Clicando no nome abre, logo abaixo, a lista dos
+   cursos dele com vencimento, situação, etapas da renovação e status.
+   Tabela no banco: emb_cracha_nr (um registro por colaborador + curso). */
+var NR_PADRAO = ['NR-10','NR-11','NR-12','NR-18','NR-20','NR-35'];
+var NR_ETAPAS = [
+  ['data_solicitacao','Solicitação do treinamento','Solicitação'],
+  ['data_treinamento','Treinamento realizado','Treinamento'],
+  ['data_certificado','Certificado emitido','Certificado'],
+  ['data_envio_rainbow','Enviado no Rainbow','Envio Rainbow'],
+  ['data_aprovacao_rainbow','Aprovado no Rainbow','Aprovação Rainbow']
+];
+var NR_SIT = {
+  VENC:{l:'Vencida', hex:'#d9433b', ord:0},
+  V30: {l:'A vencer (30 dias)', hex:'#e07b39', ord:1},
+  SEM: {l:'Sem dados', hex:'#9aa6b2', ord:2},
+  OK:  {l:'Em dia', hex:'#2e9e44', ord:3},
+  NA:  {l:'N.A', hex:'#b3bcc6', ord:4}
+};
+var NR = { rows:null, erro:null, form:null, colForm:null,
+           ui:{ q:'', cc:'', curso:'', sit:'', abertos:{}, sort:null } };
+
+/* ---------- regras ---------- */
+function nrSit(r){
+  if(r.marcacao==='NA') return {k:'NA', l:'N.A', dias:null};
+  if(r.marcacao==='EM_DIA') return {k:'OK', l:'Em dia', dias:null};
+  if(!r.vencimento) return {k:'SEM', l:'Sem dados', dias:null};
+  var d=diffDays(hoje(), String(r.vencimento).slice(0,10));
+  if(d<0) return {k:'VENC', l:'Vencida', dias:d};
+  if(d<=30) return {k:'V30', l:'A vencer', dias:d};
+  return {k:'OK', l:'Em dia', dias:d};
+}
+function nrFeitas(r){ return NR_ETAPAS.filter(function(e){ return !!r[e[0]]; }).length; }
+/* renovação "ativa": já começou, ou o curso está vencido / a vencer / sem dados */
+function nrRenovando(r){ var k=nrSit(r).k; return nrFeitas(r)>0 || k==='VENC' || k==='V30' || k==='SEM'; }
+function nrEtapaAtual(r){
+  for(var i=0;i<NR_ETAPAS.length;i++){ if(!r[NR_ETAPAS[i][0]]) return i; }
+  return NR_ETAPAS.length;
+}
+/* status do curso: o escolhido no cadastro ou, se vazio, calculado */
+function nrStatus(r){
+  if(r.status) return normSt(r.status);
+  var s=nrSit(r), f=nrFeitas(r);
+  if(s.k==='NA') return '';
+  if(f===NR_ETAPAS.length) return 'Concluído';
+  if(f>0) return 'Em Andamento';
+  if(s.k==='VENC') return 'Atrasado';
+  if(s.k==='V30' || s.k==='SEM') return 'Pendente';
+  return 'Concluído';
+}
+function nrSitColab(cursos){
+  var tem={};
+  cursos.forEach(function(r){ tem[nrSit(r).k]=true; });
+  if(tem.VENC) return 'VENC';
+  if(tem.V30) return 'V30';
+  if(tem.OK) return 'OK';
+  if(tem.SEM) return 'SEM';
+  return 'NA';
+}
+function nrNome(s){ return String(s||'').replace(/\s+/g,' ').trim().toUpperCase(); }
+function nrData(iso){ if(!iso) return ''; var p=String(iso).slice(0,10).split('-'); return p[2]+'/'+p[1]+'/'+p[0].slice(2); }
+function nrSitClasse(k){ return 'k-'+k; }
+
+/* ---------- banco ---------- */
+function nrCarregar(forcar){
+  if(NR.rows && !forcar) return Promise.resolve(NR.rows);
+  var todos=[], pagina=1000;
+  function busca(ini){
+    return api('emb_cracha_nr?select=*&order=colaborador.asc,curso.asc&limit='+pagina+'&offset='+ini).then(function(rows){
+      rows=rows||[]; todos=todos.concat(rows);
+      if(rows.length===pagina) return busca(ini+pagina);
+      return todos;
+    });
+  }
+  return busca(0).then(function(rows){
+    rows.forEach(function(r){ r.colaborador=nrNome(r.colaborador); });
+    NR.rows=rows; NR.erro=null; return rows;
+  }).catch(function(e){ NR.rows=NR.rows||[]; NR.erro=e.message||String(e); return NR.rows; });
+}
+function nrUsuario(){ try{ return (EMB_CFG && (EMB_CFG.nome||EMB_CFG.usuario)) || 'link externo'; }catch(e){ return 'link externo'; } }
+function nrSalvar(dados, id){
+  dados.atualizado_por = nrUsuario();
+  var p = id ? api('emb_cracha_nr?id=eq.'+encodeURIComponent(id), {method:'PATCH', body:dados, prefer:'return=representation'})
+             : api('emb_cracha_nr', {method:'POST', body:dados, prefer:'return=representation'});
+  return p.then(function(rows){
+    var novo=rows&&rows[0]; if(!novo) throw new Error('o banco não confirmou a gravação');
+    novo.colaborador=nrNome(novo.colaborador);
+    var i=NR.rows.findIndex(function(x){ return String(x.id)===String(novo.id); });
+    if(i>=0) NR.rows[i]=novo; else NR.rows.push(novo);
+    return novo;
+  });
+}
+function nrErroBanco(e){
+  var m=String(e&&e.message||e);
+  if(/emb_cracha_nr/.test(m) && /exist|schema cache|relation/i.test(m)) return 'A tabela emb_cracha_nr ainda não existe. Rode o arquivo embarque_cracha_critico.sql no Supabase.';
+  if(/duplicate|23505|unique/i.test(m)) return 'Esse colaborador já tem esse curso cadastrado.';
+  return m;
+}
+
+/* ---------- navegação ---------- */
+function nrMostrar(){
+  escondeTodasViews();
+  var v=$('view-nr'); v.style.display='flex';
+  nrMontarFiltros(); nrRender();
+  nrCarregar().then(function(){ if(v.style.display==='flex'){ nrMontarFiltros(); nrRender(); } });
+}
+function nrRecarregar(){
+  loading(true);
+  nrCarregar(true).then(function(){ nrMontarFiltros(); nrRender(); toast('Dados atualizados.'); }).then(function(){ loading(false); });
+}
+
+/* ---------- agrupamento ---------- */
+function nrCursosTodos(){
+  var m={}; NR_PADRAO.forEach(function(c){ m[c]=1; });
+  (NR.rows||[]).forEach(function(r){ if(r.curso) m[r.curso]=1; });
+  var extras=Object.keys(m).filter(function(c){ return NR_PADRAO.indexOf(c)<0; }).sort(function(a,b){ return a.localeCompare(b,'pt-BR',{numeric:true}); });
+  return NR_PADRAO.concat(extras);
+}
+function nrColaboradores(){
+  var m={}, ordem=[];
+  (NR.rows||[]).forEach(function(r){
+    var k=r.colaborador;
+    if(!m[k]){ m[k]={nome:k, cargo:'', cc:'', cursos:[]}; ordem.push(k); }
+    m[k].cursos.push(r);
+    if(r.cargo) m[k].cargo=r.cargo;
+    if(r.cc) m[k].cc=String(r.cc);
+  });
+  return ordem.map(function(k){
+    var c=m[k];
+    c.sit=nrSitColab(c.cursos);
+    c.nVenc=c.cursos.filter(function(r){ return nrSit(r).k==='VENC'; }).length;
+    c.nV30=c.cursos.filter(function(r){ return nrSit(r).k==='V30'; }).length;
+    c.nAnd=c.cursos.filter(function(r){ return nrStatus(r)==='Em Andamento'; }).length;
+    c.porCurso={}; c.cursos.forEach(function(r){ c.porCurso[r.curso]=r; });
+    return c;
+  });
+}
+
+/* ---------- filtros ---------- */
+function nrMontarFiltros(){
+  var ui=NR.ui, ccs={};
+  (NR.rows||[]).forEach(function(r){ if(r.cc) ccs[String(r.cc)]=1; });
+  $('nr-cc').innerHTML='<option value="">Todos</option>'+Object.keys(ccs).sort(function(a,b){ return a.localeCompare(b,'pt-BR',{numeric:true}); })
+    .map(function(v){ return '<option value="'+esc(v)+'">'+esc(v)+(ccDesc(v)?' - '+esc(ccDesc(v)):'')+'</option>'; }).join('');
+  $('nr-cc').value=ui.cc;
+  $('nr-curso').innerHTML='<option value="">Todos</option>'+nrCursosTodos().map(function(c){ return '<option>'+esc(c)+'</option>'; }).join('');
+  $('nr-curso').value=ui.curso;
+  $('nr-sit').innerHTML='<option value="">Todas</option>'+['VENC','V30','OK','SEM'].map(function(k){ return '<option value="'+k+'">'+NR_SIT[k].l+'</option>'; }).join('');
+  $('nr-sit').value=ui.sit;
+  $('nr-q').value=ui.q;
+}
+function nrFiltro(k, v){ NR.ui[k]=v; nrRender(); }
+function nrLimpar(){ var u=NR.ui; u.q=''; u.cc=''; u.curso=''; u.sit=''; u.sort=null; nrMontarFiltros(); nrRender(); }
+function nrChip(k){ NR.ui.sit = NR.ui.sit===k ? '' : k; nrMontarFiltros(); nrRender(); }
+function nrOrdenar(k){
+  var u=NR.ui;
+  if(!u.sort || u.sort.k!==k) u.sort={k:k, dir:1}; else if(u.sort.dir===1) u.sort.dir=-1; else u.sort=null;
+  nrRender();
+}
+function nrPassa(c){
+  var u=NR.ui, q=u.q.trim().toUpperCase();
+  if(u.cc && c.cc!==u.cc) return false;
+  if(q && [c.nome,c.cargo,c.cc].concat(c.cursos.map(function(r){ return (r.curso||'')+' '+(r.observacoes||''); })).join(' ').toUpperCase().indexOf(q)<0) return false;
+  if(u.curso){
+    var r=c.porCurso[u.curso]; if(!r) return false;
+    if(u.sit && nrSit(r).k!==u.sit) return false;
+  } else if(u.sit){
+    if(u.sit==='OK' || u.sit==='SEM'){ if(c.sit!==u.sit) return false; }
+    else if(!c.cursos.some(function(r){ return nrSit(r).k===u.sit; })) return false;
+  }
+  return true;
+}
+
+/* ---------- tela ---------- */
+function nrCelulaCurso(r){
+  if(!r) return '<span class="nrp k-NONE" title="Curso não cadastrado">·</span>';
+  var s=nrSit(r), t;
+  if(s.k==='NA') t='N.A'; else if(r.marcacao==='EM_DIA') t='EM DIA'; else if(s.k==='SEM') t='—'; else t=nrData(r.vencimento);
+  var and = nrStatus(r)==='Em Andamento' ? '<i class="nrp-and" title="Renovação em andamento">&#8635;</i>' : '';
+  var tip = r.curso+': '+s.l+(s.dias!=null?(s.dias<0?' há '+(-s.dias)+' dia(s)':' - faltam '+s.dias+' dia(s)'):'');
+  return '<span class="nrp '+nrSitClasse(s.k)+'" title="'+esc(tip)+'">'+t+and+'</span>';
+}
+function nrStepper(r, pode){
+  var atual=nrEtapaAtual(r), cancel=normSt(r.status)==='Cancelado';
+  return '<div class="nrs'+(cancel?' canc':'')+'">'+NR_ETAPAS.map(function(e, i){
+    var v=r[e[0]], cls=v?'on':(i===atual&&!cancel&&nrRenovando(r)?'prox':'');
+    return '<button type="button" class="nrs-p '+cls+'"'+(pode?' onclick="event.stopPropagation();nrMarcarEtapa('+r.id+','+i+')"':' disabled')
+      +' title="'+esc((i+1)+'. '+e[1]+(v?' - concluída em '+fmtBR(String(v).slice(0,10)):' - pendente')+(pode?' (clique para '+(v?'desmarcar':'marcar hoje')+')':''))+'">'
+      +(v?'&#10003;':(i+1))+'</button>'+(i<NR_ETAPAS.length-1?'<i class="nrs-l'+(r[NR_ETAPAS[i+1][0]]||v&&r[NR_ETAPAS[i+1][0]]?' on':(v?' meio':''))+'"></i>':'');
+  }).join('')+'</div>';
+}
+function nrDetalheHTML(c){
+  var pode=state.editMode;
+  var ord=c.cursos.slice().sort(function(a,b){
+    var ia=nrCursosTodos().indexOf(a.curso), ib=nrCursosTodos().indexOf(b.curso);
+    return ia-ib;
+  });
+  var h='<div class="nrd"><table class="nrd-t"><thead><tr><th>Curso</th><th>Vencimento</th><th>Situação</th><th>Etapas da renovação</th><th>Etapa atual</th><th>Status</th><th>Observações</th><th></th></tr></thead><tbody>';
+  ord.forEach(function(r, i){
+    var s=nrSit(r), at=nrEtapaAtual(r), st=nrStatus(r);
+    var venc = r.marcacao==='NA' ? 'Não se aplica' : r.marcacao==='EM_DIA' ? 'Em dia (sem data)' : (r.vencimento ? fmtBR(String(r.vencimento).slice(0,10)) : '—');
+    var dias = s.dias==null ? '' : '<small class="nrd-dias '+nrSitClasse(s.k)+'">'+(s.dias<0?'vencida há '+(-s.dias)+' dia'+(s.dias===-1?'':'s'):(s.dias===0?'vence hoje':'faltam '+s.dias+' dia'+(s.dias===1?'':'s')))+'</small>';
+    var etapaTx = s.k==='NA' ? '—' : (at>=NR_ETAPAS.length ? 'Concluídas' : (nrRenovando(r) ? NR_ETAPAS[at][1] : 'Nenhuma renovação pendente'));
+    h+='<tr style="animation-delay:'+(i*35)+'ms" onclick="nrAbrirCurso('+r.id+')" title="'+(pode?'Clique para alterar este curso':'Clique para ver o curso')+'">'
+      +'<td><span class="nrd-curso">'+esc(r.curso)+'</span></td>'
+      +'<td>'+venc+dias+'</td>'
+      +'<td><span class="nrsit '+nrSitClasse(s.k)+'"><span class="dot"></span>'+esc(s.l)+'</span></td>'
+      +'<td>'+nrStepper(r, pode)+'</td>'
+      +'<td class="nrd-et">'+esc(etapaTx)+'</td>'
+      +'<td>'+(st?badgeSt(st):'<span class="nrd-na">—</span>')+(r.status?'':'<small class="nrd-auto" title="Calculado pela situação e pelas etapas">auto</small>')+'</td>'
+      +'<td class="nrd-obs">'+esc(r.observacoes||'')+'</td>'
+      +'<td><span class="nrd-ed">'+(pode?'&#9998;':'&#128065;')+'</span></td></tr>';
+  });
+  h+='</tbody></table>';
+  if(pode){
+    h+='<div class="nrd-acoes">'
+      +'<button type="button" class="btn" onclick="event.stopPropagation();nrNovoCurso(\''+esc(c.nome).replace(/'/g,"\\'")+'\')">+ Adicionar curso</button>'
+      +'<button type="button" class="btn" onclick="event.stopPropagation();nrAbrirColab(\''+esc(c.nome).replace(/'/g,"\\'")+'\')">&#9998; Dados do colaborador</button>'
+      +'</div>';
+  }
+  return h+'</div>';
+}
+function nrRender(){
+  var ui=NR.ui, cursos=nrCursosTodos();
+  var ncol=5+cursos.length+1;
+  var seta=function(k){ return ui.sort&&ui.sort.k===k ? (ui.sort.dir===1?'▲':'▼') : ''; };
+  $('nr-head').innerHTML='<tr><th style="width:34px;"></th>'
+    +[['nome','Colaborador'],['cargo','Cargo'],['cc','CC']].map(function(c){ return '<th class="srt" onclick="nrOrdenar(\''+c[0]+'\')">'+c[1]+' <span class="srt-i">'+seta(c[0])+'</span></th>'; }).join('')
+    +cursos.map(function(c){ return '<th class="srt nr-thc'+(ui.curso===c?' on':'')+'" onclick="nrOrdenar(\'c:'+esc(c)+'\')">'+esc(c)+' <span class="srt-i">'+seta('c:'+c)+'</span></th>'; }).join('')
+    +'<th class="srt" onclick="nrOrdenar(\'sit\')">Situação <span class="srt-i">'+seta('sit')+'</span></th>'
+    +'<th>Renovação</th></tr>';
+  var av=$('nr-aviso');
+  if(NR.erro){ av.innerHTML='<b>Não foi possível ler os cursos do banco.</b> '+esc(nrErroBanco(NR.erro)); av.style.display='block'; } else av.style.display='none';
+  $('nr-limpar').style.display = (ui.q||ui.cc||ui.curso||ui.sit||ui.sort) ? '' : 'none';
+  if(!NR.rows){ $('nr-grid').innerHTML='<tr><td colspan="'+ncol+'" class="dv-vazio">Carregando...</td></tr>'; $('nr-resumo').innerHTML=''; return; }
+  var todos=nrColaboradores();
+  /* resumo (mesmos indicadores da planilha) */
+  var base=todos.filter(function(c){ return (!ui.cc||c.cc===ui.cc); });
+  var nVencCol=base.filter(function(c){ return c.nVenc; }).length;
+  var nVenc=0, nV30=0, nAnd=0, nSem=0;
+  base.forEach(function(c){ nVenc+=c.nVenc; nV30+=c.nV30; nAnd+=c.nAnd; if(c.sit==='SEM') nSem++; });
+  var kpi=function(k, tit, val, sub, cor){
+    return '<button type="button" class="nrk'+(ui.sit===k?' on':'')+'" style="--c:'+cor+'" onclick="nrChip(\''+k+'\')"><span class="nrk-v">'+val+'</span><span class="nrk-t">'+tit+'</span>'+(sub?'<span class="nrk-s">'+sub+'</span>':'')+'</button>';
+  };
+  $('nr-resumo').innerHTML =
+    '<div class="nrk tot"><span class="nrk-v">'+base.length+'</span><span class="nrk-t">Total de colaboradores</span></div>'
+    + kpi('VENC','Colaboradores com NR vencida', nVencCol, nVenc+' NR'+(nVenc===1?'':'s')+' vencida'+(nVenc===1?'':'s')+' no total', '#d9433b')
+    + kpi('V30','NRs a vencer (30 dias)', nV30, 'renovar antes de vencer', '#e07b39')
+    + '<div class="nrk" style="--c:#1272b9"><span class="nrk-v">'+nAnd+'</span><span class="nrk-t">Renovações em andamento</span><span class="nrk-s">cursos com etapas iniciadas</span></div>'
+    + kpi('SEM','Sem dados', nSem, 'nenhum curso informado', '#9aa6b2');
+  /* lista */
+  var lista=todos.filter(nrPassa);
+  if(ui.sort){
+    var k=ui.sort.k, d=ui.sort.dir;
+    lista.sort(function(a,b){
+      var x, y;
+      if(k==='sit'){ x=NR_SIT[a.sit].ord; y=NR_SIT[b.sit].ord; }
+      else if(k.indexOf('c:')===0){
+        var ca=a.porCurso[k.slice(2)], cb=b.porCurso[k.slice(2)];
+        var v=function(r){ if(!r) return '9999'; var s=nrSit(r); return s.k==='NA'?'9998':(s.k==='SEM'?'9997':(r.marcacao==='EM_DIA'?'9996':String(r.vencimento))); };
+        x=v(ca); y=v(cb);
+      } else { x=a[k]||''; y=b[k]||''; }
+      if(x<y) return -d; if(x>y) return d; return a.nome.localeCompare(b.nome,'pt-BR');
+    });
+  }
+  var html='';
+  lista.forEach(function(c){
+    var aberto=!!ui.abertos[c.nome], s=NR_SIT[c.sit];
+    var prog = c.nAnd ? '<span class="nr-and">&#8635; '+c.nAnd+' em andamento</span>' : '';
+    html+='<tr class="drow nr-row'+(aberto?' aberto':'')+'" data-nome="'+esc(c.nome)+'" onclick="nrToggle(this.getAttribute(\'data-nome\'))">'
+      +'<td><span class="nr-car">&#9656;</span></td>'
+      +'<td class="nm"><span class="nr-nome">'+esc(c.nome)+'</span><span class="nr-qtd">'+c.cursos.length+' curso'+(c.cursos.length===1?'':'s')+'</span></td>'
+      +'<td class="nr-cargo" title="'+esc(c.cargo||'')+'">'+esc(c.cargo||'—')+'</td><td>'+esc(c.cc||'—')+'</td>'
+      +cursos.map(function(cu){ return '<td class="nr-tdc">'+nrCelulaCurso(c.porCurso[cu])+'</td>'; }).join('')
+      +'<td><span class="nrsit '+nrSitClasse(c.sit)+'"><span class="dot"></span>'+(c.sit==='VENC'?'Vencida':c.sit==='V30'?'A vencer':c.sit==='OK'?'Em dia':c.sit==='SEM'?'Sem dados':'N.A')+'</span></td>'
+      +'<td>'+prog+'</td></tr>';
+    if(aberto) html+='<tr class="nr-det"><td colspan="'+ncol+'">'+nrDetalheHTML(c)+'</td></tr>';
+  });
+  if(!lista.length) html='<tr><td colspan="'+ncol+'" class="dv-vazio">'+(todos.length?'Nenhum colaborador com esses filtros.':'Nenhum curso cadastrado. Use <b>Importar planilha</b> ou <b>Incluir colaborador</b>.')+'</td></tr>';
+  $('nr-grid').innerHTML=html;
+  $('nr-counts').textContent='Mostrando '+lista.length+' de '+todos.length+' colaboradores';
+}
+function nrToggle(nome){ if(NR.ui.abertos[nome]) delete NR.ui.abertos[nome]; else NR.ui.abertos[nome]=true; nrRender(); }
+function nrExpandir(todos){
+  NR.ui.abertos={};
+  if(todos) nrColaboradores().filter(nrPassa).forEach(function(c){ NR.ui.abertos[c.nome]=true; });
+  nrRender();
+}
+
+/* ---------- marcar etapa direto na lista ---------- */
+function nrMarcarEtapa(id, i){
+  if(!state.editMode){ toast('Ative o Modo Edição para alterar.', true); return; }
+  var r=NR.rows.find(function(x){ return String(x.id)===String(id); }); if(!r) return;
+  var k=NR_ETAPAS[i][0], dados={};
+  if(r[k]){
+    /* desmarca esta e as seguintes */
+    for(var j=i;j<NR_ETAPAS.length;j++) if(r[NR_ETAPAS[j][0]]) dados[NR_ETAPAS[j][0]]=null;
+  } else {
+    /* marca hoje esta e as anteriores que estiverem em branco */
+    for(var j2=0;j2<=i;j2++) if(!r[NR_ETAPAS[j2][0]]) dados[NR_ETAPAS[j2][0]]=hoje();
+  }
+  nrSalvar(dados, id).then(function(){ nrRender(); toast(r.colaborador+' - '+r.curso+': '+(dados[k]?'etapa "'+NR_ETAPAS[i][1]+'" concluída.':'etapa desmarcada.')); })
+    .catch(function(e){ toast('Não foi possível salvar: '+nrErroBanco(e), true); });
+}
+
+/* ---------- cadastro do curso ---------- */
+function nrAbrirCurso(id){
+  var r=NR.rows.find(function(x){ return String(x.id)===String(id); }); if(!r) return;
+  nrFormCurso(r, state.editMode ? 'alt' : 'ver');
+}
+function nrNovoCurso(nome){
+  var c=nrColaboradores().find(function(x){ return x.nome===nome; }) || {cargo:'', cc:''};
+  nrFormCurso({colaborador:nome, cargo:c.cargo, cc:c.cc, curso:''}, 'inc');
+}
+function nrFormCurso(r, modo){
+  NR.form={id:r.id||null, modo:modo, r:r};
+  var ro = modo==='ver';
+  var dis = ro ? ' disabled' : '';
+  var marc = r.marcacao==='NA' ? 'NA' : r.marcacao==='EM_DIA' ? 'EM_DIA' : 'DATA';
+  var usados=(NR.rows||[]).filter(function(x){ return x.colaborador===r.colaborador; }).map(function(x){ return x.curso; });
+  var opcoes=nrCursosTodos().filter(function(c){ return modo!=='inc' || usados.indexOf(c)<0; });
+  $('nrf-tit').textContent = modo==='inc' ? 'Adicionar curso' : (r.curso+' - '+(ro?'Visualizar':'Alterar'));
+  $('nrf-sub').textContent = r.colaborador + (r.cargo?' · '+r.cargo:'') + (r.cc?' · CC '+r.cc:'');
+  var h='<div class="fsec">Curso</div>'
+    +'<div class="ff"><label>Curso <span class="req">*</span></label>'
+    +(modo==='inc'
+      ? '<input id="nrf-curso" list="nrf-cursos" placeholder="Ex.: NR-33" oninput="this.value=this.value.toUpperCase()"><datalist id="nrf-cursos">'+opcoes.map(function(c){ return '<option value="'+esc(c)+'">'; }).join('')+'</datalist>'
+      : '<input id="nrf-curso" value="'+esc(r.curso)+'" disabled>')
+    +'</div>'
+    +'<div class="ff w2"><label>Validade</label><div class="nrf-seg">'
+      +[['DATA','Com data de vencimento'],['EM_DIA','Em dia (sem data)'],['NA','Não se aplica']].map(function(o){
+        return '<label class="nrf-op'+(marc===o[0]?' on':'')+'"><input type="radio" name="nrf-marc" value="'+o[0]+'"'+(marc===o[0]?' checked':'')+dis+' onchange="nrFormMarc()">'+o[1]+'</label>';
+      }).join('')+'</div></div>'
+    +'<div class="ff" id="nrf-venc-box"><label>Data de vencimento</label><input type="date" id="nrf-venc" value="'+esc(r.vencimento?String(r.vencimento).slice(0,10):'')+'"'+dis+' onchange="nrFormSit()"></div>'
+    +'<div class="ff w2"><label>Situação</label><div id="nrf-sit" class="nrf-sit"></div></div>'
+    +'<div class="fsec">Etapas da renovação</div>'
+    +'<div class="ff w3"><div class="etl" id="nrf-etapas">'+NR_ETAPAS.map(function(e, i){
+        var v=r[e[0]]?String(r[e[0]]).slice(0,10):'';
+        return '<div class="etl-item'+(v?' on':'')+'" id="nrf-et-'+e[0]+'">'
+          +'<button type="button" class="etl-chk" role="checkbox" aria-checked="'+(v?'true':'false')+'" onclick="nrFormEtapa(\''+e[0]+'\')"'+dis+'>&#10003;</button>'
+          +'<span class="etl-num">'+(i+1)+'</span><label class="etl-lbl" for="nrf-'+e[0]+'">'+esc(e[1])+'</label>'
+          +'<span class="etl-st">'+(v?'Concluída':'Pendente')+'</span>'
+          +'<input type="date" id="nrf-'+e[0]+'" value="'+esc(v)+'"'+dis+' onchange="nrFormEtapaData(\''+e[0]+'\')"></div>';
+      }).join('')+'</div></div>'
+    +'<div class="fsec">Status e observações</div>'
+    +'<div class="ff"><label>Status</label><select id="nrf-status"'+dis+' onchange="nrFormSit()"><option value="">Automático</option>'
+      +DOC_ST.filter(function(s){ return s.v; }).map(function(s){ return '<option'+(normSt(r.status)===s.v?' selected':'')+'>'+s.v+'</option>'; }).join('')+'</select></div>'
+    +'<div class="ff w2"><label>Status que vai aparecer</label><div id="nrf-stv" class="nrf-sit"></div></div>'
+    +'<div class="ff w3"><label>Observações</label><textarea id="nrf-obs" rows="3"'+dis+' placeholder="Ex.: treinamento agendado para 20/11">'+esc(r.observacoes||'')+'</textarea></div>'
+    +(r.updated_at?'<div class="ff w3 nrf-rod">Última alteração: '+new Date(r.updated_at).toLocaleString('pt-BR')+(r.atualizado_por?' por '+esc(r.atualizado_por):'')+'</div>':'');
+  $('nrf-body').innerHTML=h;
+  $('nrf-excluir').style.display = modo==='alt' ? '' : 'none';
+  $('nrf-renovar').style.display = modo==='alt' ? '' : 'none';
+  $('nrf-salvar').style.display = ro ? 'none' : '';
+  nrFormMarc();
+  openDlg('dlg-nr');
+}
+function nrFormDados(){
+  var marc=(document.querySelector('input[name="nrf-marc"]:checked')||{}).value||'DATA';
+  var d={ marcacao: marc==='DATA'?null:marc, vencimento: marc==='DATA' ? ($('nrf-venc').value||null) : null,
+          status: $('nrf-status').value||null, observacoes: $('nrf-obs').value.trim()||null };
+  NR_ETAPAS.forEach(function(e){ d[e[0]]=$('nrf-'+e[0]).value||null; });
+  return d;
+}
+function nrFormMarc(){
+  var marc=(document.querySelector('input[name="nrf-marc"]:checked')||{}).value||'DATA';
+  document.querySelectorAll('#nrf-body .nrf-op').forEach(function(l){ l.classList.toggle('on', l.querySelector('input').checked); });
+  $('nrf-venc-box').style.opacity = marc==='DATA' ? '1' : '.4';
+  $('nrf-venc').disabled = marc!=='DATA' || NR.form.modo==='ver';
+  nrFormSit();
+}
+function nrFormSit(){
+  var d=Object.assign({}, NR.form.r, nrFormDados()), s=nrSit(d), st=nrStatus(d);
+  $('nrf-sit').innerHTML='<span class="nrsit '+nrSitClasse(s.k)+'"><span class="dot"></span>'+esc(s.l)+'</span>'
+    +(s.dias!=null?' <small style="color:#6b7785;">'+(s.dias<0?'vencida há '+(-s.dias)+' dia(s)':'faltam '+s.dias+' dia(s)')+'</small>':'');
+  $('nrf-stv').innerHTML=(st?badgeSt(st):'—')+(d.status?'':' <small style="color:#9aa6b2;">(automático)</small>');
+}
+function nrFormEtapa(k){
+  var inp=$('nrf-'+k);
+  inp.value = inp.value ? '' : hoje();
+  nrFormEtapaData(k);
+}
+function nrFormEtapaData(k){
+  var v=$('nrf-'+k).value, it=$('nrf-et-'+k);
+  it.classList.toggle('on', !!v);
+  it.querySelector('.etl-chk').setAttribute('aria-checked', v?'true':'false');
+  it.querySelector('.etl-st').textContent = v?'Concluída':'Pendente';
+  nrFormSit();
+}
+function nrNovaRenovacao(){
+  NR_ETAPAS.forEach(function(e){ $('nrf-'+e[0]).value=''; nrFormEtapaData(e[0]); });
+  $('nrf-status').value=''; nrFormSit();
+  toast('Etapas limpas para uma nova renovação. Informe o novo vencimento quando sair o certificado e clique em Salvar.');
+}
+function nrSalvarCurso(){
+  var f=NR.form, d=nrFormDados();
+  if(f.modo==='inc'){
+    var curso=nrNome($('nrf-curso').value);
+    if(!curso){ toast('Informe o curso.', true); $('nrf-curso').focus(); return; }
+    if((NR.rows||[]).some(function(x){ return x.colaborador===f.r.colaborador && x.curso===curso; })){ toast('Esse colaborador já tem o curso '+curso+'.', true); return; }
+    d.curso=curso; d.colaborador=f.r.colaborador; d.cargo=f.r.cargo||null; d.cc=f.r.cc||null;
+  }
+  loading(true);
+  nrSalvar(d, f.id).then(function(){
+    closeDlg('dlg-nr'); NR.ui.abertos[f.r.colaborador]=true; nrMontarFiltros(); nrRender(); toast('Curso salvo.');
+  }).catch(function(e){ toast('Não foi possível salvar: '+nrErroBanco(e), true); }).then(function(){ loading(false); });
+}
+function nrExcluirCurso(){
+  var f=NR.form, b=$('nrf-excluir');
+  if(!b.dataset.conf){ b.dataset.conf='1'; b.textContent='Confirmar exclusão'; setTimeout(function(){ delete b.dataset.conf; b.textContent='Excluir curso'; }, 4000); return; }
+  delete b.dataset.conf; b.textContent='Excluir curso';
+  loading(true);
+  api('emb_cracha_nr?id=eq.'+encodeURIComponent(f.id), {method:'DELETE'}).then(function(){
+    NR.rows=NR.rows.filter(function(x){ return String(x.id)!==String(f.id); });
+    closeDlg('dlg-nr'); nrMontarFiltros(); nrRender(); toast('Curso excluído.');
+  }).catch(function(e){ toast('Não foi possível excluir: '+nrErroBanco(e), true); }).then(function(){ loading(false); });
+}
+
+/* ---------- cadastro do colaborador ---------- */
+function nrAbrirColab(nome){
+  if(!state.editMode){ toast('Ative o Modo Edição para incluir ou alterar.', true); return; }
+  var c = nome ? nrColaboradores().find(function(x){ return x.nome===nome; }) : null;
+  NR.colForm={ nome: nome||null };
+  $('nrc-tit').textContent = c ? 'Dados do colaborador' : 'Incluir colaborador';
+  $('nrc-sub').textContent = c ? 'Muda nome, cargo e CC em todos os cursos dele' : 'Informe os cursos já feitos: data de vencimento, "EM DIA" ou N.A';
+  var nomes = (state.colabs||state.colaboradores||[]).map(function(x){ return x.nome; }).filter(Boolean);
+  var h='<div class="fsec">Colaborador</div>'
+    +'<div class="ff w2"><label>Nome <span class="req">*</span></label><input id="nrc-nome" list="nrc-nomes" value="'+esc(c?c.nome:'')+'" oninput="this.value=this.value.toUpperCase()"><datalist id="nrc-nomes">'+nomes.map(function(n){ return '<option value="'+esc(String(n).toUpperCase())+'">'; }).join('')+'</datalist></div>'
+    +'<div class="ff"><label>CC</label><input id="nrc-cc" list="dl-ccs" value="'+esc(c?c.cc:'')+'"></div>'
+    +'<div class="ff w3"><label>Cargo</label><input id="nrc-cargo" value="'+esc(c?c.cargo:'')+'" oninput="this.value=this.value.toUpperCase()"></div>';
+  if(!c){
+    h+='<div class="fsec">Cursos</div><div class="ff w3"><div class="nrc-grid">'+NR_PADRAO.map(function(cu){
+      return '<div class="nrc-c"><b>'+cu+'</b><select id="nrc-m-'+cu+'" onchange="$(\'nrc-v-'+cu+'\').disabled=this.value!==\'DATA\'">'
+        +'<option value="SEM">Sem dados</option><option value="DATA">Data de vencimento</option><option value="EM_DIA">Em dia</option><option value="NA">N.A</option></select>'
+        +'<input type="date" id="nrc-v-'+cu+'" disabled></div>';
+    }).join('')+'</div></div>';
+  }
+  $('nrc-body').innerHTML=h;
+  $('nrc-excluir').style.display = c ? '' : 'none';
+  openDlg('dlg-nrcol');
+}
+function nrSalvarColab(){
+  var antigo=NR.colForm.nome, nome=nrNome($('nrc-nome').value), cc=$('nrc-cc').value.trim()||null, cargo=nrNome($('nrc-cargo').value)||null;
+  if(!nome){ toast('Informe o nome.', true); return; }
+  loading(true);
+  var p;
+  if(antigo){
+    if(nome!==antigo && (NR.rows||[]).some(function(x){ return x.colaborador===nome; })){ loading(false); toast('Já existe um colaborador com esse nome.', true); return; }
+    p = api('emb_cracha_nr?colaborador=eq.'+encodeURIComponent(antigo), {method:'PATCH', body:{colaborador:nome, cc:cc, cargo:cargo, atualizado_por:nrUsuario()}, prefer:'return=representation'})
+      .then(function(rows){
+        NR.rows=NR.rows.filter(function(x){ return x.colaborador!==antigo; }).concat((rows||[]).map(function(r){ r.colaborador=nrNome(r.colaborador); return r; }));
+        if(NR.ui.abertos[antigo]){ delete NR.ui.abertos[antigo]; NR.ui.abertos[nome]=true; }
+      });
+  } else {
+    if((NR.rows||[]).some(function(x){ return x.colaborador===nome; })){ loading(false); toast('Esse colaborador já está no controle. Abra a linha dele para adicionar cursos.', true); return; }
+    var novos=NR_PADRAO.map(function(cu){
+      var m=$('nrc-m-'+cu).value, v=$('nrc-v-'+cu).value||null;
+      return {colaborador:nome, cc:cc, cargo:cargo, curso:cu, marcacao:(m==='NA'||m==='EM_DIA')?m:null, vencimento:m==='DATA'?v:null, atualizado_por:nrUsuario()};
+    });
+    p = api('emb_cracha_nr', {method:'POST', body:novos, prefer:'return=representation'}).then(function(rows){
+      (rows||[]).forEach(function(r){ r.colaborador=nrNome(r.colaborador); NR.rows.push(r); });
+      NR.ui.abertos[nome]=true;
+    });
+  }
+  p.then(function(){ closeDlg('dlg-nrcol'); nrMontarFiltros(); nrRender(); toast('Colaborador salvo.'); })
+   .catch(function(e){ toast('Não foi possível salvar: '+nrErroBanco(e), true); }).then(function(){ loading(false); });
+}
+function nrExcluirColab(){
+  var nome=NR.colForm.nome, b=$('nrc-excluir');
+  if(!b.dataset.conf){ b.dataset.conf='1'; b.textContent='Confirmar: excluir todos os cursos'; setTimeout(function(){ delete b.dataset.conf; b.textContent='Excluir colaborador'; }, 4000); return; }
+  loading(true);
+  api('emb_cracha_nr?colaborador=eq.'+encodeURIComponent(nome), {method:'DELETE'}).then(function(){
+    NR.rows=NR.rows.filter(function(x){ return x.colaborador!==nome; }); delete NR.ui.abertos[nome];
+    closeDlg('dlg-nrcol'); nrMontarFiltros(); nrRender(); toast(nome+' saiu do controle de crachá crítico.');
+  }).catch(function(e){ toast('Não foi possível excluir: '+nrErroBanco(e), true); }).then(function(){ loading(false); });
+}
+
+/* ---------- importar a planilha (CONTROLE DE NR - SISTEMA RAINBOW) ---------- */
+function nrImportar(){
+  if(!state.editMode){ toast('Ative o Modo Edição para importar.', true); return; }
+  if(typeof XLSX==='undefined'){ toast('Leitor de planilha ainda carregando. Tente de novo em alguns segundos.', true); if(typeof loadXLSX==='function') loadXLSX(0); return; }
+  var inp=document.createElement('input'); inp.type='file'; inp.accept='.xlsx,.xls';
+  inp.onchange=function(){
+    var f=inp.files[0]; if(!f) return;
+    var rd=new FileReader();
+    rd.onload=function(){
+      try{
+        var wb=XLSX.read(new Uint8Array(rd.result), {type:'array', cellDates:true});
+        var regs=nrLerPlanilha(wb);
+        if(!regs.length){ toast('Não encontrei a tabela (coluna NOME e colunas NR-xx) na planilha.', true); return; }
+        nrEnviarImportacao(regs, f.name);
+      }catch(e){ toast('Não foi possível ler a planilha: '+e.message, true); }
+    };
+    rd.readAsArrayBuffer(f);
+  };
+  inp.click();
+}
+function nrIsoDe(v){
+  if(v instanceof Date && !isNaN(v)){ var d=new Date(v.getTime()+12*3600000); return d.getUTCFullYear()+'-'+String(d.getUTCMonth()+1).padStart(2,'0')+'-'+String(d.getUTCDate()).padStart(2,'0'); }
+  var m=String(v).trim().match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})$/);
+  if(m){ var a=m[3].length===2?'20'+m[3]:m[3]; return a+'-'+m[2].padStart(2,'0')+'-'+m[1].padStart(2,'0'); }
+  return null;
+}
+function nrLerPlanilha(wb){
+  var nome=wb.SheetNames.find(function(n){ return /controle/i.test(n); }) || wb.SheetNames[0];
+  var linhas=XLSX.utils.sheet_to_json(wb.Sheets[nome], {header:1, raw:true, defval:null});
+  var hi=linhas.findIndex(function(l){ return l && l.some(function(c){ return String(c||'').trim().toUpperCase()==='NOME'; }); });
+  if(hi<0) return [];
+  var hd=linhas[hi].map(function(c){ return String(c||'').trim().toUpperCase(); });
+  var iN=hd.indexOf('NOME'), iCg=hd.indexOf('CARGO'), iCc=hd.indexOf('CC');
+  var cursos=[]; hd.forEach(function(h, i){ if(/^NR[\s-]?\d+/.test(h)) cursos.push({i:i, nome:h.replace(/^NR\s?-?\s?/,'NR-')}); });
+  var regs=[];
+  linhas.slice(hi+1).forEach(function(l){
+    var n=nrNome(l[iN]); if(!n) return;
+    var cc=l[iCc]; cc = cc==null||cc==='' ? null : String(cc).replace(/\.0$/,'').trim();
+    var cargo=iCg>=0 && l[iCg] ? nrNome(l[iCg]) : null;
+    cursos.forEach(function(c){
+      var v=l[c.i], venc=null, marc=null;
+      if(v instanceof Date) venc=nrIsoDe(v);
+      else if(v!=null && String(v).trim()!==''){
+        var t=String(v).trim().toUpperCase();
+        if(/^N\.?\s?A|^N\/A/.test(t)) marc='NA';
+        else if(t.indexOf('EM DIA')===0) marc='EM_DIA';
+        else venc=nrIsoDe(v);
+      }
+      regs.push({colaborador:n, cargo:cargo, cc:cc, curso:c.nome, vencimento:venc, marcacao:marc, atualizado_por:nrUsuario()});
+    });
+  });
+  return regs;
+}
+function nrEnviarImportacao(regs, arquivo){
+  var pessoas={}; regs.forEach(function(r){ pessoas[r.colaborador]=1; });
+  var np=Object.keys(pessoas).length;
+  loading(true);
+  var lotes=[]; for(var i=0;i<regs.length;i+=400) lotes.push(regs.slice(i,i+400));
+  var p=Promise.resolve();
+  lotes.forEach(function(l){ p=p.then(function(){ return api('emb_cracha_nr?on_conflict=colaborador,curso', {method:'POST', body:l, prefer:'resolution=merge-duplicates,return=minimal', timeout:60000}); }); });
+  p.then(function(){ return nrCarregar(true); })
+   .then(function(){ nrMontarFiltros(); nrRender(); toast(arquivo+': '+np+' colaboradores e '+regs.length+' cursos atualizados. Etapas, status e observações foram mantidos.'); })
+   .catch(function(e){ toast('Importação interrompida: '+nrErroBanco(e), true); })
+   .then(function(){ loading(false); });
+}
+
+/* ---------- Excel no padrão Parente Andrade ---------- */
+function nrExportar(){
+  if(!NR.rows || !NR.rows.length){ toast('Não há cursos para exportar.', true); return; }
+  loading(true);
+  carregarExcelJS().then(nrMontarExcel).catch(function(e){ toast('Não foi possível gerar o Excel: '+e.message, true); }).then(function(){ loading(false); });
+}
+function nrMontarExcel(){
+  var cursos=nrCursosTodos(), lista=nrColaboradores().filter(nrPassa), agora=new Date();
+  var wb=new ExcelJS.Workbook(); wb.creator='Parente Andrade'; wb.created=agora;
+  var VERDE='FF3B6A1F', CORES={VENC:'FFF8D7D5', V30:'FFFDE7D3', OK:'FFE2F2DF', SEM:'FFF0F2F4', NA:'FFF0F2F4'}, TXT={VENC:'FFB3261E', V30:'FFB35A12', OK:'FF1E6B2D', SEM:'FF7D8A97', NA:'FF7D8A97'};
+  var borda={top:{style:'thin',color:{argb:'FFD9DFE5'}},left:{style:'thin',color:{argb:'FFD9DFE5'}},bottom:{style:'thin',color:{argb:'FFD9DFE5'}},right:{style:'thin',color:{argb:'FFD9DFE5'}}};
+  function cabecalho(ws, titulo, ncol){
+    var logo=logoPABase64();
+    if(logo){ var id=wb.addImage({base64:logo, extension:'png'}); ws.addImage(id, {tl:{col:0.15,row:0.2}, ext:{width:120,height:42}}); }
+    ws.mergeCells(1,2,1,ncol); var t=ws.getCell(1,2); t.value=titulo; t.font={bold:true,size:15,color:{argb:'FF17456E'}}; t.alignment={vertical:'middle'};
+    ws.mergeCells(2,2,2,ncol); var s=ws.getCell(2,2); s.value='Embarque Taboca · gerado em '+agora.toLocaleString('pt-BR'); s.font={size:10,color:{argb:'FF6B7785'}};
+    ws.getRow(1).height=30; ws.getRow(2).height=18; ws.getRow(3).height=8;
+  }
+  function linhaTitulo(ws, n, vals){
+    var r=ws.getRow(n); r.values=vals; r.height=22;
+    r.eachCell(function(c){ c.font={bold:true,color:{argb:'FFFFFFFF'}}; c.fill={type:'pattern',pattern:'solid',fgColor:{argb:VERDE}}; c.alignment={vertical:'middle',horizontal:'center',wrapText:true}; c.border=borda; });
+  }
+  /* aba 1: controle (igual à planilha) */
+  var ws=wb.addWorksheet('Crachá Crítico', {views:[{state:'frozen', ySplit:4, xSplit:1}]});
+  var ncol=3+cursos.length+1;
+  cabecalho(ws, 'CRACHÁ CRÍTICO - CONTROLE DE NRs (SISTEMA RAINBOW)', ncol);
+  linhaTitulo(ws, 4, ['NOME','CARGO','CC'].concat(cursos).concat(['SITUAÇÃO']));
+  lista.forEach(function(c, i){
+    var row=ws.getRow(5+i);
+    row.getCell(1).value=c.nome; row.getCell(2).value=c.cargo||''; row.getCell(3).value=c.cc?Number(c.cc)||c.cc:'';
+    cursos.forEach(function(cu, j){
+      var r=c.porCurso[cu], cel=row.getCell(4+j);
+      if(!r){ cel.value=''; }
+      else{
+        var s=nrSit(r);
+        if(r.marcacao==='NA') cel.value='N.A'; else if(r.marcacao==='EM_DIA') cel.value='EM DIA';
+        else if(r.vencimento){ var p=String(r.vencimento).slice(0,10).split('-'); cel.value=new Date(Date.UTC(+p[0],+p[1]-1,+p[2])); cel.numFmt='dd/mm/yyyy'; }
+        cel.fill={type:'pattern',pattern:'solid',fgColor:{argb:CORES[s.k]}}; cel.font={color:{argb:TXT[s.k]},bold:s.k==='VENC'||s.k==='V30'};
+      }
+      cel.alignment={horizontal:'center'};
+    });
+    var sc=row.getCell(ncol), k=c.sit;
+    sc.value={VENC:'VENCIDA',V30:'A VENCER',OK:'EM DIA',SEM:'SEM DADOS',NA:'N.A'}[k];
+    sc.fill={type:'pattern',pattern:'solid',fgColor:{argb:CORES[k]}}; sc.font={bold:true,color:{argb:TXT[k]}}; sc.alignment={horizontal:'center'};
+    row.eachCell({includeEmpty:true}, function(cel, col){ if(col<=ncol) cel.border=borda; });
+  });
+  ws.getColumn(1).width=40; ws.getColumn(2).width=32; ws.getColumn(3).width=8;
+  cursos.forEach(function(cu, j){ ws.getColumn(4+j).width=12; }); ws.getColumn(ncol).width=13;
+  ws.autoFilter={from:{row:4,column:1}, to:{row:4+lista.length, column:ncol}};
+  ws.pageSetup={orientation:'landscape', fitToPage:true, fitToWidth:1, fitToHeight:0, paperSize:9};
+  /* aba 2: um curso por linha, com etapas e status */
+  var w2=wb.addWorksheet('Etapas por curso', {views:[{state:'frozen', ySplit:4}]});
+  var cab=['NOME','CARGO','CC','CURSO','VENCIMENTO','SITUAÇÃO','DIAS'].concat(NR_ETAPAS.map(function(e){ return e[2].toUpperCase(); })).concat(['ETAPA ATUAL','STATUS','OBSERVAÇÕES']);
+  cabecalho(w2, 'CRACHÁ CRÍTICO - ETAPAS E STATUS POR CURSO', cab.length);
+  linhaTitulo(w2, 4, cab);
+  var n=5;
+  lista.forEach(function(c){
+    c.cursos.slice().sort(function(a,b){ return cursos.indexOf(a.curso)-cursos.indexOf(b.curso); }).forEach(function(r){
+      var s=nrSit(r), at=nrEtapaAtual(r), row=w2.getRow(n++);
+      var vals=[c.nome, c.cargo||'', c.cc?Number(c.cc)||c.cc:'', r.curso,
+        r.marcacao==='NA'?'N.A':(r.marcacao==='EM_DIA'?'EM DIA':(r.vencimento?nrDataExcel(r.vencimento):'')),
+        s.l.toUpperCase(), s.dias==null?'':s.dias]
+        .concat(NR_ETAPAS.map(function(e){ return r[e[0]]?nrDataExcel(r[e[0]]):''; }))
+        .concat([s.k==='NA'?'—':(at>=NR_ETAPAS.length?'Concluídas':(nrRenovando(r)?NR_ETAPAS[at][1]:'Nenhuma renovação pendente')), nrStatus(r)||'—', r.observacoes||'']);
+      row.values=vals;
+      row.eachCell({includeEmpty:true}, function(cel, col){
+        if(col>cab.length) return; cel.border=borda;
+        if(cel.value instanceof Date) cel.numFmt='dd/mm/yyyy';
+        if(col>=5) cel.alignment={horizontal: col===cab.length?'left':'center', wrapText: col===cab.length};
+      });
+      var sc=row.getCell(6); sc.fill={type:'pattern',pattern:'solid',fgColor:{argb:CORES[s.k]}}; sc.font={bold:true,color:{argb:TXT[s.k]}};
+    });
+  });
+  [38,30,8,10,13,20,8,13,13,13,14,16,26,15,40].forEach(function(w, i){ w2.getColumn(i+1).width=w; });
+  w2.autoFilter={from:{row:4,column:1}, to:{row:n-1, column:cab.length}};
+  w2.pageSetup={orientation:'landscape', fitToPage:true, fitToWidth:1, fitToHeight:0, paperSize:9};
+  return wb.xlsx.writeBuffer().then(function(buf){
+    var a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}));
+    a.download='cracha-critico-nrs-'+hoje()+'.xlsx'; document.body.appendChild(a); a.click(); a.remove();
+    toast('Excel gerado: '+lista.length+' colaboradores.');
+  });
+}
+function nrDataExcel(iso){ var p=String(iso).slice(0,10).split('-'); return new Date(Date.UTC(+p[0],+p[1]-1,+p[2])); }
+
+/* ---------- Crachá Crítico abre esta tela ---------- */
+(function(){
+  var orig=_docsMostrar;
+  _docsMostrar=function(t){
+    if((t||state.docTipo)==='cracha'){ state.docTipo='cracha'; state.docSel=null; nrMostrar(); return; }
+    var v=$('view-nr'); if(v) v.style.display='none';
+    return orig.apply(this, arguments);
+  };
+  var origEsc=escondeDocs;
+  escondeDocs=function(){ origEsc.apply(this, arguments); var v=$('view-nr'); if(v) v.style.display='none'; ['dlg-nr','dlg-nrcol'].forEach(function(id){ var d=$(id); if(d) d.classList.remove('open'); }); };
+})();
+
 </script>
 <!-- ==================== COLABORADORES DA FUNÇÃO (dashboard) ==================== -->
 <div class="overlay" id="dlg-func" onclick="if(event.target===this)closeDlg('dlg-func')">
@@ -5712,6 +6477,41 @@ setTimeout(function(){ loadXLSX(0); }, 2000);
   </div>
 </div>
 <datalist id="dl-colabs"></datalist><datalist id="dl-ccs"></datalist><datalist id="dl-funcs"></datalist>
+<!-- ==================== CRACHÁ CRÍTICO: CURSO ==================== -->
+<div class="overlay" id="dlg-nr" onclick="if(event.target===this)closeDlg('dlg-nr')">
+  <div class="mdlg" role="dialog" aria-modal="true" aria-labelledby="nrf-tit" style="width:780px;">
+    <div class="mdlg-head">
+      <div><h2 id="nrf-tit"></h2><div class="mdlg-sub" id="nrf-sub"></div></div>
+      <div class="flex"></div>
+      <button type="button" class="mdlg-x" onclick="closeDlg('dlg-nr')" aria-label="Fechar">&#10005;</button>
+    </div>
+    <div class="mdlg-body df-body"><div class="fgrid" id="nrf-body"></div></div>
+    <div class="mdlg-foot">
+      <button type="button" class="mbtn danger" id="nrf-excluir" onclick="nrExcluirCurso()">Excluir curso</button>
+      <button type="button" class="mbtn renov" id="nrf-renovar" onclick="nrNovaRenovacao()">&#8635; Nova renova&ccedil;&atilde;o</button>
+      <div class="flex"></div>
+      <button type="button" class="mbtn" onclick="closeDlg('dlg-nr')">Cancelar</button>
+      <button type="button" class="mbtn pri" id="nrf-salvar" onclick="nrSalvarCurso()">Salvar</button>
+    </div>
+  </div>
+</div>
+<!-- ==================== CRACHÁ CRÍTICO: COLABORADOR ==================== -->
+<div class="overlay" id="dlg-nrcol" onclick="if(event.target===this)closeDlg('dlg-nrcol')">
+  <div class="mdlg" role="dialog" aria-modal="true" aria-labelledby="nrc-tit" style="width:720px;">
+    <div class="mdlg-head">
+      <div><h2 id="nrc-tit"></h2><div class="mdlg-sub" id="nrc-sub"></div></div>
+      <div class="flex"></div>
+      <button type="button" class="mdlg-x" onclick="closeDlg('dlg-nrcol')" aria-label="Fechar">&#10005;</button>
+    </div>
+    <div class="mdlg-body df-body"><div class="fgrid" id="nrc-body"></div></div>
+    <div class="mdlg-foot">
+      <button type="button" class="mbtn danger" id="nrc-excluir" onclick="nrExcluirColab()">Excluir colaborador</button>
+      <div class="flex"></div>
+      <button type="button" class="mbtn" onclick="closeDlg('dlg-nrcol')">Cancelar</button>
+      <button type="button" class="mbtn pri" onclick="nrSalvarColab()">Salvar</button>
+    </div>
+  </div>
+</div>
 <!-- ==================== CONTROLE DE DOCUMENTOS: LISTA DO DASHBOARD ==================== -->
 <div class="overlay" id="dlg-ddlista" onclick="if(event.target===this)closeDlg('dlg-ddlista')">
   <div class="mdlg" role="dialog" aria-modal="true" aria-labelledby="ddl-tit">
