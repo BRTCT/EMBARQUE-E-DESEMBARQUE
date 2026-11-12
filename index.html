@@ -1465,10 +1465,9 @@
         <div class="tree-kids">
           <span class="leaf" onclick="goDashboard()">Análise de Embarques</span>
         </div>
-        <div class="tree-parent closed" onclick="toggleTree(this)"><span class="caret">&#9660;</span>Controle de Documentos (6)</div>
+        <div class="tree-parent closed" onclick="toggleTree(this)"><span class="caret">&#9660;</span>Controle de Documentos (5)</div>
         <div class="tree-kids">
           <span class="leaf" onclick="goDocs('pcv')">PCV</span>
-          <span class="leaf" onclick="goDocs('carta')">Carta de Designa&ccedil;&atilde;o</span>
           <span class="leaf" onclick="goDocs('cracha')">Crach&aacute; Cr&iacute;tico</span>
           <span class="leaf" onclick="goDocsDash()">Dashboard de Documentos</span>
           <span class="leaf" onclick="abrirAvisoVenc(true)">&#9888; Avisos de Vencimento</span>
@@ -1528,10 +1527,9 @@
       </div>
       <div class="home-sec">
         <h2>Controle de Documentos</h2>
-        <div class="sub">PCV, cartas de designa&ccedil;&atilde;o e crach&aacute; cr&iacute;tico (cursos NR) por centro de custo</div>
+        <div class="sub">PCV e crach&aacute; cr&iacute;tico (cursos NR) por centro de custo</div>
         <div class="home-links">
           <a onclick="goDocs('pcv')">PCV</a>
-          <a onclick="goDocs('carta')">Carta de Designa&ccedil;&atilde;o</a>
           <a onclick="goDocs('cracha')">Crach&aacute; Cr&iacute;tico</a>
           <a onclick="goDocsDash()">Dashboard de Documentos</a>
           <a onclick="abrirAvisoVenc(true)">Avisos de Vencimento</a>
@@ -1766,8 +1764,8 @@
       <div class="dash-body">
         <div class="docs-aviso" id="al-aviso" style="display:none;"></div>
         <div class="al-como"><span class="al-como-i">&#9993;</span><div><b>Envio autom&aacute;tico todos os dias &agrave;s 7h</b>, pelo e-mail da empresa (Microsoft 365).
-          Cada documento gera alerta <b>30</b>, <b>10</b> e <b>7 dias</b> antes do vencimento (na carta de designa&ccedil;&atilde;o, do prazo de assinatura).
-          Cada alerta vai para os e-mails cadastrados no quadro do documento. Documentos cancelados, cartas j&aacute; assinadas e PCVs renovados com nova data deixam de gerar alerta.</div></div>
+          Cada documento gera alerta <b>30</b>, <b>10</b> e <b>7 dias</b> antes do vencimento.
+          Cada alerta vai para os e-mails cadastrados no quadro do documento. Documentos cancelados e PCVs renovados com nova data deixam de gerar alerta.</div></div>
         <div class="al-cards" id="al-cards"></div>
         <section class="dcard" style="margin-bottom:12px;">
           <header><h3>Pr&oacute;ximos alertas</h3><span class="dsub">pr&eacute;via dos pr&oacute;ximos 30 dias</span></header>
@@ -2083,9 +2081,9 @@ function esc(s){ return (s==null?'':String(s)).replace(/&/g,'&amp;').replace(/</
 function hoje(){ var d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
 function addDays(iso,n){ var p=iso.split('-').map(Number); var dt=new Date(Date.UTC(p[0],p[1]-1,p[2]+n)); return dt.toISOString().slice(0,10); }
 function diffDays(a,b){ var x=a.split('-').map(Number), y=b.split('-').map(Number); return Math.round((Date.UTC(y[0],y[1]-1,y[2])-Date.UTC(x[0],x[1]-1,x[2]))/86400000); }
-function fmtBR(iso){ if(!iso) return '—'; var p=iso.split('-'); return p[2]+'/'+p[1]+'/'+p[0]; }
+function fmtBR(iso){ if(!iso) return '-'; var p=iso.split('-'); return p[2]+'/'+p[1]+'/'+p[0]; }
 function fmtBRComDia(iso){
-  if(!iso) return '—';
+  if(!iso) return '-';
   var dias = ['domingo','segunda-feira','terça-feira','quarta-feira','quinta-feira','sexta-feira','sábado'];
   var p = iso.split('-');
   var d = new Date(parseInt(p[0]),parseInt(p[1])-1,parseInt(p[2]));
@@ -2237,7 +2235,7 @@ function statusInfo(c){
     var df = diffDays(e.data_desembarque,h), tf = diffDays(e.data_desembarque,e.data_reembarque)-1;
     return { code:'DES', e:e, detalhe:'Folga: '+df+'º dia de '+tf+' • reembarca em '+fmtBR(e.data_reembarque) };
   }
-  return { code:'PEND', e:e, detalhe:'Reembarque previsto em '+fmtBR(e.data_reembarque)+' — registre o novo embarque' };
+  return { code:'PEND', e:e, detalhe:'Reembarque previsto em '+fmtBR(e.data_reembarque)+' - registre o novo embarque' };
 }
 
 
@@ -2541,20 +2539,20 @@ function render(){
     var st=ST[si.code], e=si.e;
     rows+='<tr data-id="'+c.id+'" class="'+(state.sel===c.id?'sel':'')+' '+(c.nao_embarcou?'nao-embarcou':'')+'" onclick="selRow(this)" style="'+(c.nao_embarcou?'background-color:#ffebee;':'')+'">'
       +'<td style="text-align:center;"><span class="dot" style="background:'+st.hex+';" title="'+st.label+'"></span></td>'
-      +'<td class="td-cc">'+esc(c.cc||'—')+'</td>'
-      +'<td class="td-back">'+esc(c.back||'—')+'</td>'
-      +'<td class="td-num">'+esc(c.matricula||'—')+'</td>'
+      +'<td class="td-cc">'+esc(c.cc||'-')+'</td>'
+      +'<td class="td-back">'+esc(c.back||'-')+'</td>'
+      +'<td class="td-num">'+esc(c.matricula||'-')+'</td>'
       +'<td class="td-nome"><a class="nome-link" title="Ver histórico de embarques e alterações" onclick="event.stopPropagation();selRow(this.closest(\'tr\'));abrirHistColab(\''+c.id+'\')">'+esc(c.nome)+'</a></td>'
-      +'<td class="td-func">'+esc(c.funcao||'—')+'</td>'
-      +'<td class="td-cen">'+esc(c.turma||'—')+'</td>'
+      +'<td class="td-func">'+esc(c.funcao||'-')+'</td>'
+      +'<td class="td-cen">'+esc(c.turma||'-')+'</td>'
       +'<td class="td-cen">'+esc(c.escala)+'</td>'
       +'<td class="td-data td-emb"><span class="emb-dt">'+fmtBR(e?e.data_embarque:null)+'</span><button type="button" class="cal-btn" title="Alterar a data de embarque" aria-label="Alterar a data de embarque" onclick="event.stopPropagation();abrirMiniCal(this,\''+c.id+'\')">&#128197;</button></td>'
       +'<td class="td-data td-emb">'+(e ? '<span class="emb-dt">'+fmtBR(e.data_desembarque)+'</span><button type="button" class="cal-btn" title="Alterar a data de desembarque" aria-label="Alterar a data de desembarque" onclick="event.stopPropagation();abrirMiniCal(this,\''+c.id+'\',\'des\')">&#128197;</button>' : fmtBR(null))+'</td>'
       +'<td class="td-data">'+fmtBR(e?e.data_reembarque:null)+'</td>'
       +'<td style="text-align:center;"><input type="checkbox" class="chk-nao-embarcou" data-colab="'+c.id+'" '+(c.nao_embarcou?'checked':'')+' onchange="marcarNaoEmbarcou(this, \''+c.id+'\')"></td>'
-      +'<td><select class="sel-sit-folha sit-folha-'+(c.sit_folha?c.sit_folha.replace(/ /g,'-'):'vazio')+'" data-colab="'+c.id+'" onchange="salvarSitFolha(this, \''+c.id+'\')"><option value="">—</option><option value="AFASTADO INSS" '+(c.sit_folha==='AFASTADO INSS'?'selected':'')+'>AFASTADO INSS</option><option value="FÉRIAS" '+(c.sit_folha==='FÉRIAS'?'selected':'')+'>FÉRIAS</option></select></td>'
+      +'<td><select class="sel-sit-folha sit-folha-'+(c.sit_folha?c.sit_folha.replace(/ /g,'-'):'vazio')+'" data-colab="'+c.id+'" onchange="salvarSitFolha(this, \''+c.id+'\')"><option value="">-</option><option value="AFASTADO INSS" '+(c.sit_folha==='AFASTADO INSS'?'selected':'')+'>AFASTADO INSS</option><option value="FÉRIAS" '+(c.sit_folha==='FÉRIAS'?'selected':'')+'>FÉRIAS</option></select></td>'
       +'<td class="td-st" title="'+esc(si.detalhe)+'"><span class="badge pill-st" style="--c:'+st.hex+';">'+st.label+'</span><div class="st-detail">'+si.detalhe+'</div></td>'
-      +'<td class="td-obs" style="cursor:pointer;" title="'+esc(c.observacoes||'')+'" ondblclick="editarObs(this, \''+c.id+'\')"><span class="obs-text">'+esc(c.observacoes||'—')+'</span></td>'
+      +'<td class="td-obs" style="cursor:pointer;" title="'+esc(c.observacoes||'')+'" ondblclick="editarObs(this, \''+c.id+'\')"><span class="obs-text">'+esc(c.observacoes||'-')+'</span></td>'
       +'</tr>';
   });
   atualizaIconesColunas();
@@ -2819,7 +2817,7 @@ function montarExcelRota(grupos, cfgRel){
   var COLS = ['Nº', 'Nome', 'Matrícula', 'Função', 'CC', 'Turma', 'Endereço', 'Complemento', 'Bairro', 'Município', 'Telefone'];
   function valores(c, n){
     var end = (c.logradouro || '') + (c.numero ? ', ' + c.numero : '');
-    return [n, c.nome || '', c.matricula || '', c.funcao || '', c.cc || '', c.turma || '', end || '—', c.complemento || '—', c.bairro || 'SEM BAIRRO', c.municipio || '', c.telefone || '—'];
+    return [n, c.nome || '', c.matricula || '', c.funcao || '', c.cc || '', c.turma || '', end || '-', c.complemento || '-', c.bairro || 'SEM BAIRRO', c.municipio || '', c.telefone || '-'];
   }
   var LARG = [5, 34, 11, 22, 10, 7, 36, 20, 20, 16, 16];
   function configurar(ws){
@@ -2909,7 +2907,7 @@ function gerarRelatorio(){
         html += '<tr style="border-bottom:2px solid #333;"><th style="text-align:left;padding:8px;">Nome</th><th style="text-align:left;padding:8px;">Endereço</th><th style="text-align:left;padding:8px;">Complemento</th><th style="text-align:left;padding:8px;">Telefone</th></tr>';
         b.colabs.forEach(function(c){
           var end = (c.logradouro||'') + (c.numero?' '+c.numero:'');
-          html += '<tr style="border-bottom:1px solid #ddd;"><td style="padding:8px;">'+esc(c.nome)+'</td><td style="padding:8px;">'+esc(end)+'</td><td style="padding:8px;">'+esc(c.complemento||'—')+'</td><td style="padding:8px;">'+esc(c.telefone||'—')+'</td></tr>';
+          html += '<tr style="border-bottom:1px solid #ddd;"><td style="padding:8px;">'+esc(c.nome)+'</td><td style="padding:8px;">'+esc(end)+'</td><td style="padding:8px;">'+esc(c.complemento||'-')+'</td><td style="padding:8px;">'+esc(c.telefone||'-')+'</td></tr>';
         });
         html += '</table>';
       });
@@ -3333,7 +3331,7 @@ var HIST_ROTULOS = { matricula:'Matrícula', nome:'Nome', cpf:'CPF', funcao:'Fun
 function histUsuario(){ return (typeof EMB_CFG !== 'undefined' && EMB_CFG && (EMB_CFG.nome || EMB_CFG.usuario)) || 'Link externo'; }
 function histOrigem(){ return (typeof EMB_CFG !== 'undefined' && EMB_CFG) ? 'Portal' : 'Link externo'; }
 function histValor(v){
-  if(v === null || v === undefined || v === '') return '—';
+  if(v === null || v === undefined || v === '') return '-';
   if(typeof v === 'boolean') return v ? 'Sim' : 'Não';
   if(/^\d{4}-\d{2}-\d{2}$/.test(String(v))) return fmtBR(String(v));
   return String(v);
@@ -3388,7 +3386,7 @@ function abrirHistColab(id, silencioso){
         return '<div class="hc-ev" style="--c:' + cor + ';"><div class="hc-ev-dot"></div><div class="hc-ev-c">'
           + '<div class="hc-ev-top"><b>' + esc(h.acao) + '</b><span>' + quando + '</span></div>'
           + (h.detalhe ? '<div class="hc-ev-det">' + esc(h.detalhe) + '</div>' : '')
-          + '<div class="hc-ev-por">por <b>' + esc(h.usuario || '—') + '</b>' + (h.origem && h.origem !== h.usuario ? ' · pelo ' + esc(h.origem) : '') + '</div></div></div>';
+          + '<div class="hc-ev-por">por <b>' + esc(h.usuario || '-') + '</b>' + (h.origem && h.origem !== h.usuario ? ' · pelo ' + esc(h.origem) : '') + '</div></div></div>';
       }).join('') : '<div class="hc-vazio">Nenhuma alteração registrada ainda. A partir de agora, toda mudança neste colaborador aparece aqui.</div>';
     })
     .catch(function(){
@@ -3505,7 +3503,7 @@ function fillHist(c, podeEditar){
   var rows='';
   (c.embarques||[]).forEach(function(e){
     rows+='<tr><td>'+fmtBR(e.data_embarque)+'</td><td>'+fmtBR(e.data_desembarque)+'</td><td>'+fmtBR(e.data_reembarque)+'</td><td>'+esc(e.observacao||'')+'</td><td style="text-align:center;">'
-      +(podeEditar ? '<span class="act act-edit" title="Alterar datas" data-emb="'+e.id+'">&#9998;</span><span class="act act-del" title="Excluir ciclo" style="color:#c33;" data-emb="'+e.id+'">&#10005;</span>' : '—')
+      +(podeEditar ? '<span class="act act-edit" title="Alterar datas" data-emb="'+e.id+'">&#9998;</span><span class="act act-del" title="Excluir ciclo" style="color:#c33;" data-emb="'+e.id+'">&#10005;</span>' : '-')
       +'</td></tr>';
   });
   $('hist-body').innerHTML = rows || '<tr><td colspan="5" style="text-align:center;color:#999;">Nenhum embarque registrado</td></tr>';
@@ -3884,7 +3882,7 @@ function gerarDashboard(){
   var agora=new Date();
   $('dash-upd').textContent = 'Atualizado às '+String(agora.getHours()).padStart(2,'0')+':'+String(agora.getMinutes()).padStart(2,'0');
 
-  // Status geral — mostra todos os status do CC; clique filtra os demais gráficos
+  // Status geral - mostra todos os status do CC; clique filtra os demais gráficos
   var stCodes=[], stL=[], stD=[], stC=[];
   ORDEM_ST.forEach(function(code){ if(statusCount[code]>0){ stCodes.push(code); stL.push(rotuloStatus(code)); stD.push(statusCount[code]); stC.push(ST[code].hex); } });
   $('sub-status').textContent = totalCC+' colaboradores';
@@ -3905,7 +3903,7 @@ function gerarDashboard(){
   $('sub-turma').textContent = turL.length+' turma(s)';
   renderChart('chart-turma','bar',turL,turL.map(function(x){return tur[x];}),paleta(turL.length));
 
-  // Por centro de custo — considera o status; mostra todos os CCs e destaca o selecionado
+  // Por centro de custo - considera o status; mostra todos os CCs e destaca o selecionado
   var ccs = contaPor(function(c){ return String(c.cc||''); }, baseST);
   if(state.dashCC!==null && !(state.dashCC in ccs)) ccs[state.dashCC]=0;
   var ccVals = Object.keys(ccs).sort(function(a,b){ if(a==='') return 1; if(b==='') return -1; return a.localeCompare(b,'pt-BR',{numeric:true}); });
@@ -3915,7 +3913,7 @@ function gerarDashboard(){
     onClick: function(i){ var v=ccVals[i]; filtraDashCC(state.dashCC===v ? null : v); }
   });
 
-  // Por função — TODAS, ordenadas da maior para a menor
+  // Por função - TODAS, ordenadas da maior para a menor
   var fun = contaPor(function(c){ return c.funcao || 'Não informada'; }, base);
   var funL = Object.keys(fun).sort(function(a,b){ return fun[b]-fun[a] || a.localeCompare(b,'pt-BR'); });
   $('sub-funcao').textContent = funL.length+' função(ões)';
@@ -4203,11 +4201,11 @@ function desenhaListaFuncao(){
     }
     html+='<tr tabindex="0" onclick="verColabDaFuncao(\''+c.id+'\')" onkeydown="if(event.key===\'Enter\')verColabDaFuncao(\''+c.id+'\')">'
       +'<td><span class="dot" style="background:'+st.hex+';"></span></td>'
-      +'<td class="nm">'+esc(c.nome||'—')+'</td>'
-      +'<td>'+esc(c.matricula||'—')+'</td>'
-      +'<td>'+esc(c.cc||'—')+'</td>'
-      +'<td>'+esc(c.turma||'—')+'</td>'
-      +'<td>'+esc(c.escala||'—')+'</td>'
+      +'<td class="nm">'+esc(c.nome||'-')+'</td>'
+      +'<td>'+esc(c.matricula||'-')+'</td>'
+      +'<td>'+esc(c.cc||'-')+'</td>'
+      +'<td>'+esc(c.turma||'-')+'</td>'
+      +'<td>'+esc(c.escala||'-')+'</td>'
       +'<td><span class="badge" style="background:'+st.hex+';">'+st.label+'</span></td>'
       +'<td>'+fmtBR(e?e.data_embarque:null)+'</td>'
       +'<td>'+fmtBR(e?e.data_desembarque:null)+'</td>'
@@ -4380,7 +4378,7 @@ var DOCS = {
     ]
   }
 };
-var DOC_TIPOS = ['pcv','carta','cracha'];
+var DOC_TIPOS = ['pcv','cracha'];   /* Carta de Designação retirada em 12/11/2026 */
 
 state.docs = {pcv:null, carta:null, cracha:null};
 state.docLocal = {}; state.docErro = {};
@@ -4392,7 +4390,7 @@ state.ddTipo = 'pcv'; state.ddCC = null; state.ddST = null;
 /* ---------- Situação de validade / prazo ---------- */
 function sitDoc(t, r){
   var cfg=DOCS[t];
-  if(normSt(r.status)==='Cancelado') return {k:'NA', l:'—', dias:null};
+  if(normSt(r.status)==='Cancelado') return {k:'NA', l:'-', dias:null};
   if(cfg.alvo==='prazo'){
     if(r[cfg.campoConclusao]) return {k:'ASSIN', l:'Assinada', dias:null};
     var p=r[cfg.campoData]; if(!p) return {k:'SEM', l:'Sem prazo', dias:null};
@@ -4461,7 +4459,7 @@ function procEtapa(t, r){
 }
 function procHTML(t, r){
   var p=procEtapa(t, r);
-  if(!p) return '<span class="dmuted">—</span>';
+  if(!p) return '<span class="dmuted">-</span>';
   if(p.fim) return '<span class="dmuted">Etapas concluídas</span>';
   var tit='Aguardando: '+p.nome+(p.desde?'\n'+(p.porCadastro?(DOCS[t].inicioCampo&&r[DOCS[t].inicioCampo]?'Emitida em ':'Cadastrado em '):'Etapa anterior concluída em ')+fmtBR(p.desde):'')+(p.total!=null?'\nTotal no processo: '+p.total+' dia'+(p.total===1?'':'s'):'');
   return '<span class="proc" title="'+esc(tit)+'"><span class="proc-n">'+(p.prox+1)+'</span><span class="proc-et">'+esc(p.curto)+'</span>'
@@ -4562,6 +4560,7 @@ function escondeTodasViews(){
   escondeDocs();
 }
 function _docsMostrar(t){
+  if(t==='carta') t='pcv';
   escondeTodasViews();
   state.docTipo = t || state.docTipo || 'pcv';
   state.docSel = null;
@@ -4573,6 +4572,7 @@ function _docsMostrar(t){
   });
 }
 function goDocs(t){
+  if(t==='carta') t='pcv';
   _docsMostrar(t);
   if(typeof ABAS!=='undefined' && !ABAS.trocando){ var a=abaAtual(); if(a){ a.docTipo=state.docTipo; } marcaViewAba('docs'); }
 }
@@ -4647,7 +4647,7 @@ function cmpDoc(a,b){
 }
 function badgeSt(v){ var s=stInfo(v); return '<span class="dbadge" style="background:'+s.hex+';">'+esc(stLabel(v))+'</span>'; }
 function badgeSit(sit){
-  if(sit.k==='NA') return '<span class="dmuted">—</span>';
+  if(sit.k==='NA') return '<span class="dmuted">-</span>';
   var h=SIT_HEX[sit.k]; return '<span class="dsoft" style="--c:'+h+';">'+esc(sit.l)+'</span>';
 }
 function etapasHTML(t, r){
@@ -4665,13 +4665,13 @@ function etapasHTML(t, r){
 function celulaDoc(t, c, x){
   var r=x.r, v;
   if(c.k==='_sit') return badgeSit(x.sit);
-  if(c.k==='_dias'){ if(x.sit.dias==null) return '<span class="dmuted">—</span>'; return '<span class="'+(x.sit.dias<0?'dneg':(x.sit.k==='V30'?'dwarn':''))+'">'+x.sit.dias+'</span>'; }
+  if(c.k==='_dias'){ if(x.sit.dias==null) return '<span class="dmuted">-</span>'; return '<span class="'+(x.sit.dias<0?'dneg':(x.sit.k==='V30'?'dwarn':''))+'">'+x.sit.dias+'</span>'; }
   if(c.k==='_etapas') return etapasHTML(t, r);
   if(c.k==='_proc') return procHTML(t, r);
   if(c.k==='status') return badgeSt(r.status);
   v=r[c.k];
-  if(c.date) return v ? fmtBR(v) : '<span class="dmuted">—</span>';
-  if(v==null || v==='') return '<span class="dmuted">—</span>';
+  if(c.date) return v ? fmtBR(v) : '<span class="dmuted">-</span>';
+  if(v==null || v==='') return '<span class="dmuted">-</span>';
   return c.cls==='obs' ? '<span class="dobs" title="'+esc(v)+'">'+esc(v)+'</span>' : esc(v);
 }
 function renderDocs(){
@@ -5021,7 +5021,7 @@ function exportarDocsCSV(){
     var r=x.r;
     linhas.push([r.cc||''].concat(campos.filter(function(f){ return f.k!=='cc'; }).map(function(f){
       var v=r[f.k]; if(f.status) return stLabel(v); if(f.date) return v?fmtBR(v):''; return v==null?'':v;
-    })).concat([x.sit.l==='—'?'':x.sit.l, x.sit.dias==null?'':x.sit.dias]));
+    })).concat([x.sit.l==='-'?'':x.sit.l, x.sit.dias==null?'':x.sit.dias]));
   });
   var csv='\ufeff'+linhas.map(function(l){ return l.map(function(v){ v=String(v).replace(/"/g,'""'); return /[;"\n]/.test(v)?'"'+v+'"':v; }).join(';'); }).join('\r\n');
   var a=document.createElement('a');
@@ -5271,7 +5271,7 @@ function gerarDocsDash(){
   var prox=base.filter(function(x){ return x.sit.k==='VENC'||x.sit.k==='V30'||x.sit.k==='V60'; }).sort(function(a,b){ return a.sit.dias-b.sit.dias; });
   $('dd-tit-prox').textContent = prazo ? 'Prazos de assinatura (vencidos e próximos 7 dias)' : 'Próximos vencimentos (vencidos e próximos 60 dias)';
   $('dd-prox').innerHTML = prox.length ? '<table class="mini"><thead><tr><th>CC</th><th>Colaborador</th><th>'+esc(cfg.rotData)+'</th><th>Dias</th></tr></thead><tbody>'
-    + prox.map(function(x){ return '<tr onclick="abrirDocForm(\'ver\',\''+t+'\',\''+esc(x.r.id)+'\')"><td>'+esc(x.r.cc||'—')+'</td><td class="nm">'+esc(x.r.colaborador)+'</td><td>'+fmtBR(x.r[cfg.campoData])+'</td><td>'+badgeDias(x.sit)+'</td></tr>'; }).join('')
+    + prox.map(function(x){ return '<tr onclick="abrirDocForm(\'ver\',\''+t+'\',\''+esc(x.r.id)+'\')"><td>'+esc(x.r.cc||'-')+'</td><td class="nm">'+esc(x.r.colaborador)+'</td><td>'+fmtBR(x.r[cfg.campoData])+'</td><td>'+badgeDias(x.sit)+'</td></tr>'; }).join('')
     + '</tbody></table>' : '<div class="dv-vazio">Nenhum vencimento próximo.</div>';
 
   // Resumo por centro de custo
@@ -5280,7 +5280,7 @@ function gerarDocsDash(){
     var cg=contaDocs(txCC[g]); var atencao = cg.st['Atrasado'] || cg.venc || cg.v30;
     var situ = atencao ? '<span class="sit-at">▲ Atenção</span>' : (cg.ativos && cg.st['Concluído']===cg.ativos ? '<span class="sit-ok">✓ Concluído</span>' : '<span class="sit-ex">● Em execução</span>');
     linhas+='<tr class="'+(state.ddCC===g?'sel':'')+'" onclick="ddFiltraCC(state.ddCC===\''+esc(g)+'\'?null:\''+esc(g)+'\')" title="Clique para filtrar">'
-      +'<td class="nm">'+esc(g||'Sem CC')+'</td><td>'+esc(ccDesc(g)||'—')+'</td><td class="n"><b>'+cg.total+'</b></td>'
+      +'<td class="nm">'+esc(g||'Sem CC')+'</td><td>'+esc(ccDesc(g)||'-')+'</td><td class="n"><b>'+cg.total+'</b></td>'
       +['Concluído','Em Andamento','Pendente','Atrasado','Cancelado',''].map(function(s){ return '<td class="n">'+(cg.st[s]||'<span class="dmuted">0</span>')+'</td>'; }).join('')
       +'<td><span class="pbar"><i style="width:'+cg.taxa+'%;"></i></span>'+String(cg.taxa).replace('.',',')+'%</td>'
       +'<td class="n">'+(cg.venc?'<span class="dneg">'+cg.venc+'</span>':'0')+'</td><td class="n">'+(cg.v30?'<span class="dwarn">'+cg.v30+'</span>':'0')+'</td><td>'+situ+'</td></tr>';
@@ -5302,7 +5302,7 @@ function gerarDocsDash(){
   $('dd-sub-geral').textContent = state.ddCC!==null ? 'Considerando apenas o '+nomeCC(state.ddCC) : 'Todos os centros de custo';
 }
 function badgeDias(sit){
-  if(sit.dias==null) return '<span class="dmuted">—</span>';
+  if(sit.dias==null) return '<span class="dmuted">-</span>';
   var h=SIT_HEX[sit.k];
   return '<span class="dsoft" style="--c:'+h+';">'+(sit.dias<0 ? Math.abs(sit.dias)+' d em atraso' : sit.dias+' d')+'</span>';
 }
@@ -5322,7 +5322,7 @@ function abrirListaDD(chave){
     var cc=String(x.r.cc||'');
     if(cc!==g){ g=cc; html+='<tr class="grp"><td colspan="7">'+esc(nomeCC(cc))+(ccDesc(cc)?' - '+esc(ccDesc(cc)):'')+'</td></tr>'; }
     html+='<tr tabindex="0" onclick="closeDlg(\'dlg-ddlista\');abrirDocForm(\'ver\',\''+t+'\',\''+esc(x.r.id)+'\')" onkeydown="if(event.key===\'Enter\')this.click()">'
-      +'<td><span class="dot" style="background:'+stInfo(x.r.status).hex+';"></span></td><td class="nm">'+esc(x.r.colaborador)+'</td><td>'+esc(x.r.cc||'—')+'</td><td>'+esc(x.r.funcao||'—')+'</td>'
+      +'<td><span class="dot" style="background:'+stInfo(x.r.status).hex+';"></span></td><td class="nm">'+esc(x.r.colaborador)+'</td><td>'+esc(x.r.cc||'-')+'</td><td>'+esc(x.r.funcao||'-')+'</td>'
       +'<td>'+badgeSt(x.r.status)+'</td><td>'+badgeSit(x.sit)+'</td><td>'+fmtBR(x.r[cfg.campoData])+'</td></tr>';
   });
   $('ddl-lista').innerHTML=html || '<tr><td colspan="7" class="dv-vazio">Nenhum colaborador nesta situação.</td></tr>';
@@ -5382,7 +5382,7 @@ function abrirAvisoVenc(manual){
           var r=i.x.r, cc=String(r.cc||'');
           return '<tr class="'+(i.dias<0?'venc':'prox')+'" onclick="abrirDocForm(\'ver\',\''+t+'\',\''+esc(r.id)+'\')" title="Ver registro">'
             +'<td>'+(cc?esc(cc)+(ccDesc(cc)?' <span class="dmuted">'+esc(ccDesc(cc))+'</span>':''):'<span class="dmuted">Sem CC</span>')+'</td>'
-            +'<td class="nm">'+esc(r.colaborador)+'</td><td>'+esc(r.funcao||'—')+'</td>'
+            +'<td class="nm">'+esc(r.colaborador)+'</td><td>'+esc(r.funcao||'-')+'</td>'
             +'<td><b>'+fmtBR(r[cfg.campoData])+'</b></td>'
             +'<td>'+badgeDias(i.x.sit)+'</td><td>'+badgeSt(r.status)+'</td></tr>';
         }).join('')+'</tbody></table></div></section>';
@@ -5544,7 +5544,7 @@ function renderAlertas(){
     + pa.map(function(x){
         var ds=destPara(x.t), cor=x.marco<=7?'#d9433b':(x.marco<=10?'#e07b39':'#b7791f');
         return '<tr onclick="abrirDocForm(\'ver\',\''+x.t+'\',\''+esc(x.r.id)+'\')"><td><b>'+(x.pendente?'Próxima execução':fmtBR(x.quando))+'</b></td>'
-          +'<td><span class="dsoft" style="--c:'+cor+';">'+x.marco+' dias</span></td><td>'+DOCS[x.t].ico+' '+esc(DOCS[x.t].titulo)+'</td><td>'+esc(x.r.cc||'—')+'</td>'
+          +'<td><span class="dsoft" style="--c:'+cor+';">'+x.marco+' dias</span></td><td>'+DOCS[x.t].ico+' '+esc(DOCS[x.t].titulo)+'</td><td>'+esc(x.r.cc||'-')+'</td>'
           +'<td class="nm">'+esc(x.r.colaborador)+'</td><td>'+fmtBR(x.venc)+'</td>'
           +'<td>'+(ds.length ? ds.length+' pessoa'+(ds.length===1?'':'s') : '<span class="dneg">ninguém cadastrado</span>')+'</td></tr>';
       }).join('') + '</tbody></table>'
@@ -5554,7 +5554,7 @@ function renderAlertas(){
   $('al-env').innerHTML = env.length ? '<table class="mini wide"><thead><tr><th>Enviado em</th><th>Aviso</th><th>Documento</th><th>CC</th><th>Colaborador</th><th>Vencimento</th><th>Enviado para</th></tr></thead><tbody>'
     + env.map(function(x){
         var dt=new Date(x.enviado_em), d2=String(dt.getDate()).padStart(2,'0')+'/'+String(dt.getMonth()+1).padStart(2,'0')+'/'+dt.getFullYear()+' '+String(dt.getHours()).padStart(2,'0')+':'+String(dt.getMinutes()).padStart(2,'0');
-        return '<tr><td>'+d2+'</td><td>'+x.marco+' dias</td><td>'+(DOCS[x.tipo]?DOCS[x.tipo].ico+' '+esc(DOCS[x.tipo].titulo):esc(x.tipo))+'</td><td>'+esc(x.cc||'—')+'</td><td class="nm">'+esc(String(x.colaborador||'').toUpperCase())+'</td><td>'+fmtBR(x.vencimento)+'</td><td class="al-para" title="'+esc(x.enviado_para||'')+'">'+esc(x.enviado_para||'—')+'</td></tr>';
+        return '<tr><td>'+d2+'</td><td>'+x.marco+' dias</td><td>'+(DOCS[x.tipo]?DOCS[x.tipo].ico+' '+esc(DOCS[x.tipo].titulo):esc(x.tipo))+'</td><td>'+esc(x.cc||'-')+'</td><td class="nm">'+esc(String(x.colaborador||'').toUpperCase())+'</td><td>'+fmtBR(x.vencimento)+'</td><td class="al-para" title="'+esc(x.enviado_para||'')+'">'+esc(x.enviado_para||'-')+'</td></tr>';
       }).join('') + '</tbody></table>'
     : '<div class="dv-vazio">Nenhum alerta enviado ainda.</div>';
 }
@@ -5978,7 +5978,7 @@ function nrPassa(c){
 function nrCelulaCurso(r){
   if(!r) return '<span class="nrp k-NONE" title="Curso não cadastrado">·</span>';
   var s=nrSit(r), t;
-  if(s.k==='NA') t='N.A'; else if(r.marcacao==='EM_DIA') t='EM DIA'; else if(s.k==='SEM') t='—'; else t=nrData(r.vencimento);
+  if(s.k==='NA') t='N.A'; else if(r.marcacao==='EM_DIA') t='EM DIA'; else if(s.k==='SEM') t='-'; else t=nrData(r.vencimento);
   var tip = r.curso+': '+s.l+(r.data_realizacao?' · realizado em '+fmtBR(String(r.data_realizacao).slice(0,10)):'')+(r.validade_anos?' · validade '+String(r.validade_anos).replace('.',',')+' ano(s)':'')+(s.dias!=null?' · '+nrDiasTexto(s):'');
   return '<span class="nrp '+nrSitClasse(s.k)+'" title="'+esc(tip)+'">'+t+'</span>';
 }
@@ -6028,7 +6028,7 @@ function nrRender(){
     html+='<tr class="drow nr-row" style="animation-delay:'+Math.min(i,20)*12+'ms" data-nome="'+esc(c.nome)+'" onclick="nrAbrirCadastro(this.getAttribute(\'data-nome\'))" title="Clique para abrir o cadastro de NRs">'
       +'<td><span class="nr-car">&#9998;</span></td>'
       +'<td class="nm"><span class="nr-nome">'+esc(c.nome)+'</span></td>'
-      +'<td class="nr-cargo" title="'+esc(c.cargo||'')+'">'+esc(c.cargo||'—')+'</td><td>'+esc(c.cc||'—')+'</td>'
+      +'<td class="nr-cargo" title="'+esc(c.cargo||'')+'">'+esc(c.cargo||'-')+'</td><td>'+esc(c.cc||'-')+'</td>'
       +cursos.map(function(cu){ return '<td class="nr-tdc">'+nrCelulaCurso(c.porCurso[cu])+'</td>'; }).join('')
       +'<td><span class="nrsit '+nrSitClasse(c.sit)+'"><span class="dot"></span>'+{VENC:'Vencida',V30:'A vencer',OK:'Válido',SEM:'Sem dados',NA:'N.A'}[c.sit]+'</span></td>'
       +'<td class="nr-obs" title="'+esc(c.obs.join('\n'))+'">'+esc(c.obs.join(' · '))+'</td></tr>';
@@ -6087,9 +6087,9 @@ function nrCadRender(primeira){
         +[['SIM','Sim'],['NA','N.A'],['EM_DIA','Em dia (sem data)']].map(function(o){ return '<option value="'+o[0]+'"'+(l.aplica===o[0]?' selected':'')+'>'+o[1]+'</option>'; }).join('')+'</select></td>'
       +'<td><input type="date" value="'+esc(l.realizacao)+'" max="'+hoje()+'" onchange="nrCadMuda('+i+',\'realizacao\',this.value)"'+(off?' disabled':dis)+'></td>'
       +'<td><div class="nrc-anos"><input type="number" min="0.5" max="10" step="0.5" value="'+esc(l.anos)+'" onchange="nrCadMuda('+i+',\'anos\',this.value)"'+(off?' disabled':dis)+'><span>ano'+(Number(l.anos)===1?'':'s')+'</span></div></td>'
-      +'<td class="nrc-venc">'+(off?'—':(venc?'<b>'+fmtBR(venc)+'</b>'+(!l.realizacao&&l.vencOrig?'<small title="Vencimento importado da planilha; informe a realização para recalcular">da planilha</small>':''):'<span class="nrd-na">informe a realização</span>'))+'</td>'
+      +'<td class="nrc-venc">'+(off?'-':(venc?'<b>'+fmtBR(venc)+'</b>'+(!l.realizacao&&l.vencOrig?'<small title="Vencimento importado da planilha; informe a realização para recalcular">da planilha</small>':''):'<span class="nrd-na">informe a realização</span>'))+'</td>'
       +'<td><span class="nrsit '+nrSitClasse(s.k)+'"><span class="dot"></span>'+esc(s.l)+'</span></td>'
-      +'<td class="nrc-dias '+nrSitClasse(s.k)+'">'+(s.dias==null?'—':(s.dias<0?'<b>'+s.dias+'</b><small>vencido há '+(-s.dias)+' dia'+(s.dias===-1?'':'s')+'</small>':'<b>'+s.dias+'</b><small>dia'+(s.dias===1?'':'s')+'</small>'))+'</td>'
+      +'<td class="nrc-dias '+nrSitClasse(s.k)+'">'+(s.dias==null?'-':(s.dias<0?'<b>'+s.dias+'</b><small>vencido há '+(-s.dias)+' dia'+(s.dias===-1?'':'s')+'</small>':'<b>'+s.dias+'</b><small>dia'+(s.dias===1?'':'s')+'</small>'))+'</td>'
       +'<td><input class="nrc-obs" value="'+esc(l.obs)+'" placeholder="Observação" oninput="NR.cad.linhas['+i+'].obs=this.value"'+dis+'></td>'
       +'<td>'+(cad.pode && !l.padrao ? '<button type="button" class="nrc-x" title="Remover este curso" onclick="nrCadRemove('+i+')">&#10005;</button>' : '')+'</td>'
       +'</tr>';
@@ -6452,7 +6452,6 @@ function nrMontarExcel(){
       <div class="ff w3"><label for="ad-email">E-mail <span class="req">*</span></label><input type="email" id="ad-email" placeholder="nome@empresa.com.br"></div>
       <div class="fsec">Recebe alertas de</div>
       <label class="al-ck w3"><input type="checkbox" id="ad-pcv"> &#128203; PCV</label>
-      <label class="al-ck w3"><input type="checkbox" id="ad-carta"> &#9993;&#65039; Cartas de Designa&ccedil;&atilde;o</label>
       <label class="al-ck w3"><input type="checkbox" id="ad-cracha"> &#129706; Crach&aacute; Cr&iacute;tico</label>
       <div class="fsec">Situa&ccedil;&atilde;o</div>
       <label class="al-ck w3"><input type="checkbox" id="ad-ativo" checked> Ativo (desmarque para pausar os alertas desta pessoa)</label>
