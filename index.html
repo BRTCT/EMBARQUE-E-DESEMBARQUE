@@ -1429,6 +1429,17 @@
   #foto-fundo.ok .foto-img img{opacity:1;} #foto-fundo.ok .foto-carr{display:none;}
   #foto-fundo .foto-carr{position:absolute;color:#8a8a8a;font-size:13px;}
   #foto-fundo .foto-rod{padding:12px 16px;border-top:1px solid #eee;text-align:right;}
+
+  /* status digitado em cada etapa (PCV) */
+  .etl-item .etl-obs{grid-column:3/-1;display:flex;align-items:center;gap:8px;margin-top:-2px;}
+  .etl-item .etl-obs input{flex:1;min-width:0;border:1px dashed #cdd6e0;border-radius:8px;padding:6px 10px;font-size:12.5px;font-family:inherit;color:#1f3347;background:#fbfcfd;transition:border-color .15s,background .15s;}
+  .etl-item .etl-obs input:focus{outline:none;border-style:solid;border-color:var(--azul);background:#fff;box-shadow:0 0 0 3px rgba(18,114,185,.12);}
+  .etl-item .etl-obs input:disabled{background:transparent;border-color:transparent;padding-left:0;}
+  .etl-item .etl-obs input:disabled:placeholder-shown{display:none;}
+  .etl-item .etl-obs .etl-obs-i{font-size:11px;font-weight:700;color:#8a97a6;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;}
+  .etl-item.tem-obs .etl-obs .etl-obs-i{color:#b35a12;}
+  .proc-obs{display:block;margin-top:3px;font-size:11px;font-weight:600;color:#b35a12;line-height:1.3;max-width:260px;white-space:normal;}
+  @media (max-width:700px){ .etl-item .etl-obs{grid-column:1/-1;} }
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700;800&display=swap" rel="stylesheet">
@@ -4496,8 +4507,11 @@ function procHTML(t, r){
   if(!p) return '<span class="dmuted">—</span>';
   if(p.fim) return '<span class="dmuted">Etapas concluídas</span>';
   var tit='Aguardando: '+p.nome+(p.desde?'\n'+(p.porCadastro?(DOCS[t].inicioCampo&&r[DOCS[t].inicioCampo]?'Emitida em ':'Cadastrado em '):'Etapa anterior concluída em ')+fmtBR(p.desde):'')+(p.total!=null?'\nTotal no processo: '+p.total+' dia'+(p.total===1?'':'s'):'');
+  var etA=etapasAtivas(t, r)[p.prox], stA=etA ? etapasStatusDe(r)[etA[0]] : '';
+  if(stA) tit+='\nStatus: '+stA;
   return '<span class="proc" title="'+esc(tit)+'"><span class="proc-n">'+(p.prox+1)+'</span><span class="proc-et">'+esc(p.curto)+'</span>'
-    +(p.dias!=null ? '<span class="dsoft" style="--c:'+corDiasProc(p.dias)+';">'+p.dias+' dia'+(p.dias===1?'':'s')+'</span>' : '')+'</span>';
+    +(p.dias!=null ? '<span class="dsoft" style="--c:'+corDiasProc(p.dias)+';">'+p.dias+' dia'+(p.dias===1?'':'s')+'</span>' : '')+'</span>'
+    +(stA ? '<span class="proc-obs">&#9998; '+esc(stA)+'</span>' : '');
 }
 function etapasFeitas(t, r){
   var et=etapasAtivas(t, r);
@@ -4539,6 +4553,7 @@ function docsCarregar(t, forcar){
   return api(DOCS[t].tabela+'?select=*&order=colaborador.asc').then(function(rows){
     state.docs[t]=rows||[]; state.docLocal[t]=false; state.docErro[t]=null;
     state.docColsFaltando[t] = !!(COLS_NOVAS[t] && state.docs[t].length && COLS_NOVAS[t].some(function(k){ return state.docs[t][0][k]===undefined; }));
+    state.semEtapasStatus = state.semEtapasStatus || {}; state.semEtapasStatus[t] = !!(DOCS[t].etapasChecklist && state.docs[t].length && state.docs[t][0].etapas_status===undefined);
     nomesMaiusculos(state.docs[t]);
     return state.docs[t];
   }).catch(function(err){
@@ -4850,8 +4865,10 @@ function abrirDocForm(modo, t, id){
   if(!ro) setTimeout(function(){ var e=$('df-colaborador'); if(e) e.focus(); }, 30);
   atualizaChecklist();
 }
+function etapasStatusDe(r){ var o=r && r.etapas_status; if(typeof o==='string'){ try{ o=JSON.parse(o); }catch(e){ o=null; } } return o||{}; }
 function checklistEtapasHTML(cfg, r, ro, ativas, limpar){
   ativas = ativas || cfg.etapas;
+  var sts = limpar ? {} : etapasStatusDe(r);
   var h='<div class="etl"><div class="etl-top"><span id="etl-prog-tx"></span><span class="etl-prog"><i id="etl-prog-bar"></i></span></div>';
   cfg.etapas.forEach(function(e, i){
     var k=e[0];
@@ -4860,13 +4877,14 @@ function checklistEtapasHTML(cfg, r, ro, ativas, limpar){
         +'<span class="etl-lbl">'+esc(e[1])+'</span><span class="etl-st">Não se aplica</span><span></span></div>';
       return;
     }
-    var v = (!limpar && r && r[k]) ? String(r[k]) : '';
-    h+='<div class="etl-item'+(v?' on':'')+'" id="etl-'+k+'">'
+    var v = (!limpar && r && r[k]) ? String(r[k]) : '', sv = sts[k] || '';
+    h+='<div class="etl-item'+(v?' on':'')+(sv?' tem-obs':'')+'" id="etl-'+k+'">'
       +'<button type="button" class="etl-chk" role="checkbox" aria-checked="'+(v?'true':'false')+'" aria-label="Marcar etapa '+(i+1)+' como concluída" onclick="toggleEtapa(\''+k+'\')"'+(ro?' disabled':'')+'>&#10003;</button>'
       +'<span class="etl-num">'+(i+1)+'</span>'
       +'<label class="etl-lbl" for="df-'+k+'">'+esc(e[1])+(e[3]?'<small>'+esc(e[3])+'</small>':'')+'</label>'
       +'<span class="etl-st">'+(v?'Concluída':'Pendente')+'</span>'
       +'<input type="date" id="df-'+k+'" value="'+esc(v)+'" onchange="etapaDataMudou(\''+k+'\')" title="Data de conclusão da etapa (pode ser alterada)"'+(ro?' disabled':'')+'>'
+      +'<div class="etl-obs"><span class="etl-obs-i">Status</span><input type="text" id="ds-'+k+'" maxlength="300" value="'+esc(sv)+'" placeholder="Ex.: solicitado em 10/11, aguardando retorno do gestor" oninput="this.closest(\'.etl-item\').classList.toggle(\'tem-obs\', !!this.value.trim())"'+(ro?' disabled':'')+'></div>'
       +'</div>';
   });
   return h+'</div>';
@@ -5006,6 +5024,10 @@ function salvarDocForm(){
       if(el){ var v=(el.value||'').trim(); dados[e[0]] = v==='' ? null : v; }
       else if(f.renov) dados[e[0]] = null;          // etapa que não se aplica nesta renovação
     });
+    var sts={}, tem=false;
+    cfg.etapas.forEach(function(e){ var el=$('ds-'+e[0]); if(el && el.value.trim()){ sts[e[0]]=el.value.trim(); tem=true; } });
+    dados.etapas_status = tem ? sts : null;
+    if(state.semEtapasStatus && state.semEtapasStatus[f.t]){ delete dados.etapas_status; if(tem) toast('O status das etapas não foi gravado: rode o arquivo embarque_pcv_etapas_status.sql no Supabase.', true); }
   }
   if(f.renov){
     var r0=docById(f.t, f.id) || {};
