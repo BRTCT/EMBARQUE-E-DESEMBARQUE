@@ -1396,6 +1396,39 @@
   @keyframes nrPulso{0%{box-shadow:0 0 0 0 rgba(217,67,59,.55);}70%{box-shadow:0 0 0 6px rgba(217,67,59,0);}100%{box-shadow:0 0 0 0 rgba(217,67,59,0);}}
   @keyframes nrPulsoAz{0%{box-shadow:0 0 0 0 rgba(18,114,185,.45);}70%{box-shadow:0 0 0 6px rgba(18,114,185,0);}100%{box-shadow:0 0 0 0 rgba(18,114,185,0);}}
   @media (prefers-reduced-motion: reduce){ .nrk,.nrd,.nrd-t tbody tr,.nrp-and,.nrs-p.prox,.nrsit .dot{animation:none !important;} }
+
+  /* coluna e filtros de Crachá */
+  .nr-kpis-crc{align-items:stretch;}
+  .nr-crc-tit{display:flex;align-items:center;font-size:11px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:#5a6b7d;padding:0 4px 0 2px;}
+  .nr-crc-av{flex-basis:100%;font-size:12px;color:#8f1f18;}
+  .nr-tdcrc{text-align:center;}
+  select.nr-crc{appearance:none;-webkit-appearance:none;border:1px solid #d6dde5;border-radius:999px;padding:4px 24px 4px 10px;font-size:11px;font-weight:700;cursor:pointer;max-width:100%;
+    background:#fff url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M0 0l5 6 5-6z' fill='%23667'/></svg>") no-repeat right 9px center;transition:background-color .15s,border-color .15s;}
+  select.nr-crc:hover{border-color:#9fb0c2;}
+  select.nr-crc.ok{background-color:#e2f2df;color:#1e6b2d;border-color:#b9dcb3;}
+  select.nr-crc.agu{background-color:#fff4d6;color:#8a5a00;border-color:#f1d896;}
+  select.nr-crc.sol{background-color:#fbe1df;color:#b3261e;border-color:#f0bdb8;}
+  select.nr-crc.vaz{color:#8a97a6;}
+  select.nr-crc:disabled{opacity:.6;cursor:wait;}
+  .nr-kpis.nr-kpis-crc{grid-template-columns:auto repeat(4,minmax(150px,1fr));margin-top:8px;}
+  .nr-crc-av{grid-column:1/-1;}
+  @media (max-width:1100px){ .nr-kpis.nr-kpis-crc{grid-template-columns:repeat(2,1fr);} .nr-crc-tit{grid-column:1/-1;} }
+
+  /* fotos dos técnicos (PCV e Crachá Crítico) */
+  .foto-chip{display:inline-flex;align-items:center;gap:4px;margin-left:7px;vertical-align:middle;border:1px solid #cfe1f1;background:#eef5fb;color:#1d5f94;border-radius:999px;padding:2px 8px 2px 6px;font-size:10.5px;font-weight:700;cursor:pointer;transition:background .15s,transform .12s;}
+  .foto-chip:hover{background:#dcebf8;transform:translateY(-1px);}
+  #foto-fundo{position:fixed;inset:0;background:rgba(15,20,25,.6);backdrop-filter:blur(3px);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .2s;}
+  #foto-fundo.on{opacity:1;pointer-events:auto;}
+  #foto-fundo .foto-box{background:#fff;border-radius:16px;width:min(720px,100%);max-height:92vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.35);transform:scale(.97);transition:transform .25s cubic-bezier(.2,.8,.3,1);}
+  #foto-fundo.on .foto-box{transform:none;}
+  #foto-fundo .foto-cab{display:flex;align-items:flex-start;gap:10px;padding:14px 16px;border-bottom:1px solid #eee;}
+  #foto-fundo .foto-cab div{flex:1;} #foto-fundo .foto-cab b{display:block;font-size:15px;} #foto-fundo .foto-cab small{font-size:12px;color:#6b7563;}
+  #foto-fundo .foto-cab button{border:1px solid #e5e5e5;background:#fff;border-radius:8px;width:32px;height:32px;cursor:pointer;}
+  #foto-fundo .foto-img{flex:1;min-height:240px;background:#f4f4f4;display:flex;align-items:center;justify-content:center;position:relative;overflow:auto;}
+  #foto-fundo .foto-img img{max-width:100%;max-height:70vh;display:block;opacity:0;transition:opacity .3s;}
+  #foto-fundo.ok .foto-img img{opacity:1;} #foto-fundo.ok .foto-carr{display:none;}
+  #foto-fundo .foto-carr{position:absolute;color:#8a8a8a;font-size:13px;}
+  #foto-fundo .foto-rod{padding:12px 16px;border-top:1px solid #eee;text-align:right;}
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700;800&display=swap" rel="stylesheet">
@@ -1676,6 +1709,7 @@
       </div>
       <div class="docs-aviso" id="nr-aviso" style="display:none;"></div>
       <div class="nr-kpis" id="nr-resumo"></div>
+      <div class="nr-kpis nr-kpis-crc" id="nr-cracha-kpis"></div>
       <div class="dv-wrap">
         <table class="dtab nr-tab"><thead id="nr-head"></thead><tbody id="nr-grid"></tbody></table>
       </div>
@@ -2081,9 +2115,9 @@ function esc(s){ return (s==null?'':String(s)).replace(/&/g,'&amp;').replace(/</
 function hoje(){ var d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
 function addDays(iso,n){ var p=iso.split('-').map(Number); var dt=new Date(Date.UTC(p[0],p[1]-1,p[2]+n)); return dt.toISOString().slice(0,10); }
 function diffDays(a,b){ var x=a.split('-').map(Number), y=b.split('-').map(Number); return Math.round((Date.UTC(y[0],y[1]-1,y[2])-Date.UTC(x[0],x[1]-1,x[2]))/86400000); }
-function fmtBR(iso){ if(!iso) return '-'; var p=iso.split('-'); return p[2]+'/'+p[1]+'/'+p[0]; }
+function fmtBR(iso){ if(!iso) return '—'; var p=iso.split('-'); return p[2]+'/'+p[1]+'/'+p[0]; }
 function fmtBRComDia(iso){
-  if(!iso) return '-';
+  if(!iso) return '—';
   var dias = ['domingo','segunda-feira','terça-feira','quarta-feira','quinta-feira','sexta-feira','sábado'];
   var p = iso.split('-');
   var d = new Date(parseInt(p[0]),parseInt(p[1])-1,parseInt(p[2]));
@@ -2235,7 +2269,7 @@ function statusInfo(c){
     var df = diffDays(e.data_desembarque,h), tf = diffDays(e.data_desembarque,e.data_reembarque)-1;
     return { code:'DES', e:e, detalhe:'Folga: '+df+'º dia de '+tf+' • reembarca em '+fmtBR(e.data_reembarque) };
   }
-  return { code:'PEND', e:e, detalhe:'Reembarque previsto em '+fmtBR(e.data_reembarque)+' - registre o novo embarque' };
+  return { code:'PEND', e:e, detalhe:'Reembarque previsto em '+fmtBR(e.data_reembarque)+' — registre o novo embarque' };
 }
 
 
@@ -2539,20 +2573,20 @@ function render(){
     var st=ST[si.code], e=si.e;
     rows+='<tr data-id="'+c.id+'" class="'+(state.sel===c.id?'sel':'')+' '+(c.nao_embarcou?'nao-embarcou':'')+'" onclick="selRow(this)" style="'+(c.nao_embarcou?'background-color:#ffebee;':'')+'">'
       +'<td style="text-align:center;"><span class="dot" style="background:'+st.hex+';" title="'+st.label+'"></span></td>'
-      +'<td class="td-cc">'+esc(c.cc||'-')+'</td>'
-      +'<td class="td-back">'+esc(c.back||'-')+'</td>'
-      +'<td class="td-num">'+esc(c.matricula||'-')+'</td>'
+      +'<td class="td-cc">'+esc(c.cc||'—')+'</td>'
+      +'<td class="td-back">'+esc(c.back||'—')+'</td>'
+      +'<td class="td-num">'+esc(c.matricula||'—')+'</td>'
       +'<td class="td-nome"><a class="nome-link" title="Ver histórico de embarques e alterações" onclick="event.stopPropagation();selRow(this.closest(\'tr\'));abrirHistColab(\''+c.id+'\')">'+esc(c.nome)+'</a></td>'
-      +'<td class="td-func">'+esc(c.funcao||'-')+'</td>'
-      +'<td class="td-cen">'+esc(c.turma||'-')+'</td>'
+      +'<td class="td-func">'+esc(c.funcao||'—')+'</td>'
+      +'<td class="td-cen">'+esc(c.turma||'—')+'</td>'
       +'<td class="td-cen">'+esc(c.escala)+'</td>'
       +'<td class="td-data td-emb"><span class="emb-dt">'+fmtBR(e?e.data_embarque:null)+'</span><button type="button" class="cal-btn" title="Alterar a data de embarque" aria-label="Alterar a data de embarque" onclick="event.stopPropagation();abrirMiniCal(this,\''+c.id+'\')">&#128197;</button></td>'
       +'<td class="td-data td-emb">'+(e ? '<span class="emb-dt">'+fmtBR(e.data_desembarque)+'</span><button type="button" class="cal-btn" title="Alterar a data de desembarque" aria-label="Alterar a data de desembarque" onclick="event.stopPropagation();abrirMiniCal(this,\''+c.id+'\',\'des\')">&#128197;</button>' : fmtBR(null))+'</td>'
       +'<td class="td-data">'+fmtBR(e?e.data_reembarque:null)+'</td>'
       +'<td style="text-align:center;"><input type="checkbox" class="chk-nao-embarcou" data-colab="'+c.id+'" '+(c.nao_embarcou?'checked':'')+' onchange="marcarNaoEmbarcou(this, \''+c.id+'\')"></td>'
-      +'<td><select class="sel-sit-folha sit-folha-'+(c.sit_folha?c.sit_folha.replace(/ /g,'-'):'vazio')+'" data-colab="'+c.id+'" onchange="salvarSitFolha(this, \''+c.id+'\')"><option value="">-</option><option value="AFASTADO INSS" '+(c.sit_folha==='AFASTADO INSS'?'selected':'')+'>AFASTADO INSS</option><option value="FÉRIAS" '+(c.sit_folha==='FÉRIAS'?'selected':'')+'>FÉRIAS</option></select></td>'
+      +'<td><select class="sel-sit-folha sit-folha-'+(c.sit_folha?c.sit_folha.replace(/ /g,'-'):'vazio')+'" data-colab="'+c.id+'" onchange="salvarSitFolha(this, \''+c.id+'\')"><option value="">—</option><option value="AFASTADO INSS" '+(c.sit_folha==='AFASTADO INSS'?'selected':'')+'>AFASTADO INSS</option><option value="FÉRIAS" '+(c.sit_folha==='FÉRIAS'?'selected':'')+'>FÉRIAS</option></select></td>'
       +'<td class="td-st" title="'+esc(si.detalhe)+'"><span class="badge pill-st" style="--c:'+st.hex+';">'+st.label+'</span><div class="st-detail">'+si.detalhe+'</div></td>'
-      +'<td class="td-obs" style="cursor:pointer;" title="'+esc(c.observacoes||'')+'" ondblclick="editarObs(this, \''+c.id+'\')"><span class="obs-text">'+esc(c.observacoes||'-')+'</span></td>'
+      +'<td class="td-obs" style="cursor:pointer;" title="'+esc(c.observacoes||'')+'" ondblclick="editarObs(this, \''+c.id+'\')"><span class="obs-text">'+esc(c.observacoes||'—')+'</span></td>'
       +'</tr>';
   });
   atualizaIconesColunas();
@@ -2817,7 +2851,7 @@ function montarExcelRota(grupos, cfgRel){
   var COLS = ['Nº', 'Nome', 'Matrícula', 'Função', 'CC', 'Turma', 'Endereço', 'Complemento', 'Bairro', 'Município', 'Telefone'];
   function valores(c, n){
     var end = (c.logradouro || '') + (c.numero ? ', ' + c.numero : '');
-    return [n, c.nome || '', c.matricula || '', c.funcao || '', c.cc || '', c.turma || '', end || '-', c.complemento || '-', c.bairro || 'SEM BAIRRO', c.municipio || '', c.telefone || '-'];
+    return [n, c.nome || '', c.matricula || '', c.funcao || '', c.cc || '', c.turma || '', end || '—', c.complemento || '—', c.bairro || 'SEM BAIRRO', c.municipio || '', c.telefone || '—'];
   }
   var LARG = [5, 34, 11, 22, 10, 7, 36, 20, 20, 16, 16];
   function configurar(ws){
@@ -2907,7 +2941,7 @@ function gerarRelatorio(){
         html += '<tr style="border-bottom:2px solid #333;"><th style="text-align:left;padding:8px;">Nome</th><th style="text-align:left;padding:8px;">Endereço</th><th style="text-align:left;padding:8px;">Complemento</th><th style="text-align:left;padding:8px;">Telefone</th></tr>';
         b.colabs.forEach(function(c){
           var end = (c.logradouro||'') + (c.numero?' '+c.numero:'');
-          html += '<tr style="border-bottom:1px solid #ddd;"><td style="padding:8px;">'+esc(c.nome)+'</td><td style="padding:8px;">'+esc(end)+'</td><td style="padding:8px;">'+esc(c.complemento||'-')+'</td><td style="padding:8px;">'+esc(c.telefone||'-')+'</td></tr>';
+          html += '<tr style="border-bottom:1px solid #ddd;"><td style="padding:8px;">'+esc(c.nome)+'</td><td style="padding:8px;">'+esc(end)+'</td><td style="padding:8px;">'+esc(c.complemento||'—')+'</td><td style="padding:8px;">'+esc(c.telefone||'—')+'</td></tr>';
         });
         html += '</table>';
       });
@@ -3331,7 +3365,7 @@ var HIST_ROTULOS = { matricula:'Matrícula', nome:'Nome', cpf:'CPF', funcao:'Fun
 function histUsuario(){ return (typeof EMB_CFG !== 'undefined' && EMB_CFG && (EMB_CFG.nome || EMB_CFG.usuario)) || 'Link externo'; }
 function histOrigem(){ return (typeof EMB_CFG !== 'undefined' && EMB_CFG) ? 'Portal' : 'Link externo'; }
 function histValor(v){
-  if(v === null || v === undefined || v === '') return '-';
+  if(v === null || v === undefined || v === '') return '—';
   if(typeof v === 'boolean') return v ? 'Sim' : 'Não';
   if(/^\d{4}-\d{2}-\d{2}$/.test(String(v))) return fmtBR(String(v));
   return String(v);
@@ -3386,7 +3420,7 @@ function abrirHistColab(id, silencioso){
         return '<div class="hc-ev" style="--c:' + cor + ';"><div class="hc-ev-dot"></div><div class="hc-ev-c">'
           + '<div class="hc-ev-top"><b>' + esc(h.acao) + '</b><span>' + quando + '</span></div>'
           + (h.detalhe ? '<div class="hc-ev-det">' + esc(h.detalhe) + '</div>' : '')
-          + '<div class="hc-ev-por">por <b>' + esc(h.usuario || '-') + '</b>' + (h.origem && h.origem !== h.usuario ? ' · pelo ' + esc(h.origem) : '') + '</div></div></div>';
+          + '<div class="hc-ev-por">por <b>' + esc(h.usuario || '—') + '</b>' + (h.origem && h.origem !== h.usuario ? ' · pelo ' + esc(h.origem) : '') + '</div></div></div>';
       }).join('') : '<div class="hc-vazio">Nenhuma alteração registrada ainda. A partir de agora, toda mudança neste colaborador aparece aqui.</div>';
     })
     .catch(function(){
@@ -3503,7 +3537,7 @@ function fillHist(c, podeEditar){
   var rows='';
   (c.embarques||[]).forEach(function(e){
     rows+='<tr><td>'+fmtBR(e.data_embarque)+'</td><td>'+fmtBR(e.data_desembarque)+'</td><td>'+fmtBR(e.data_reembarque)+'</td><td>'+esc(e.observacao||'')+'</td><td style="text-align:center;">'
-      +(podeEditar ? '<span class="act act-edit" title="Alterar datas" data-emb="'+e.id+'">&#9998;</span><span class="act act-del" title="Excluir ciclo" style="color:#c33;" data-emb="'+e.id+'">&#10005;</span>' : '-')
+      +(podeEditar ? '<span class="act act-edit" title="Alterar datas" data-emb="'+e.id+'">&#9998;</span><span class="act act-del" title="Excluir ciclo" style="color:#c33;" data-emb="'+e.id+'">&#10005;</span>' : '—')
       +'</td></tr>';
   });
   $('hist-body').innerHTML = rows || '<tr><td colspan="5" style="text-align:center;color:#999;">Nenhum embarque registrado</td></tr>';
@@ -3882,7 +3916,7 @@ function gerarDashboard(){
   var agora=new Date();
   $('dash-upd').textContent = 'Atualizado às '+String(agora.getHours()).padStart(2,'0')+':'+String(agora.getMinutes()).padStart(2,'0');
 
-  // Status geral - mostra todos os status do CC; clique filtra os demais gráficos
+  // Status geral — mostra todos os status do CC; clique filtra os demais gráficos
   var stCodes=[], stL=[], stD=[], stC=[];
   ORDEM_ST.forEach(function(code){ if(statusCount[code]>0){ stCodes.push(code); stL.push(rotuloStatus(code)); stD.push(statusCount[code]); stC.push(ST[code].hex); } });
   $('sub-status').textContent = totalCC+' colaboradores';
@@ -3903,7 +3937,7 @@ function gerarDashboard(){
   $('sub-turma').textContent = turL.length+' turma(s)';
   renderChart('chart-turma','bar',turL,turL.map(function(x){return tur[x];}),paleta(turL.length));
 
-  // Por centro de custo - considera o status; mostra todos os CCs e destaca o selecionado
+  // Por centro de custo — considera o status; mostra todos os CCs e destaca o selecionado
   var ccs = contaPor(function(c){ return String(c.cc||''); }, baseST);
   if(state.dashCC!==null && !(state.dashCC in ccs)) ccs[state.dashCC]=0;
   var ccVals = Object.keys(ccs).sort(function(a,b){ if(a==='') return 1; if(b==='') return -1; return a.localeCompare(b,'pt-BR',{numeric:true}); });
@@ -3913,7 +3947,7 @@ function gerarDashboard(){
     onClick: function(i){ var v=ccVals[i]; filtraDashCC(state.dashCC===v ? null : v); }
   });
 
-  // Por função - TODAS, ordenadas da maior para a menor
+  // Por função — TODAS, ordenadas da maior para a menor
   var fun = contaPor(function(c){ return c.funcao || 'Não informada'; }, base);
   var funL = Object.keys(fun).sort(function(a,b){ return fun[b]-fun[a] || a.localeCompare(b,'pt-BR'); });
   $('sub-funcao').textContent = funL.length+' função(ões)';
@@ -4201,11 +4235,11 @@ function desenhaListaFuncao(){
     }
     html+='<tr tabindex="0" onclick="verColabDaFuncao(\''+c.id+'\')" onkeydown="if(event.key===\'Enter\')verColabDaFuncao(\''+c.id+'\')">'
       +'<td><span class="dot" style="background:'+st.hex+';"></span></td>'
-      +'<td class="nm">'+esc(c.nome||'-')+'</td>'
-      +'<td>'+esc(c.matricula||'-')+'</td>'
-      +'<td>'+esc(c.cc||'-')+'</td>'
-      +'<td>'+esc(c.turma||'-')+'</td>'
-      +'<td>'+esc(c.escala||'-')+'</td>'
+      +'<td class="nm">'+esc(c.nome||'—')+'</td>'
+      +'<td>'+esc(c.matricula||'—')+'</td>'
+      +'<td>'+esc(c.cc||'—')+'</td>'
+      +'<td>'+esc(c.turma||'—')+'</td>'
+      +'<td>'+esc(c.escala||'—')+'</td>'
       +'<td><span class="badge" style="background:'+st.hex+';">'+st.label+'</span></td>'
       +'<td>'+fmtBR(e?e.data_embarque:null)+'</td>'
       +'<td>'+fmtBR(e?e.data_desembarque:null)+'</td>'
@@ -4390,7 +4424,7 @@ state.ddTipo = 'pcv'; state.ddCC = null; state.ddST = null;
 /* ---------- Situação de validade / prazo ---------- */
 function sitDoc(t, r){
   var cfg=DOCS[t];
-  if(normSt(r.status)==='Cancelado') return {k:'NA', l:'-', dias:null};
+  if(normSt(r.status)==='Cancelado') return {k:'NA', l:'—', dias:null};
   if(cfg.alvo==='prazo'){
     if(r[cfg.campoConclusao]) return {k:'ASSIN', l:'Assinada', dias:null};
     var p=r[cfg.campoData]; if(!p) return {k:'SEM', l:'Sem prazo', dias:null};
@@ -4459,7 +4493,7 @@ function procEtapa(t, r){
 }
 function procHTML(t, r){
   var p=procEtapa(t, r);
-  if(!p) return '<span class="dmuted">-</span>';
+  if(!p) return '<span class="dmuted">—</span>';
   if(p.fim) return '<span class="dmuted">Etapas concluídas</span>';
   var tit='Aguardando: '+p.nome+(p.desde?'\n'+(p.porCadastro?(DOCS[t].inicioCampo&&r[DOCS[t].inicioCampo]?'Emitida em ':'Cadastrado em '):'Etapa anterior concluída em ')+fmtBR(p.desde):'')+(p.total!=null?'\nTotal no processo: '+p.total+' dia'+(p.total===1?'':'s'):'');
   return '<span class="proc" title="'+esc(tit)+'"><span class="proc-n">'+(p.prox+1)+'</span><span class="proc-et">'+esc(p.curto)+'</span>'
@@ -4647,7 +4681,7 @@ function cmpDoc(a,b){
 }
 function badgeSt(v){ var s=stInfo(v); return '<span class="dbadge" style="background:'+s.hex+';">'+esc(stLabel(v))+'</span>'; }
 function badgeSit(sit){
-  if(sit.k==='NA') return '<span class="dmuted">-</span>';
+  if(sit.k==='NA') return '<span class="dmuted">—</span>';
   var h=SIT_HEX[sit.k]; return '<span class="dsoft" style="--c:'+h+';">'+esc(sit.l)+'</span>';
 }
 function etapasHTML(t, r){
@@ -4665,13 +4699,14 @@ function etapasHTML(t, r){
 function celulaDoc(t, c, x){
   var r=x.r, v;
   if(c.k==='_sit') return badgeSit(x.sit);
-  if(c.k==='_dias'){ if(x.sit.dias==null) return '<span class="dmuted">-</span>'; return '<span class="'+(x.sit.dias<0?'dneg':(x.sit.k==='V30'?'dwarn':''))+'">'+x.sit.dias+'</span>'; }
+  if(c.k==='_dias'){ if(x.sit.dias==null) return '<span class="dmuted">—</span>'; return '<span class="'+(x.sit.dias<0?'dneg':(x.sit.k==='V30'?'dwarn':''))+'">'+x.sit.dias+'</span>'; }
   if(c.k==='_etapas') return etapasHTML(t, r);
   if(c.k==='_proc') return procHTML(t, r);
   if(c.k==='status') return badgeSt(r.status);
+  if(c.k==='colaborador' && t==='pcv' && r.colaborador) return esc(r.colaborador)+fotoChip('pcv', r.colaborador);
   v=r[c.k];
-  if(c.date) return v ? fmtBR(v) : '<span class="dmuted">-</span>';
-  if(v==null || v==='') return '<span class="dmuted">-</span>';
+  if(c.date) return v ? fmtBR(v) : '<span class="dmuted">—</span>';
+  if(v==null || v==='') return '<span class="dmuted">—</span>';
   return c.cls==='obs' ? '<span class="dobs" title="'+esc(v)+'">'+esc(v)+'</span>' : esc(v);
 }
 function renderDocs(){
@@ -5021,7 +5056,7 @@ function exportarDocsCSV(){
     var r=x.r;
     linhas.push([r.cc||''].concat(campos.filter(function(f){ return f.k!=='cc'; }).map(function(f){
       var v=r[f.k]; if(f.status) return stLabel(v); if(f.date) return v?fmtBR(v):''; return v==null?'':v;
-    })).concat([x.sit.l==='-'?'':x.sit.l, x.sit.dias==null?'':x.sit.dias]));
+    })).concat([x.sit.l==='—'?'':x.sit.l, x.sit.dias==null?'':x.sit.dias]));
   });
   var csv='\ufeff'+linhas.map(function(l){ return l.map(function(v){ v=String(v).replace(/"/g,'""'); return /[;"\n]/.test(v)?'"'+v+'"':v; }).join(';'); }).join('\r\n');
   var a=document.createElement('a');
@@ -5271,7 +5306,7 @@ function gerarDocsDash(){
   var prox=base.filter(function(x){ return x.sit.k==='VENC'||x.sit.k==='V30'||x.sit.k==='V60'; }).sort(function(a,b){ return a.sit.dias-b.sit.dias; });
   $('dd-tit-prox').textContent = prazo ? 'Prazos de assinatura (vencidos e próximos 7 dias)' : 'Próximos vencimentos (vencidos e próximos 60 dias)';
   $('dd-prox').innerHTML = prox.length ? '<table class="mini"><thead><tr><th>CC</th><th>Colaborador</th><th>'+esc(cfg.rotData)+'</th><th>Dias</th></tr></thead><tbody>'
-    + prox.map(function(x){ return '<tr onclick="abrirDocForm(\'ver\',\''+t+'\',\''+esc(x.r.id)+'\')"><td>'+esc(x.r.cc||'-')+'</td><td class="nm">'+esc(x.r.colaborador)+'</td><td>'+fmtBR(x.r[cfg.campoData])+'</td><td>'+badgeDias(x.sit)+'</td></tr>'; }).join('')
+    + prox.map(function(x){ return '<tr onclick="abrirDocForm(\'ver\',\''+t+'\',\''+esc(x.r.id)+'\')"><td>'+esc(x.r.cc||'—')+'</td><td class="nm">'+esc(x.r.colaborador)+'</td><td>'+fmtBR(x.r[cfg.campoData])+'</td><td>'+badgeDias(x.sit)+'</td></tr>'; }).join('')
     + '</tbody></table>' : '<div class="dv-vazio">Nenhum vencimento próximo.</div>';
 
   // Resumo por centro de custo
@@ -5280,7 +5315,7 @@ function gerarDocsDash(){
     var cg=contaDocs(txCC[g]); var atencao = cg.st['Atrasado'] || cg.venc || cg.v30;
     var situ = atencao ? '<span class="sit-at">▲ Atenção</span>' : (cg.ativos && cg.st['Concluído']===cg.ativos ? '<span class="sit-ok">✓ Concluído</span>' : '<span class="sit-ex">● Em execução</span>');
     linhas+='<tr class="'+(state.ddCC===g?'sel':'')+'" onclick="ddFiltraCC(state.ddCC===\''+esc(g)+'\'?null:\''+esc(g)+'\')" title="Clique para filtrar">'
-      +'<td class="nm">'+esc(g||'Sem CC')+'</td><td>'+esc(ccDesc(g)||'-')+'</td><td class="n"><b>'+cg.total+'</b></td>'
+      +'<td class="nm">'+esc(g||'Sem CC')+'</td><td>'+esc(ccDesc(g)||'—')+'</td><td class="n"><b>'+cg.total+'</b></td>'
       +['Concluído','Em Andamento','Pendente','Atrasado','Cancelado',''].map(function(s){ return '<td class="n">'+(cg.st[s]||'<span class="dmuted">0</span>')+'</td>'; }).join('')
       +'<td><span class="pbar"><i style="width:'+cg.taxa+'%;"></i></span>'+String(cg.taxa).replace('.',',')+'%</td>'
       +'<td class="n">'+(cg.venc?'<span class="dneg">'+cg.venc+'</span>':'0')+'</td><td class="n">'+(cg.v30?'<span class="dwarn">'+cg.v30+'</span>':'0')+'</td><td>'+situ+'</td></tr>';
@@ -5302,7 +5337,7 @@ function gerarDocsDash(){
   $('dd-sub-geral').textContent = state.ddCC!==null ? 'Considerando apenas o '+nomeCC(state.ddCC) : 'Todos os centros de custo';
 }
 function badgeDias(sit){
-  if(sit.dias==null) return '<span class="dmuted">-</span>';
+  if(sit.dias==null) return '<span class="dmuted">—</span>';
   var h=SIT_HEX[sit.k];
   return '<span class="dsoft" style="--c:'+h+';">'+(sit.dias<0 ? Math.abs(sit.dias)+' d em atraso' : sit.dias+' d')+'</span>';
 }
@@ -5322,7 +5357,7 @@ function abrirListaDD(chave){
     var cc=String(x.r.cc||'');
     if(cc!==g){ g=cc; html+='<tr class="grp"><td colspan="7">'+esc(nomeCC(cc))+(ccDesc(cc)?' - '+esc(ccDesc(cc)):'')+'</td></tr>'; }
     html+='<tr tabindex="0" onclick="closeDlg(\'dlg-ddlista\');abrirDocForm(\'ver\',\''+t+'\',\''+esc(x.r.id)+'\')" onkeydown="if(event.key===\'Enter\')this.click()">'
-      +'<td><span class="dot" style="background:'+stInfo(x.r.status).hex+';"></span></td><td class="nm">'+esc(x.r.colaborador)+'</td><td>'+esc(x.r.cc||'-')+'</td><td>'+esc(x.r.funcao||'-')+'</td>'
+      +'<td><span class="dot" style="background:'+stInfo(x.r.status).hex+';"></span></td><td class="nm">'+esc(x.r.colaborador)+'</td><td>'+esc(x.r.cc||'—')+'</td><td>'+esc(x.r.funcao||'—')+'</td>'
       +'<td>'+badgeSt(x.r.status)+'</td><td>'+badgeSit(x.sit)+'</td><td>'+fmtBR(x.r[cfg.campoData])+'</td></tr>';
   });
   $('ddl-lista').innerHTML=html || '<tr><td colspan="7" class="dv-vazio">Nenhum colaborador nesta situação.</td></tr>';
@@ -5382,7 +5417,7 @@ function abrirAvisoVenc(manual){
           var r=i.x.r, cc=String(r.cc||'');
           return '<tr class="'+(i.dias<0?'venc':'prox')+'" onclick="abrirDocForm(\'ver\',\''+t+'\',\''+esc(r.id)+'\')" title="Ver registro">'
             +'<td>'+(cc?esc(cc)+(ccDesc(cc)?' <span class="dmuted">'+esc(ccDesc(cc))+'</span>':''):'<span class="dmuted">Sem CC</span>')+'</td>'
-            +'<td class="nm">'+esc(r.colaborador)+'</td><td>'+esc(r.funcao||'-')+'</td>'
+            +'<td class="nm">'+esc(r.colaborador)+'</td><td>'+esc(r.funcao||'—')+'</td>'
             +'<td><b>'+fmtBR(r[cfg.campoData])+'</b></td>'
             +'<td>'+badgeDias(i.x.sit)+'</td><td>'+badgeSt(r.status)+'</td></tr>';
         }).join('')+'</tbody></table></div></section>';
@@ -5544,7 +5579,7 @@ function renderAlertas(){
     + pa.map(function(x){
         var ds=destPara(x.t), cor=x.marco<=7?'#d9433b':(x.marco<=10?'#e07b39':'#b7791f');
         return '<tr onclick="abrirDocForm(\'ver\',\''+x.t+'\',\''+esc(x.r.id)+'\')"><td><b>'+(x.pendente?'Próxima execução':fmtBR(x.quando))+'</b></td>'
-          +'<td><span class="dsoft" style="--c:'+cor+';">'+x.marco+' dias</span></td><td>'+DOCS[x.t].ico+' '+esc(DOCS[x.t].titulo)+'</td><td>'+esc(x.r.cc||'-')+'</td>'
+          +'<td><span class="dsoft" style="--c:'+cor+';">'+x.marco+' dias</span></td><td>'+DOCS[x.t].ico+' '+esc(DOCS[x.t].titulo)+'</td><td>'+esc(x.r.cc||'—')+'</td>'
           +'<td class="nm">'+esc(x.r.colaborador)+'</td><td>'+fmtBR(x.venc)+'</td>'
           +'<td>'+(ds.length ? ds.length+' pessoa'+(ds.length===1?'':'s') : '<span class="dneg">ninguém cadastrado</span>')+'</td></tr>';
       }).join('') + '</tbody></table>'
@@ -5554,7 +5589,7 @@ function renderAlertas(){
   $('al-env').innerHTML = env.length ? '<table class="mini wide"><thead><tr><th>Enviado em</th><th>Aviso</th><th>Documento</th><th>CC</th><th>Colaborador</th><th>Vencimento</th><th>Enviado para</th></tr></thead><tbody>'
     + env.map(function(x){
         var dt=new Date(x.enviado_em), d2=String(dt.getDate()).padStart(2,'0')+'/'+String(dt.getMonth()+1).padStart(2,'0')+'/'+dt.getFullYear()+' '+String(dt.getHours()).padStart(2,'0')+':'+String(dt.getMinutes()).padStart(2,'0');
-        return '<tr><td>'+d2+'</td><td>'+x.marco+' dias</td><td>'+(DOCS[x.tipo]?DOCS[x.tipo].ico+' '+esc(DOCS[x.tipo].titulo):esc(x.tipo))+'</td><td>'+esc(x.cc||'-')+'</td><td class="nm">'+esc(String(x.colaborador||'').toUpperCase())+'</td><td>'+fmtBR(x.vencimento)+'</td><td class="al-para" title="'+esc(x.enviado_para||'')+'">'+esc(x.enviado_para||'-')+'</td></tr>';
+        return '<tr><td>'+d2+'</td><td>'+x.marco+' dias</td><td>'+(DOCS[x.tipo]?DOCS[x.tipo].ico+' '+esc(DOCS[x.tipo].titulo):esc(x.tipo))+'</td><td>'+esc(x.cc||'—')+'</td><td class="nm">'+esc(String(x.colaborador||'').toUpperCase())+'</td><td>'+fmtBR(x.vencimento)+'</td><td class="al-para" title="'+esc(x.enviado_para||'')+'">'+esc(x.enviado_para||'—')+'</td></tr>';
       }).join('') + '</tbody></table>'
     : '<div class="dv-vazio">Nenhum alerta enviado ainda.</div>';
 }
@@ -5833,7 +5868,13 @@ var NR_SIT = {
   OK:  {l:'Válido', hex:'#2e9e44', ord:3},
   NA:  {l:'N.A', hex:'#b3bcc6', ord:4}
 };
-var NR = { rows:null, erro:null, cad:null, ui:{ q:'', cc:'', curso:'', sit:'', sort:null } };
+var NR = { rows:null, erro:null, cad:null, cracha:{}, crachaErro:null, ui:{ q:'', cc:'', curso:'', sit:'', cracha:'', sort:null } };
+/* situação do crachá (uma por colaborador, tabela emb_cracha_status) */
+var NR_CRACHA = [
+  {v:'VÁLIDO', l:'Crachá válido', hex:'#2e9e44', cls:'ok'},
+  {v:'AGUARDANDO IMPRESSÃO', l:'Aguardando impressão', hex:'#d99a00', cls:'agu'},
+  {v:'SOLICITAR CRACHÁ', l:'Solicitar crachá', hex:'#d9433b', cls:'sol'}
+];
 
 /* ---------- regras ---------- */
 function nrSomaAnos(iso, anos){
@@ -5884,7 +5925,10 @@ function nrCarregar(forcar){
       return todos;
     });
   }
-  return busca(0).then(function(rows){
+  var crachas = api('emb_cracha_status?select=*').then(function(l){ NR.crachaErro=null; return l||[]; }).catch(function(e){ NR.crachaErro=e.message||String(e); return null; });
+  return Promise.all([busca(0), crachas]).then(function(res){
+    var rows=res[0];
+    if(res[1]){ NR.cracha={}; res[1].forEach(function(c){ NR.cracha[nrNome(c.colaborador)]=c; }); }
     rows.forEach(function(r){ r.colaborador=nrNome(r.colaborador); });
     NR.rows=rows; NR.erro=null;
     NR.semColunas = rows.length>0 && rows[0].data_realizacao===undefined;
@@ -5935,6 +5979,7 @@ function nrColaboradores(){
     c.nV30=c.cursos.filter(function(r){ return nrSit(r).k==='V30'; }).length;
     c.obs=c.cursos.filter(function(r){ return r.observacoes; }).map(function(r){ return r.curso+': '+r.observacoes; });
     c.porCurso={}; c.cursos.forEach(function(r){ c.porCurso[r.curso]=r; });
+    c.cracha=(NR.cracha[c.nome]||{}).cracha||'';
     return c;
   });
 }
@@ -5953,7 +5998,26 @@ function nrMontarFiltros(){
   $('nr-q').value=ui.q;
 }
 function nrFiltro(k, v){ NR.ui[k]=v; nrRender(); }
-function nrLimpar(){ var u=NR.ui; u.q=''; u.cc=''; u.curso=''; u.sit=''; u.sort=null; nrMontarFiltros(); nrRender(); }
+function nrLimpar(){ var u=NR.ui; u.q=''; u.cc=''; u.curso=''; u.sit=''; u.cracha=''; u.sort=null; nrMontarFiltros(); nrRender(); }
+function nrChipCracha(v){ NR.ui.cracha = NR.ui.cracha===v ? '' : v; nrRender(); }
+function nrCrachaInfo(v){ for(var i=0;i<NR_CRACHA.length;i++){ if(NR_CRACHA[i].v===v) return NR_CRACHA[i]; } return null; }
+function nrCrachaSelect(c){
+  var inf=nrCrachaInfo(c.cracha);
+  return '<select class="nr-crc '+(inf?inf.cls:'vaz')+'" data-nome="'+esc(c.nome)+'" onclick="event.stopPropagation()" ondblclick="event.stopPropagation()" onchange="nrCrachaSalvar(this)" title="Situação do crachá">'
+    +'<option value="">-</option>'+NR_CRACHA.map(function(o){ return '<option value="'+esc(o.v)+'"'+(o.v===c.cracha?' selected':'')+'>'+esc(o.v)+'</option>'; }).join('')+'</select>';
+}
+function nrCrachaSalvar(sel){
+  var nome=sel.getAttribute('data-nome'), v=sel.value, ant=(NR.cracha[nome]||{}).cracha||'';
+  var reg={colaborador:nome, cracha:v||null, atualizado_por:nrUsuario(), atualizado_em:new Date().toISOString()};
+  var inf=nrCrachaInfo(v); sel.className='nr-crc '+(inf?inf.cls:'vaz'); sel.disabled=true;
+  api('emb_cracha_status?on_conflict=colaborador', {method:'POST', body:reg, prefer:'resolution=merge-duplicates,return=minimal'})
+    .then(function(){ NR.cracha[nome]=reg; toast(nome+': crachá '+(v?v.toLowerCase():'sem informação')+'.'); nrRender(); })
+    .catch(function(e){
+      var m=String(e&&e.message||e);
+      toast(/emb_cracha_status/.test(m)&&/exist|schema cache|relation|could not find/i.test(m) ? 'Rode o arquivo embarque_cracha_status.sql no Supabase para gravar a coluna Crachá.' : 'Não foi possível salvar o crachá: '+m, true);
+      sel.value=ant; var i2=nrCrachaInfo(ant); sel.className='nr-crc '+(i2?i2.cls:'vaz'); sel.disabled=false;
+    });
+}
 function nrChip(k){ NR.ui.sit = NR.ui.sit===k ? '' : k; nrMontarFiltros(); nrRender(); }
 function nrOrdenar(k){
   var u=NR.ui;
@@ -5963,6 +6027,7 @@ function nrOrdenar(k){
 function nrPassa(c){
   var u=NR.ui, q=u.q.trim().toUpperCase();
   if(u.cc && c.cc!==u.cc) return false;
+  if(u.cracha){ if(u.cracha==='SEM' ? c.cracha : c.cracha!==u.cracha) return false; }
   if(q && [c.nome,c.cargo,c.cc].concat(c.cursos.map(function(r){ return (r.curso||'')+' '+(r.observacoes||''); })).join(' ').toUpperCase().indexOf(q)<0) return false;
   if(u.curso){
     var r=c.porCurso[u.curso]; if(!r) return false;
@@ -5978,24 +6043,25 @@ function nrPassa(c){
 function nrCelulaCurso(r){
   if(!r) return '<span class="nrp k-NONE" title="Curso não cadastrado">·</span>';
   var s=nrSit(r), t;
-  if(s.k==='NA') t='N.A'; else if(r.marcacao==='EM_DIA') t='EM DIA'; else if(s.k==='SEM') t='-'; else t=nrData(r.vencimento);
+  if(s.k==='NA') t='N.A'; else if(r.marcacao==='EM_DIA') t='EM DIA'; else if(s.k==='SEM') t='—'; else t=nrData(r.vencimento);
   var tip = r.curso+': '+s.l+(r.data_realizacao?' · realizado em '+fmtBR(String(r.data_realizacao).slice(0,10)):'')+(r.validade_anos?' · validade '+String(r.validade_anos).replace('.',',')+' ano(s)':'')+(s.dias!=null?' · '+nrDiasTexto(s):'');
   return '<span class="nrp '+nrSitClasse(s.k)+'" title="'+esc(tip)+'">'+t+'</span>';
 }
 function nrRender(){
   var ui=NR.ui, cursos=nrCursosTodos();
-  var ncol=4+cursos.length+2;
+  var ncol=4+cursos.length+3;
   var seta=function(k){ return ui.sort&&ui.sort.k===k ? (ui.sort.dir===1?'▲':'▼') : ''; };
   $('nr-head').innerHTML='<tr><th style="width:34px;"></th>'
     +[['nome','Colaborador'],['cargo','Cargo'],['cc','CC']].map(function(c){ return '<th class="srt" onclick="nrOrdenar(\''+c[0]+'\')">'+c[1]+' <span class="srt-i">'+seta(c[0])+'</span></th>'; }).join('')
     +cursos.map(function(c){ return '<th class="srt nr-thc'+(ui.curso===c?' on':'')+'" onclick="nrOrdenar(\'c:'+esc(c)+'\')">'+esc(c)+' <span class="srt-i">'+seta('c:'+c)+'</span></th>'; }).join('')
     +'<th class="srt" onclick="nrOrdenar(\'sit\')">Situação <span class="srt-i">'+seta('sit')+'</span></th>'
+    +'<th class="srt" onclick="nrOrdenar(\'cracha\')">Crachá <span class="srt-i">'+seta('cracha')+'</span></th>'
     +'<th>Observações</th></tr>';
   var av=$('nr-aviso');
   if(NR.erro){ av.innerHTML='<b>Não foi possível ler os cursos do banco.</b> '+esc(nrErroBanco(NR.erro)); av.style.display='block'; }
   else if(NR.semColunas){ av.innerHTML='<b>Atualização do banco pendente.</b> Rode o arquivo <b>embarque_cracha_validade.sql</b> no SQL Editor do Supabase e clique em &#8635;. Até lá, a data de realização e os anos de validade não são gravados.'; av.style.display='block'; }
   else av.style.display='none';
-  $('nr-limpar').style.display = (ui.q||ui.cc||ui.curso||ui.sit||ui.sort) ? '' : 'none';
+  $('nr-limpar').style.display = (ui.q||ui.cc||ui.curso||ui.sit||ui.cracha||ui.sort) ? '' : 'none';
   if(!NR.rows){ $('nr-grid').innerHTML='<tr><td colspan="'+ncol+'" class="dv-vazio">Carregando...</td></tr>'; $('nr-resumo').innerHTML=''; return; }
   var todos=nrColaboradores();
   var base=todos.filter(function(c){ return (!ui.cc||c.cc===ui.cc); });
@@ -6010,6 +6076,13 @@ function nrRender(){
     + kpi('V30','NRs a vencer (30 dias)', nV30, 'renovar antes de vencer', '#e07b39')
     + kpi('OK','Colaboradores com tudo válido', nOk, 'nenhuma NR vencida ou a vencer', '#2e9e44')
     + kpi('SEM','Sem dados', nSem, 'nenhuma data informada', '#9aa6b2');
+  /* botões de filtro da situação do crachá */
+  var kc=function(v, tit, val, sub, cor){ return '<button type="button" class="nrk'+(ui.cracha===v?' on':'')+'" style="--c:'+cor+'" onclick="nrChipCracha(\''+v+'\')"><span class="nrk-v">'+val+'</span><span class="nrk-t">'+tit+'</span>'+(sub?'<span class="nrk-s">'+sub+'</span>':'')+'</button>'; };
+  var nc=function(v){ return base.filter(function(c){ return v==='SEM' ? !c.cracha : c.cracha===v; }).length; };
+  $('nr-cracha-kpis').innerHTML = '<div class="nr-crc-tit">Crachá</div>'
+    + NR_CRACHA.map(function(o){ return kc(o.v, o.l, nc(o.v), '', o.hex); }).join('')
+    + kc('SEM', 'Sem informação', nc('SEM'), 'crachá não informado', '#9aa6b2')
+    + (NR.crachaErro ? '<div class="nr-crc-av">Rode o arquivo <b>embarque_cracha_status.sql</b> no Supabase para usar a coluna Crachá.</div>' : '');
   var lista=todos.filter(nrPassa);
   if(ui.sort){
     var k=ui.sort.k, d=ui.sort.dir;
@@ -6027,10 +6100,11 @@ function nrRender(){
   lista.forEach(function(c, i){
     html+='<tr class="drow nr-row" style="animation-delay:'+Math.min(i,20)*12+'ms" data-nome="'+esc(c.nome)+'" onclick="nrAbrirCadastro(this.getAttribute(\'data-nome\'))" title="Clique para abrir o cadastro de NRs">'
       +'<td><span class="nr-car">&#9998;</span></td>'
-      +'<td class="nm"><span class="nr-nome">'+esc(c.nome)+'</span></td>'
-      +'<td class="nr-cargo" title="'+esc(c.cargo||'')+'">'+esc(c.cargo||'-')+'</td><td>'+esc(c.cc||'-')+'</td>'
+      +'<td class="nm"><span class="nr-nome">'+esc(c.nome)+'</span>'+fotoChip('cracha', c.nome)+'</td>'
+      +'<td class="nr-cargo" title="'+esc(c.cargo||'')+'">'+esc(c.cargo||'—')+'</td><td>'+esc(c.cc||'—')+'</td>'
       +cursos.map(function(cu){ return '<td class="nr-tdc">'+nrCelulaCurso(c.porCurso[cu])+'</td>'; }).join('')
       +'<td><span class="nrsit '+nrSitClasse(c.sit)+'"><span class="dot"></span>'+{VENC:'Vencida',V30:'A vencer',OK:'Válido',SEM:'Sem dados',NA:'N.A'}[c.sit]+'</span></td>'
+      +'<td class="nr-tdcrc">'+nrCrachaSelect(c)+'</td>'
       +'<td class="nr-obs" title="'+esc(c.obs.join('\n'))+'">'+esc(c.obs.join(' · '))+'</td></tr>';
   });
   if(!lista.length) html='<tr><td colspan="'+ncol+'" class="dv-vazio">'+(todos.length?'Nenhum colaborador com esses filtros.':'Nenhum curso cadastrado. Use <b>Importar planilha</b> ou <b>Incluir colaborador</b>.')+'</td></tr>';
@@ -6087,9 +6161,9 @@ function nrCadRender(primeira){
         +[['SIM','Sim'],['NA','N.A'],['EM_DIA','Em dia (sem data)']].map(function(o){ return '<option value="'+o[0]+'"'+(l.aplica===o[0]?' selected':'')+'>'+o[1]+'</option>'; }).join('')+'</select></td>'
       +'<td><input type="date" value="'+esc(l.realizacao)+'" max="'+hoje()+'" onchange="nrCadMuda('+i+',\'realizacao\',this.value)"'+(off?' disabled':dis)+'></td>'
       +'<td><div class="nrc-anos"><input type="number" min="0.5" max="10" step="0.5" value="'+esc(l.anos)+'" onchange="nrCadMuda('+i+',\'anos\',this.value)"'+(off?' disabled':dis)+'><span>ano'+(Number(l.anos)===1?'':'s')+'</span></div></td>'
-      +'<td class="nrc-venc">'+(off?'-':(venc?'<b>'+fmtBR(venc)+'</b>'+(!l.realizacao&&l.vencOrig?'<small title="Vencimento importado da planilha; informe a realização para recalcular">da planilha</small>':''):'<span class="nrd-na">informe a realização</span>'))+'</td>'
+      +'<td class="nrc-venc">'+(off?'—':(venc?'<b>'+fmtBR(venc)+'</b>'+(!l.realizacao&&l.vencOrig?'<small title="Vencimento importado da planilha; informe a realização para recalcular">da planilha</small>':''):'<span class="nrd-na">informe a realização</span>'))+'</td>'
       +'<td><span class="nrsit '+nrSitClasse(s.k)+'"><span class="dot"></span>'+esc(s.l)+'</span></td>'
-      +'<td class="nrc-dias '+nrSitClasse(s.k)+'">'+(s.dias==null?'-':(s.dias<0?'<b>'+s.dias+'</b><small>vencido há '+(-s.dias)+' dia'+(s.dias===-1?'':'s')+'</small>':'<b>'+s.dias+'</b><small>dia'+(s.dias===1?'':'s')+'</small>'))+'</td>'
+      +'<td class="nrc-dias '+nrSitClasse(s.k)+'">'+(s.dias==null?'—':(s.dias<0?'<b>'+s.dias+'</b><small>vencido há '+(-s.dias)+' dia'+(s.dias===-1?'':'s')+'</small>':'<b>'+s.dias+'</b><small>dia'+(s.dias===1?'':'s')+'</small>'))+'</td>'
       +'<td><input class="nrc-obs" value="'+esc(l.obs)+'" placeholder="Observação" oninput="NR.cad.linhas['+i+'].obs=this.value"'+dis+'></td>'
       +'<td>'+(cad.pode && !l.padrao ? '<button type="button" class="nrc-x" title="Remover este curso" onclick="nrCadRemove('+i+')">&#10005;</button>' : '')+'</td>'
       +'</tr>';
@@ -6126,7 +6200,8 @@ function nrSalvarColab(){
   });
   loading(true);
   var p=Promise.resolve();
-  if(antigo && nome!==antigo) p=p.then(function(){ return api('emb_cracha_nr?colaborador=eq.'+encodeURIComponent(antigo), {method:'PATCH', body:{colaborador:nome}}); });
+  if(antigo && nome!==antigo) p=p.then(function(){ return api('emb_cracha_nr?colaborador=eq.'+encodeURIComponent(antigo), {method:'PATCH', body:{colaborador:nome}}); })
+    .then(function(){ return api('emb_cracha_status?colaborador=eq.'+encodeURIComponent(antigo), {method:'PATCH', body:{colaborador:nome}}).then(function(){ if(NR.cracha[antigo]){ NR.cracha[nome]=Object.assign({}, NR.cracha[antigo], {colaborador:nome}); delete NR.cracha[antigo]; } }).catch(function(){}); });
   cad.removidos.forEach(function(id){ p=p.then(function(){ return api('emb_cracha_nr?id=eq.'+encodeURIComponent(id), {method:'DELETE'}); }); });
   p.then(function(){ return api('emb_cracha_nr?on_conflict=colaborador,curso', {method:'POST', body:regs, prefer:'resolution=merge-duplicates,return=representation'}); })
    .then(function(){ return nrCarregar(true); })
@@ -6140,6 +6215,7 @@ function nrExcluirColab(){
   delete b.dataset.conf; b.textContent='Excluir colaborador';
   loading(true);
   api('emb_cracha_nr?colaborador=eq.'+encodeURIComponent(nome), {method:'DELETE'}).then(function(){
+    api('emb_cracha_status?colaborador=eq.'+encodeURIComponent(nome), {method:'DELETE'}).catch(function(){}); delete NR.cracha[nome];
     NR.rows=NR.rows.filter(function(x){ return x.colaborador!==nome; });
     closeDlg('dlg-nrcol'); nrMontarFiltros(); nrRender(); toast(nome+' saiu do controle de crachá crítico.');
   }).catch(function(e){ toast('Não foi possível excluir: '+nrErroBanco(e), true); }).then(function(){ loading(false); });
@@ -6245,9 +6321,9 @@ function nrMontarExcel(){
   }
   /* aba 1: controle (igual à planilha) */
   var ws=wb.addWorksheet('Crachá Crítico', {views:[{state:'frozen', ySplit:4, xSplit:1}]});
-  var ncol=3+cursos.length+2;
+  var ncol=3+cursos.length+3;
   cabecalho(ws, 'CRACHÁ CRÍTICO - CONTROLE DE NRs (SISTEMA RAINBOW)', ncol);
-  linhaTitulo(ws, 4, ['NOME','CARGO','CC'].concat(cursos).concat(['SITUAÇÃO','OBSERVAÇÕES']));
+  linhaTitulo(ws, 4, ['NOME','CARGO','CC'].concat(cursos).concat(['SITUAÇÃO','CRACHÁ','OBSERVAÇÕES']));
   lista.forEach(function(c, i){
     var row=ws.getRow(5+i);
     row.getCell(1).value=c.nome; row.getCell(2).value=c.cargo||''; row.getCell(3).value=c.cc?Number(c.cc)||c.cc:'';
@@ -6261,14 +6337,16 @@ function nrMontarExcel(){
       }
       cel.alignment={horizontal:'center'};
     });
-    var sc=row.getCell(ncol-1), k=c.sit;
+    var sc=row.getCell(ncol-2), k=c.sit;
     sc.value={VENC:'VENCIDA',V30:'A VENCER',OK:'EM DIA',SEM:'SEM DADOS',NA:'N.A'}[k];
     sc.fill={type:'pattern',pattern:'solid',fgColor:{argb:CORES[k]}}; sc.font={bold:true,color:{argb:TXT[k]}}; sc.alignment={horizontal:'center'};
+    var cc2=row.getCell(ncol-1), ci=nrCrachaInfo(c.cracha); cc2.value=c.cracha||''; cc2.alignment={horizontal:'center', wrapText:true};
+    if(ci){ cc2.font={bold:true, color:{argb:'FF'+ci.hex.slice(1).toUpperCase()}}; }
     row.getCell(ncol).value=c.obs.join(' · '); row.getCell(ncol).alignment={wrapText:true, vertical:'top'};
     row.eachCell({includeEmpty:true}, function(cel, col){ if(col<=ncol) cel.border=borda; });
   });
   ws.getColumn(1).width=40; ws.getColumn(2).width=32; ws.getColumn(3).width=8;
-  cursos.forEach(function(cu, j){ ws.getColumn(4+j).width=12; }); ws.getColumn(ncol-1).width=13; ws.getColumn(ncol).width=40;
+  cursos.forEach(function(cu, j){ ws.getColumn(4+j).width=12; }); ws.getColumn(ncol-2).width=13; ws.getColumn(ncol-1).width=22; ws.getColumn(ncol).width=40;
   ws.autoFilter={from:{row:4,column:1}, to:{row:4+lista.length, column:ncol}};
   ws.pageSetup={orientation:'landscape', fitToPage:true, fitToWidth:1, fitToHeight:0, paperSize:9};
   /* aba 2: uma NR por linha */
@@ -6315,6 +6393,64 @@ function nrMontarExcel(){
   var origEsc=escondeDocs;
   escondeDocs=function(){ origEsc.apply(this, arguments); var v=$('view-nr'); if(v) v.style.display='none'; var d=$('dlg-nrcol'); if(d) d.classList.remove('open'); };
 })();
+
+
+
+/* ================= FOTOS DOS TÉCNICOS (PCV e Crachá Crítico) =================
+   O técnico tira a foto pelo link do celular (tecnico-fotos.html). A foto fica
+   no Storage (pasta privada "embarque-fotos") e o registro na tabela emb_fotos
+   (uma por colaborador e controle; foto nova substitui a anterior).
+   Aqui o controle mostra um ícone de câmera ao lado do nome; o clique abre a foto. */
+var FOTOS = { pcv:{}, cracha:{}, carregou:false, timer:null };
+function fotoChave(nome){ return String(nome||'').replace(/\s+/g,' ').trim().toUpperCase(); }
+function fotosCarregar(){
+  return fetch(SB_URL + '/rest/v1/emb_fotos?select=*', { headers:{ apikey:SB_KEY, Authorization:'Bearer ' + SB_KEY } })
+    .then(function(r){ return r.ok ? r.json() : []; })
+    .then(function(rows){
+      var n = { pcv:{}, cracha:{} };
+      (rows || []).forEach(function(f){ if(n[f.controle]) n[f.controle][fotoChave(f.colaborador)] = f; });
+      var mudou = JSON.stringify(n) !== JSON.stringify({ pcv:FOTOS.pcv, cracha:FOTOS.cracha });
+      FOTOS.pcv = n.pcv; FOTOS.cracha = n.cracha; FOTOS.carregou = true;
+      if(mudou) fotosRedesenhar();
+    }).catch(function(){});
+}
+function fotosRedesenhar(){
+  try{ var vd = document.getElementById('view-docs'); if(vd && vd.style.display !== 'none' && state.docTipo === 'pcv' && typeof renderDocs === 'function') renderDocs(); }catch(e){}
+  try{ var vn = document.getElementById('view-nr'); if(vn && vn.style.display === 'flex' && typeof nrRender === 'function') nrRender(); }catch(e){}
+}
+function fotoChip(controle, nome){
+  var f = (FOTOS[controle] || {})[fotoChave(nome)];
+  if(!f) return '';
+  var quando = f.tirada_em ? new Date(f.tirada_em).toLocaleString('pt-BR') : '';
+  return '<button type="button" class="foto-chip" title="Foto tirada em ' + esc(quando) + (f.tecnico ? ' por ' + esc(f.tecnico) : '') + '" '
+    + 'onclick="event.stopPropagation();fotoVer(\'' + controle + '\',this.getAttribute(\'data-nome\'))" ondblclick="event.stopPropagation()" data-nome="' + esc(nome) + '">'
+    + '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>'
+    + '<span>foto</span></button>';
+}
+function fotoVer(controle, nome){
+  var f = (FOTOS[controle] || {})[fotoChave(nome)]; if(!f) return;
+  var fundo = document.getElementById('foto-fundo');
+  if(!fundo){
+    fundo = document.createElement('div'); fundo.id = 'foto-fundo';
+    fundo.innerHTML = '<div class="foto-box"><div class="foto-cab"><div><b id="foto-tit"></b><small id="foto-sub"></small></div><button type="button" id="foto-x" title="Fechar">&#10005;</button></div>'
+      + '<div class="foto-img"><span class="foto-carr">Carregando foto...</span><img id="foto-img" alt=""></div>'
+      + '<div class="foto-rod"><a id="foto-baixar" class="btn" target="_blank" rel="noopener">Abrir em tamanho original</a></div></div>';
+    document.body.appendChild(fundo);
+    fundo.addEventListener('mousedown', function(e){ if(e.target === fundo) fundo.classList.remove('on'); });
+    document.getElementById('foto-x').onclick = function(){ fundo.classList.remove('on'); };
+  }
+  document.getElementById('foto-tit').textContent = nome;
+  document.getElementById('foto-sub').textContent = (controle === 'pcv' ? 'PCV' : 'Crachá Crítico') + ' · ' + (f.tirada_em ? new Date(f.tirada_em).toLocaleString('pt-BR') : '') + (f.tecnico ? ' · ' + f.tecnico : '');
+  var img = document.getElementById('foto-img'); img.removeAttribute('src'); fundo.classList.remove('ok');
+  fundo.classList.add('on');
+  fetch(SB_URL + '/storage/v1/object/sign/embarque-fotos/' + f.caminho, { method:'POST', headers:{ apikey:SB_KEY, Authorization:'Bearer ' + SB_KEY, 'Content-Type':'application/json' }, body:JSON.stringify({ expiresIn:3600 }) })
+    .then(function(r){ return r.json().then(function(j){ if(!r.ok) throw new Error(j.message || j.error || ('HTTP ' + r.status)); return j; }); })
+    .then(function(j){ var url = SB_URL + '/storage/v1' + (j.signedURL || j.signedUrl); img.onload = function(){ fundo.classList.add('ok'); }; img.src = url; document.getElementById('foto-baixar').href = url; })
+    .catch(function(e){ fundo.classList.remove('on'); toast('Não foi possível abrir a foto: ' + (e.message || e), true); });
+}
+fotosCarregar();
+FOTOS.timer = setInterval(function(){ if(!document.hidden) fotosCarregar(); }, 60000);
+document.addEventListener('visibilitychange', function(){ if(!document.hidden) fotosCarregar(); });
 
 </script>
 <!-- ==================== COLABORADORES DA FUNÇÃO (dashboard) ==================== -->
