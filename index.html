@@ -1440,6 +1440,105 @@
   .etl-item.tem-obs .etl-obs .etl-obs-i{color:#b35a12;}
   .proc-obs{display:block;margin-top:3px;font-size:11px;font-weight:600;color:#b35a12;line-height:1.3;max-width:260px;white-space:normal;}
   @media (max-width:700px){ .etl-item .etl-obs{grid-column:1/-1;} }
+  /* ===== PROGRAMAÇÕES ===== */
+  .pg{flex:1;flex-direction:column;overflow:auto;background:linear-gradient(160deg,#f3f7f0 0%,#fafbf8 50%,#fdf8ee 100%);}
+  .pg-topo{display:flex;align-items:flex-end;gap:18px;flex-wrap:wrap;padding:16px 20px 12px;background:#fff;border-bottom:1px solid #e3e8ee;position:sticky;top:0;z-index:5;}
+  .pg-tit{flex:1;min-width:280px;animation:pgIn .45s cubic-bezier(.2,.8,.3,1) both;}
+  .pg-tit h1{font-size:24px;font-weight:800;color:#1f3347;letter-spacing:-.3px;margin:2px 0;}
+  .pg-sub{font-size:12px;color:#7b8a99;}
+  .pg-filtros{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .pg-seg{display:inline-flex;background:#f1f4f7;border:1px solid #e3e8ee;border-radius:11px;padding:3px;}
+  .pg-seg button{border:0;background:transparent;border-radius:8px;padding:7px 12px;font-size:12.5px;font-weight:600;color:#5a6b7d;cursor:pointer;font-family:inherit;transition:background .2s,color .2s,box-shadow .2s;}
+  .pg-seg button:hover{color:#1f3347;}
+  .pg-seg button.on{background:#fff;color:#1f3347;box-shadow:0 1px 4px rgba(16,40,70,.14);}
+  .pg-busca{height:36px;border:1px solid #dfe5ec;border-radius:10px;padding:0 12px;font-size:12.5px;width:250px;font-family:inherit;outline:none;transition:border-color .15s,box-shadow .15s;}
+  .pg-busca:focus{border-color:#4a7a26;box-shadow:0 0 0 3px rgba(74,122,38,.12);}
+  .pg-corpo{padding:16px 20px 30px;}
+  @keyframes pgIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+  .pg-kpis{display:grid;grid-template-columns:repeat(4,minmax(170px,1fr));gap:12px;margin-bottom:14px;}
+  .pg-kpi{position:relative;overflow:hidden;background:#fff;border:1px solid #e3e8ee;border-radius:16px;padding:13px 16px;display:flex;flex-direction:column;gap:2px;box-shadow:0 4px 14px rgba(16,40,70,.05);animation:pgIn .45s cubic-bezier(.2,.8,.3,1) both;}
+  .pg-kpi::after{content:'';position:absolute;right:-30px;top:-30px;width:90px;height:90px;border-radius:50%;background:radial-gradient(circle,rgba(74,122,38,.10),transparent 70%);}
+  .pg-kpi.emb::after{background:radial-gradient(circle,rgba(46,158,68,.16),transparent 70%);} .pg-kpi.des::after{background:radial-gradient(circle,rgba(217,119,6,.16),transparent 70%);}
+  .pg-kpi-t{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#7b8a99;}
+  .pg-kpi b{font-size:26px;font-weight:800;color:#1f3347;line-height:1.15;}
+  .pg-kpi.emb b{color:#2e9e44;} .pg-kpi.des b{color:#d97706;}
+  .pg-kpi small{font-size:11.5px;color:#7b8a99;}
+  .pg-ccs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+  .pg-chip{border:1px solid #dfe5ec;background:#fff;border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:600;color:#3d4f61;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:7px;transition:all .2s;animation:pgIn .4s both;}
+  .pg-chip i{font-style:normal;font-size:11px;background:#f1f4f7;color:#5a6b7d;border-radius:999px;padding:1px 7px;}
+  .pg-chip:hover{border-color:#b9c6d3;transform:translateY(-1px);}
+  .pg-chip.on{background:#1f3347;border-color:#1f3347;color:#fff;} .pg-chip.on i{background:rgba(255,255,255,.18);color:#fff;}
+  .pg-sec{margin-top:14px;animation:pgIn .5s cubic-bezier(.2,.8,.3,1) both;}
+  .pg-sec-cab{display:flex;align-items:center;gap:10px;width:100%;border:0;background:none;padding:6px 2px 10px;cursor:pointer;font-family:inherit;text-align:left;}
+  .pg-sec-car{color:#8a97a6;transition:transform .25s;font-size:12px;}
+  .pg-sec.fechado .pg-sec-car{transform:rotate(-90deg);}
+  .pg-sec-cc{font-size:17px;font-weight:800;color:#1f3347;}
+  .pg-sec-desc{font-size:12px;color:#7b8a99;font-weight:600;}
+  .pg-sec-n{margin-left:auto;font-size:12px;color:#8a97a6;}
+  .pg-sec-cab::after{content:'';flex:0 0 0;}
+  .pg-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;}
+  .pg-card{position:relative;overflow:hidden;text-align:left;font-family:inherit;cursor:pointer;background:#fff;border:1px solid #e3e8ee;border-radius:18px;padding:14px 16px 13px;display:flex;flex-direction:column;gap:10px;
+           box-shadow:0 4px 14px rgba(16,40,70,.05);transition:transform .3s cubic-bezier(.2,.8,.3,1),box-shadow .3s,border-color .3s;animation:pgIn .5s cubic-bezier(.2,.8,.3,1) both;}
+  .pg-card::before{content:'';position:absolute;left:0;top:0;right:0;height:4px;background:var(--c);transform:scaleX(.25);transform-origin:left;transition:transform .45s cubic-bezier(.2,.8,.3,1);}
+  .pg-card:hover{transform:translateY(-5px);box-shadow:0 16px 32px rgba(16,40,70,.13);border-color:var(--c);}
+  .pg-card:hover::before{transform:scaleX(1);}
+  .pg-card:active{transform:translateY(-2px) scale(.985);transition-duration:.1s;}
+  .pg-card.passada{opacity:.78;} .pg-card.passada:hover{opacity:1;}
+  .pg-card.hoje{border-color:var(--c);box-shadow:0 0 0 3px var(--cl),0 8px 22px rgba(16,40,70,.08);}
+  .pg-card-top{display:flex;align-items:center;gap:9px;}
+  .pg-ic{width:34px;height:34px;border-radius:11px;background:var(--cl);color:var(--c);display:flex;align-items:center;justify-content:center;transition:transform .35s cubic-bezier(.3,1.4,.5,1);}
+  .pg-card:hover .pg-ic{transform:rotate(-8deg) scale(1.08);}
+  .pg-tipo{font-size:13px;font-weight:800;color:var(--c);}
+  .pg-rel{margin-left:auto;font-size:11px;font-weight:700;color:#5a6b7d;background:#f1f4f7;border-radius:999px;padding:3px 9px;}
+  .pg-card.hoje .pg-rel{background:var(--c);color:#fff;}
+  .pg-data{display:flex;align-items:center;gap:10px;}
+  .pg-data b{font-size:38px;font-weight:800;color:#1f3347;line-height:1;letter-spacing:-1px;}
+  .pg-data span{display:flex;flex-direction:column;}
+  .pg-data em{font-style:normal;font-size:14px;font-weight:700;color:#3d4f61;text-transform:uppercase;}
+  .pg-data small{font-size:11.5px;color:#8a97a6;}
+  .pg-pessoas{display:flex;align-items:center;gap:10px;}
+  .pg-avs{display:flex;}
+  .pg-avs i{width:28px;height:28px;border-radius:50%;background:#eef2f6;border:2px solid #fff;margin-left:-8px;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:10px;font-weight:800;color:#3d4f61;transition:transform .3s;}
+  .pg-avs i:first-child{margin-left:0;} .pg-avs i.mais{background:var(--cl);color:var(--c);}
+  .pg-card:hover .pg-avs i{transform:translateX(3px);} .pg-card:hover .pg-avs i:first-child{transform:none;}
+  .pg-n{font-size:12.5px;color:#5a6b7d;} .pg-n b{color:#1f3347;font-size:15px;}
+  .pg-turmas{display:flex;gap:5px;flex-wrap:wrap;} .pg-turmas i{font-style:normal;font-size:10.5px;font-weight:700;background:#f1f4f7;color:#5a6b7d;border-radius:6px;padding:2px 7px;}
+  .pg-abrir{font-size:12px;font-weight:700;color:var(--c);opacity:0;transform:translateX(-6px);transition:opacity .25s,transform .3s;}
+  .pg-card:hover .pg-abrir{opacity:1;transform:none;}
+  .pg-vazio{display:flex;flex-direction:column;align-items:center;gap:6px;padding:60px 20px;color:#7b8a99;font-size:13px;}
+  .pg-vazio b{font-size:15px;color:#3d4f61;}
+  /* gaveta com os colaboradores */
+  .pg-fundo{position:fixed;inset:0;z-index:300;background:rgba(15,25,35,.42);backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:opacity .25s;}
+  .pg-fundo.on{opacity:1;pointer-events:auto;}
+  .pg-gaveta{position:absolute;top:0;right:0;bottom:0;width:min(1180px,96vw);background:#fff;box-shadow:-20px 0 50px rgba(0,0,0,.2);display:flex;flex-direction:column;transform:translateX(40px);opacity:.6;transition:transform .35s cubic-bezier(.2,.8,.3,1),opacity .35s;border-radius:18px 0 0 18px;overflow:hidden;}
+  .pg-fundo.on .pg-gaveta{transform:none;opacity:1;}
+  .pg-g-cab{display:flex;align-items:center;gap:12px;padding:16px 18px;border-bottom:1px solid #e9edf1;background:linear-gradient(90deg,var(--cl),#fff 60%);}
+  .pg-g-ic{width:44px;height:44px;border-radius:14px;background:var(--c);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 14px rgba(0,0,0,.12);}
+  .pg-g-tx{flex:1;min-width:0;} .pg-g-tx b{display:block;font-size:18px;font-weight:800;color:#1f3347;} .pg-g-tx small{font-size:12.5px;color:#5a6b7d;}
+  .pg-g-baixar{display:inline-flex;align-items:center;gap:7px;border:0;border-radius:11px;padding:10px 15px;font-size:13px;font-weight:700;color:#fff;cursor:pointer;font-family:inherit;background:linear-gradient(135deg,#4a7a26,#6ea53a);box-shadow:0 6px 14px rgba(74,122,38,.28);transition:transform .15s,box-shadow .15s;}
+  .pg-g-baixar:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 10px 20px rgba(74,122,38,.34);}
+  .pg-g-baixar:disabled{opacity:.6;cursor:wait;} .pg-g-baixar.carregando .gira{display:inline-block;animation:pgGira .8s linear infinite;}
+  @keyframes pgGira{to{transform:rotate(360deg);}}
+  .pg-g-x{width:36px;height:36px;border-radius:10px;border:1px solid #e3e8ee;background:#fff;cursor:pointer;font-size:14px;color:#5a6b7d;transition:transform .2s,background .2s;}
+  .pg-g-x:hover{background:#f4f6f8;transform:rotate(90deg);}
+  .pg-g-ferr{display:flex;align-items:center;gap:10px;padding:10px 18px;border-bottom:1px solid #eef1f4;}
+  .pg-g-ferr input{flex:1;max-width:360px;height:34px;border:1px solid #dfe5ec;border-radius:9px;padding:0 11px;font-size:12.5px;font-family:inherit;outline:none;}
+  .pg-g-ferr input:focus{border-color:#4a7a26;}
+  .pg-g-ferr span{margin-left:auto;font-size:12px;color:#8a97a6;}
+  .pg-g-tab{flex:1;overflow:auto;padding:0 18px 18px;}
+  .pg-g-tab table{width:100%;border-collapse:separate;border-spacing:0;font-size:12.5px;}
+  .pg-g-tab thead th{position:sticky;top:0;z-index:2;background:#4a7a26;color:#fff;font-weight:700;font-size:11.5px;padding:10px 8px;text-align:center;border-right:1px solid rgba(255,255,255,.18);white-space:nowrap;}
+  .pg-g-tab thead th:first-child{border-radius:0 0 0 10px;} .pg-g-tab thead th:last-child{border-radius:0 0 10px 0;border-right:0;}
+  .pg-g-tab tbody td{padding:8px;border-bottom:1px solid #eef1f4;text-align:center;color:#2b3f55;white-space:nowrap;}
+  .pg-g-tab tbody tr{animation:pgIn .35s both;transition:background .15s;}
+  .pg-g-tab tbody tr:nth-child(even) td{background:#fafbfa;}
+  .pg-g-tab tbody tr:hover td{background:#f1f7ec;}
+  .pg-g-tab td.pg-nome{text-align:left;font-weight:700;color:#1f2a18;} .pg-g-tab td.pg-fun{text-align:left;color:#5a6b7d;}
+  .pg-g-tab td.pg-dt-on{font-weight:800;color:var(--c);}
+  .pg-sit{display:inline-block;font-size:11px;font-weight:800;color:var(--s);}
+  .pg-vazio-l{padding:30px !important;color:#8a97a6;}
+  @media (max-width:900px){ .pg-kpis{grid-template-columns:repeat(2,1fr);} .pg-busca{width:100%;} }
+  @media (prefers-reduced-motion: reduce){ .pg *,.pg-gaveta{animation:none !important;transition:none !important;} }
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700;800&display=swap" rel="stylesheet">
@@ -1489,6 +1588,7 @@
         <div class="tree-parent closed" onclick="toggleTree(this)"><span class="caret">&#9660;</span>Embarque e Desembarque</div>
         <div class="tree-kids">
           <span class="leaf" onclick="goBrowse('todos')">Controle Geral</span>
+          <span class="leaf" onclick="progMostrar()">Programa&ccedil;&otilde;es</span>
         </div>
         <div class="tree-parent closed" onclick="toggleTree(this)"><span class="caret">&#9660;</span>Consultas (3)</div>
         <div class="tree-kids">
@@ -1558,6 +1658,7 @@
         <div class="sub">Selecione a rotina na lista abaixo</div>
         <div class="home-links">
           <a onclick="goBrowse('todos')">Controle Geral</a>
+          <a onclick="progMostrar()">Programa&ccedil;&otilde;es</a>
         </div>
       </div>
       <div class="home-sec">
@@ -1702,6 +1803,38 @@
     </div>
 
     <!-- ===== CRACHÁ CRÍTICO: CURSOS (NRs) POR COLABORADOR ===== -->
+    <!-- ===== PROGRAMAÇÕES: EMBARQUES E DESEMBARQUES POR CC ===== -->
+    <div id="view-prog" class="pg" style="display:none;">
+      <div class="pg-topo">
+        <div class="pg-tit">
+          <div class="crumb">Embarque e Desembarque &gt; Programa&ccedil;&otilde;es</div>
+          <h1>Programa&ccedil;&otilde;es</h1>
+          <div class="pg-sub">Embarques e desembarques do controle, separados por centro de custo &middot; clique numa programa&ccedil;&atilde;o para ver os colaboradores e baixar a planilha</div>
+        </div>
+        <div class="pg-filtros">
+          <div class="pg-seg"><button type="button" data-seg="periodo:prox" onclick="progSeg('periodo','prox')">Pr&oacute;ximas</button><button type="button" data-seg="periodo:real" onclick="progSeg('periodo','real')">Realizadas</button><button type="button" data-seg="periodo:todas" onclick="progSeg('periodo','todas')">Todas</button></div>
+          <div class="pg-seg"><button type="button" data-seg="tipo:" onclick="progSeg('tipo','')">Todos</button><button type="button" data-seg="tipo:EMB" onclick="progSeg('tipo','EMB')">Embarques</button><button type="button" data-seg="tipo:DES" onclick="progSeg('tipo','DES')">Desembarques</button></div>
+          <input type="text" class="pg-busca" placeholder="&#128269; Colaborador, matr&iacute;cula, fun&ccedil;&atilde;o..." oninput="PROG.q=this.value;progRender()">
+        </div>
+      </div>
+      <div class="pg-corpo">
+        <div class="pg-kpis" id="pg-kpis"></div>
+        <div class="pg-ccs" id="pg-ccs"></div>
+        <div id="pg-lista"></div>
+      </div>
+    </div>
+    <div class="pg-fundo" id="pg-fundo" onmousedown="if(event.target===this)progFechar()">
+      <div class="pg-gaveta" id="pg-gaveta">
+        <div class="pg-g-cab">
+          <span class="pg-g-ic" id="pg-g-ic"></span>
+          <div class="pg-g-tx"><b id="pg-g-tit"></b><small id="pg-g-sub"></small></div>
+          <button type="button" class="pg-g-baixar" id="pg-g-baixar" onclick="progBaixar()"><span class="gira">&#11015;</span> Baixar planilha</button>
+          <button type="button" class="pg-g-x" onclick="progFechar()" title="Fechar">&#10005;</button>
+        </div>
+        <div class="pg-g-ferr"><input type="text" id="pg-g-busca" placeholder="&#128269; Buscar nesta programa&ccedil;&atilde;o..." oninput="progRenderLista()"><span id="pg-g-cont"></span></div>
+        <div class="pg-g-tab"><table><thead id="pg-g-head"></thead><tbody id="pg-g-body"></tbody></table></div>
+      </div>
+    </div>
     <div id="view-nr" class="docv" style="display:none;flex:1;flex-direction:column;overflow:hidden;">
       <div class="routine-bar">
         <div>
@@ -6473,6 +6606,217 @@ function fotoVer(controle, nome){
 fotosCarregar();
 FOTOS.timer = setInterval(function(){ if(!document.hidden) fotosCarregar(); }, 60000);
 document.addEventListener('visibilitychange', function(){ if(!document.hidden) fotosCarregar(); });
+
+
+
+/* ================= PROGRAMAÇÕES =================
+   Todos os embarques e desembarques do controle, separados por CC. Cada
+   programação (CC + tipo + data) abre a lista de colaboradores, com a opção
+   de baixar a planilha no padrão do Backup (só as colunas do controle). */
+var PROG = { periodo:'prox', tipo:'', cc:'', q:'', fechados:{}, aberta:null, buscaLista:'' };
+var PROG_TIPO = {
+  EMB:{ l:'Embarque', pl:'Embarques', cor:'#2e9e44', claro:'#e6f4e8', ic:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>' },
+  DES:{ l:'Desembarque', pl:'Desembarques', cor:'#d97706', claro:'#fdf1e1', ic:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 7 7 17"/><path d="M17 17H7V7"/></svg>' }
+};
+var PROG_DIAS = ['domingo','segunda-feira','terça-feira','quarta-feira','quinta-feira','sexta-feira','sábado'];
+var PROG_MESES = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+function progDiaSemana(iso){ var p = iso.split('-').map(Number); return PROG_DIAS[new Date(Date.UTC(p[0], p[1]-1, p[2], 12)).getUTCDay()]; }
+function progRel(iso){
+  var d = diffDays(hoje(), iso);
+  if(d === 0) return 'hoje'; if(d === 1) return 'amanhã'; if(d === -1) return 'ontem';
+  return d > 0 ? 'em ' + d + ' dias' : 'há ' + (-d) + ' dias';
+}
+function progIniciais(n){ return String(n || '?').trim().split(/\s+/).filter(function(p){ return p.length > 2; }).map(function(p){ return p[0]; }).slice(0, 2).join('') || String(n || '?')[0]; }
+/* monta todas as programações a partir dos ciclos de embarque */
+function progMontar(){
+  var m = {};
+  (state.colabs || []).forEach(function(c){
+    (c.embarques || []).forEach(function(e){
+      [['EMB', e.data_embarque], ['DES', e.data_desembarque]].forEach(function(x){
+        if(!x[1]) return;
+        var cc = c.cc ? String(c.cc) : 'Sem CC', k = cc + '|' + x[0] + '|' + x[1];
+        if(!m[k]) m[k] = { k:k, cc:cc, tipo:x[0], data:x[1], itens:[] };
+        m[k].itens.push({ c:c, e:e });
+      });
+    });
+  });
+  return Object.keys(m).map(function(k){ var p = m[k]; p.itens.sort(function(a, b){ return String(a.c.nome || '').localeCompare(String(b.c.nome || ''), 'pt-BR'); }); return p; });
+}
+function progFiltradas(todas){
+  var h = hoje(), q = String(PROG.q || '').trim().toUpperCase();
+  return todas.filter(function(p){
+    if(PROG.periodo === 'prox' && p.data < h) return false;
+    if(PROG.periodo === 'real' && p.data >= h) return false;
+    if(PROG.tipo && p.tipo !== PROG.tipo) return false;
+    if(q && !p.itens.some(function(x){ return (String(x.c.nome || '') + ' ' + String(x.c.matricula || '') + ' ' + String(x.c.funcao || '')).toUpperCase().indexOf(q) >= 0; })) return false;
+    return true;
+  });
+}
+function progMostrar(){
+  escondeTodasViews();
+  var v = $('view-prog'); v.style.display = 'flex';
+  progRender();
+}
+function progSeg(campo, valor){ PROG[campo] = valor; progRender(); }
+function progRender(){
+  var todas = progMontar(), base = progFiltradas(todas), h = hoje();
+  var asc = PROG.periodo !== 'real';
+  /* botões do topo */
+  document.querySelectorAll('#view-prog [data-seg]').forEach(function(b){ var p = b.getAttribute('data-seg').split(':'); b.classList.toggle('on', String(PROG[p[0]]) === p[1]); });
+  /* indicadores */
+  var futuras = todas.filter(function(p){ return p.data >= h; }).sort(function(a, b){ return a.data < b.data ? -1 : a.data > b.data ? 1 : 0; });
+  var proxE = futuras.filter(function(p){ return p.tipo === 'EMB'; }), proxD = futuras.filter(function(p){ return p.tipo === 'DES'; });
+  function somaData(lista){ if(!lista.length) return null; var d = lista[0].data, n = 0; lista.forEach(function(p){ if(p.data === d) n += p.itens.length; }); return { d:d, n:n }; }
+  var pe = somaData(proxE), pd = somaData(proxD), pessoas = {};
+  base.forEach(function(p){ p.itens.forEach(function(x){ pessoas[x.c.id] = 1; }); });
+  function kpi(cls, tit, val, sub, i){ return '<div class="pg-kpi ' + cls + '" style="animation-delay:' + i * 50 + 'ms"><span class="pg-kpi-t">' + tit + '</span><b>' + val + '</b><small>' + sub + '</small></div>'; }
+  $('pg-kpis').innerHTML =
+      kpi('emb', 'Próximo embarque', pe ? fmtBR(pe.d).slice(0, 5) : '—', pe ? pe.n + ' colaborador(es) · ' + progRel(pe.d) : 'nenhum programado', 0)
+    + kpi('des', 'Próximo desembarque', pd ? fmtBR(pd.d).slice(0, 5) : '—', pd ? pd.n + ' colaborador(es) · ' + progRel(pd.d) : 'nenhum programado', 1)
+    + kpi('', 'Programações', base.length, PROG.periodo === 'prox' ? 'a partir de hoje' : PROG.periodo === 'real' ? 'já realizadas' : 'no total', 2)
+    + kpi('', 'Colaboradores', Object.keys(pessoas).length, 'nas programações listadas', 3);
+  /* chips de CC */
+  var porCC = {};
+  base.forEach(function(p){ porCC[p.cc] = (porCC[p.cc] || 0) + 1; });
+  var ccs = Object.keys(porCC).sort(function(a, b){ return a === 'Sem CC' ? 1 : b === 'Sem CC' ? -1 : a.localeCompare(b, 'pt-BR', { numeric:true }); });
+  if(PROG.cc && !porCC[PROG.cc]) PROG.cc = '';
+  $('pg-ccs').innerHTML = '<button type="button" class="pg-chip' + (PROG.cc ? '' : ' on') + '" onclick="PROG.cc=\'\';progRender()">Todos os CC <i>' + base.length + '</i></button>'
+    + ccs.map(function(cc){ return '<button type="button" class="pg-chip' + (PROG.cc === cc ? ' on' : '') + '" onclick="PROG.cc=PROG.cc===\'' + esc(cc) + '\'?\'\':\'' + esc(cc) + '\';progRender()">' + (cc === 'Sem CC' ? cc : 'CC ' + esc(cc)) + ' <i>' + porCC[cc] + '</i></button>'; }).join('');
+  /* seções por CC */
+  var lista = base.filter(function(p){ return !PROG.cc || p.cc === PROG.cc; });
+  var grupos = {};
+  lista.forEach(function(p){ (grupos[p.cc] = grupos[p.cc] || []).push(p); });
+  var html = '', n = 0;
+  ccs.filter(function(cc){ return grupos[cc]; }).forEach(function(cc, gi){
+    var ps = grupos[cc].sort(function(a, b){ var r = a.data < b.data ? -1 : a.data > b.data ? 1 : (a.tipo === 'DES' ? -1 : 1); return asc ? r : -r; });
+    var fechado = !!PROG.fechados[cc], tot = 0; ps.forEach(function(p){ tot += p.itens.length; });
+    html += '<section class="pg-sec' + (fechado ? ' fechado' : '') + '" style="animation-delay:' + gi * 60 + 'ms">'
+      + '<button type="button" class="pg-sec-cab" onclick="PROG.fechados[\'' + esc(cc) + '\']=!PROG.fechados[\'' + esc(cc) + '\'];progRender()">'
+      + '<span class="pg-sec-car">&#9662;</span><span class="pg-sec-cc">' + (cc === 'Sem CC' ? cc : 'CC ' + esc(cc)) + '</span>'
+      + (ccDesc(cc) ? '<span class="pg-sec-desc">' + esc(ccDesc(cc)) + '</span>' : '')
+      + '<span class="pg-sec-n">' + ps.length + ' programaç' + (ps.length === 1 ? 'ão' : 'ões') + ' · ' + tot + ' movimentaç' + (tot === 1 ? 'ão' : 'ões') + '</span></button>'
+      + '<div class="pg-cards">' + (fechado ? '' : ps.map(function(p){ return progCard(p, n++); }).join('')) + '</div></section>';
+  });
+  $('pg-lista').innerHTML = html || '<div class="pg-vazio"><b>Nenhuma programação encontrada.</b><span>' + (todas.length ? 'Mude o período ou os filtros acima.' : 'Cadastre os embarques no Controle Geral para eles aparecerem aqui.') + '</span></div>';
+}
+function progCard(p, i){
+  var t = PROG_TIPO[p.tipo], d = p.data.split('-'), turmas = {};
+  p.itens.forEach(function(x){ if(x.c.turma) turmas[x.c.turma] = 1; });
+  var passada = p.data < hoje(), hojeCls = p.data === hoje() ? ' hoje' : '';
+  return '<button type="button" class="pg-card' + (passada ? ' passada' : '') + hojeCls + '" style="--c:' + t.cor + ';--cl:' + t.claro + ';animation-delay:' + Math.min(i, 24) * 35 + 'ms" onclick="progAbrir(\'' + esc(p.k) + '\')">'
+    + '<span class="pg-card-top"><span class="pg-ic">' + t.ic + '</span><span class="pg-tipo">' + t.l + '</span><span class="pg-rel">' + progRel(p.data) + '</span></span>'
+    + '<span class="pg-data"><b>' + d[2] + '</b><span><em>' + PROG_MESES[+d[1] - 1] + ' ' + d[0] + '</em><small>' + progDiaSemana(p.data) + '</small></span></span>'
+    + '<span class="pg-pessoas"><span class="pg-avs">' + p.itens.slice(0, 4).map(function(x){ return '<i>' + esc(progIniciais(x.c.nome)) + '</i>'; }).join('') + (p.itens.length > 4 ? '<i class="mais">+' + (p.itens.length - 4) + '</i>' : '') + '</span>'
+    + '<span class="pg-n"><b>' + p.itens.length + '</b> colaborador' + (p.itens.length === 1 ? '' : 'es') + '</span></span>'
+    + (Object.keys(turmas).length ? '<span class="pg-turmas">' + Object.keys(turmas).sort().map(function(x){ return '<i>' + esc(x) + '</i>'; }).join('') + '</span>' : '')
+    + '<span class="pg-abrir">Ver colaboradores &#8594;</span></button>';
+}
+
+/* ---------- lista de colaboradores da programação ---------- */
+function progAchar(k){ var l = progMontar(); for(var i = 0; i < l.length; i++){ if(l[i].k === k) return l[i]; } return null; }
+function progAbrir(k){
+  var p = progAchar(k); if(!p) return;
+  PROG.aberta = k; PROG.buscaLista = '';
+  var t = PROG_TIPO[p.tipo];
+  var dlg = $('pg-gaveta');
+  dlg.style.setProperty('--c', t.cor); dlg.style.setProperty('--cl', t.claro);
+  $('pg-g-ic').innerHTML = t.ic;
+  $('pg-g-tit').textContent = t.l + ' · ' + (p.cc === 'Sem CC' ? 'Sem CC' : 'CC ' + p.cc);
+  $('pg-g-sub').textContent = fmtBR(p.data) + ' (' + progDiaSemana(p.data) + ') · ' + progRel(p.data) + ' · ' + p.itens.length + ' colaborador' + (p.itens.length === 1 ? '' : 'es') + (ccDesc(p.cc) ? ' · ' + ccDesc(p.cc) : '');
+  $('pg-g-busca').value = '';
+  progRenderLista();
+  $('pg-fundo').classList.add('on');
+  setTimeout(function(){ $('pg-g-busca').focus(); }, 300);
+}
+function progFechar(){ $('pg-fundo').classList.remove('on'); PROG.aberta = null; }
+function progLinhas(p){
+  return p.itens.map(function(x){
+    var c = x.c, e = x.e || {}, si = statusInfo(c);
+    return { c:c, si:si, v:[c.matricula || '', c.nome || '', c.funcao || '', c.cc || '', c.turma || '', c.escala || '', ST[si.code] ? ST[si.code].label : '', e.data_embarque || '', e.data_desembarque || '', e.data_reembarque || ''] };
+  });
+}
+var PROG_COLS = ['Matrícula','Nome','Função','CC','Turma','Escala','Situação','Data Embarque','Data Desembarque','Data Reembarque'];
+function progRenderLista(){
+  var p = progAchar(PROG.aberta); if(!p) return;
+  var q = $('pg-g-busca').value.trim().toUpperCase();
+  var L = progLinhas(p).filter(function(l){ return !q || (l.v[0] + ' ' + l.v[1] + ' ' + l.v[2] + ' ' + l.v[4]).toUpperCase().indexOf(q) >= 0; });
+  $('pg-g-head').innerHTML = '<tr>' + PROG_COLS.map(function(c){ return '<th>' + c + '</th>'; }).join('') + '</tr>';
+  var destaque = p.tipo === 'EMB' ? 7 : 8;
+  $('pg-g-body').innerHTML = L.length ? L.map(function(l, i){
+    return '<tr style="animation-delay:' + Math.min(i, 30) * 18 + 'ms">' + l.v.map(function(v, j){
+      if(j === 6) return '<td><span class="pg-sit" style="--s:' + ((ST[l.si.code] || {}).hex || '#9e9e9e') + '">' + esc(v) + '</span></td>';
+      if(j >= 7) return '<td class="pg-dt' + (j === destaque ? ' pg-dt-on' : '') + '">' + (v ? fmtBR(v) : '—') + '</td>';
+      return '<td' + (j === 1 ? ' class="pg-nome"' : j === 2 ? ' class="pg-fun"' : '') + '>' + esc(v || '—') + '</td>';
+    }).join('') + '</tr>';
+  }).join('') : '<tr><td colspan="' + PROG_COLS.length + '" class="pg-vazio-l">Ninguém encontrado.</td></tr>';
+  $('pg-g-cont').textContent = L.length + ' de ' + p.itens.length;
+}
+
+/* ---------- planilha (mesmo padrão do Backup, só as colunas do controle) ---------- */
+function progBaixar(){
+  var p = progAchar(PROG.aberta); if(!p) return;
+  var b = $('pg-g-baixar'); b.disabled = true; b.classList.add('carregando');
+  carregarExcelJS().then(function(){
+    var VERDE = 'FF3B6A1F', VERDE2 = 'FF4A7A26', AMARELO = 'FFEAA837', CLARO = 'FFF7F9F4', CINZA = 'FFDDE3D6', TEXTO = 'FF33402C';
+    var agora = new Date(), quando = fmtBR(hoje()) + ' ' + String(agora.getHours()).padStart(2, '0') + ':' + String(agora.getMinutes()).padStart(2, '0');
+    var operador = (typeof EMB_CFG !== 'undefined' && EMB_CFG && EMB_CFG.nome) ? EMB_CFG.nome : '';
+    var fino = { style:'thin', color:{ argb:CINZA } }, bordas = { top:fino, left:fino, bottom:fino, right:fino };
+    var wb = new ExcelJS.Workbook(); wb.creator = 'Parente Andrade'; wb.created = agora;
+    var logo = (typeof logoPABase64 === 'function') ? logoPABase64() : null, logoId = logo ? wb.addImage({ base64:logo, extension:'png' }) : null;
+    var tipo = PROG_TIPO[p.tipo], cols = PROG_COLS, ncol = cols.length, linhaTit = 6;
+    var ws = wb.addWorksheet('Programação');
+    ws.pageSetup = { orientation:'landscape', paperSize:9, fitToPage:true, fitToWidth:1, fitToHeight:0, margins:{ left:0.3, right:0.3, top:0.45, bottom:0.55, header:0.2, footer:0.25 }, printTitlesRow:linhaTit + ':' + linhaTit };
+    ws.headerFooter.oddFooter = '&L&8Parente Andrade - Programação de ' + tipo.l.toLowerCase() + '&R&8Página &P de &N';
+    ws.properties.tabColor = { argb:VERDE2 };
+    ws.getRow(1).height = 24; ws.getRow(2).height = 20; ws.getRow(3).height = 16; ws.getRow(4).height = 5;
+    if(logoId !== null) ws.addImage(logoId, { tl:{ col:0.1, row:0.2 }, ext:{ width:170, height:47 } });
+    ws.mergeCells(1, 3, 1, ncol); ws.mergeCells(2, 3, 2, ncol); ws.mergeCells(3, 3, 3, ncol);
+    var t1 = ws.getCell(1, 3); t1.value = 'PROGRAMAÇÃO DE ' + tipo.l.toUpperCase() + ' - ' + (p.cc === 'Sem CC' ? 'SEM CC' : 'CC ' + p.cc); t1.font = { name:'Arial', size:16, bold:true, color:{ argb:VERDE } }; t1.alignment = { horizontal:'right', vertical:'middle' };
+    var t2 = ws.getCell(2, 3); t2.value = tipo.l + ' em ' + fmtBR(p.data) + ' (' + progDiaSemana(p.data) + ') · ' + p.itens.length + ' colaborador(es)' + (ccDesc(p.cc) ? ' · ' + ccDesc(p.cc) : ''); t2.font = { name:'Arial', size:10.5, color:{ argb:TEXTO } }; t2.alignment = { horizontal:'right', vertical:'middle' };
+    var t3 = ws.getCell(3, 3); t3.value = 'Gerado em ' + quando + (operador ? ' por ' + operador : '') + '  |  Controle de Embarque e Desembarque - Taboca'; t3.font = { name:'Arial', size:8.5, italic:true, color:{ argb:'FF8A97A6' } }; t3.alignment = { horizontal:'right', vertical:'middle' };
+    for(var c = 1; c <= ncol; c++) ws.getCell(4, c).fill = { type:'pattern', pattern:'solid', fgColor:{ argb:AMARELO } };
+    var rT = ws.getRow(linhaTit); rT.values = cols; rT.height = 30;
+    rT.eachCell(function(cell){ cell.font = { name:'Arial', size:9.5, bold:true, color:{ argb:'FFFFFFFF' } }; cell.fill = { type:'pattern', pattern:'solid', fgColor:{ argb:VERDE2 } }; cell.alignment = { horizontal:'center', vertical:'middle', wrapText:true }; cell.border = bordas; });
+    function dataXl(iso){ if(!iso) return ''; var q = String(iso).split('-').map(Number); return q[0] > 1900 ? new Date(Date.UTC(q[0], q[1]-1, q[2], 12)) : fmtBR(iso); }
+    var linhas = progLinhas(p);
+    linhas.forEach(function(l, n){
+      var row = ws.getRow(linhaTit + 1 + n);
+      row.values = l.v.slice(0, 7).concat([dataXl(l.v[7]), dataXl(l.v[8]), dataXl(l.v[9])]); row.height = 17;
+      row.eachCell({ includeEmpty:true }, function(cell, ci){
+        if(ci > ncol) return;
+        cell.font = { name:'Arial', size:9.5, color:{ argb:TEXTO } }; cell.border = bordas; cell.alignment = { vertical:'middle' };
+        if(n % 2 === 1) cell.fill = { type:'pattern', pattern:'solid', fgColor:{ argb:CLARO } };
+        if(cell.value instanceof Date){ cell.numFmt = 'dd/mm/yyyy'; cell.alignment = { horizontal:'center', vertical:'middle' }; }
+      });
+      row.getCell(2).font = { name:'Arial', size:9.5, bold:true, color:{ argb:'FF1F2A18' } };
+      [1, 4, 5, 6].forEach(function(ci){ row.getCell(ci).alignment = { horizontal:'center', vertical:'middle' }; });
+      var hex = ((ST[l.si.code] || {}).hex || '#9e9e9e').replace('#', '');
+      row.getCell(7).font = { name:'Arial', size:9, bold:true, color:{ argb:'FF' + hex } }; row.getCell(7).alignment = { horizontal:'center', vertical:'middle' };
+    });
+    ws.autoFilter = { from:{ row:linhaTit, column:1 }, to:{ row:linhaTit + Math.max(1, linhas.length), column:ncol } };
+    ws.views = [{ state:'frozen', ySplit:linhaTit, xSplit:2, showGridLines:false }];
+    var minimos = [10, 26, 18, 7, 7, 8, 16, 12, 13, 12], maximos = [12, 44, 30, 9, 7, 9, 18, 12, 13, 12];
+    cols.forEach(function(nome, i){
+      var max = String(nome).length * 0.9;
+      ws.getColumn(i + 1).eachCell({ includeEmpty:false }, function(cell, r){ if(r < linhaTit) return; var v = cell.value, len = (v instanceof Date) ? 10 : String(v == null ? '' : v).length; if(len > max) max = len; });
+      ws.getColumn(i + 1).width = Math.min(maximos[i], Math.max(minimos[i], Math.ceil(max * 1.1) + 2));
+    });
+    return wb.xlsx.writeBuffer();
+  }).then(function(buf){
+    var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([buf], { type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }));
+    a.download = 'Programacao_' + (p.tipo === 'EMB' ? 'Embarque' : 'Desembarque') + '_CC' + String(p.cc).replace(/\W+/g, '') + '_' + p.data.replace(/-/g, '') + '.xlsx';
+    document.body.appendChild(a); a.click(); setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+    toast('Planilha gerada com ' + p.itens.length + ' colaborador(es).');
+  }).catch(function(err){ toast('Erro ao gerar a planilha: ' + (err.message || err), true); })
+    .then(function(){ b.disabled = false; b.classList.remove('carregando'); });
+}
+
+/* esconder a tela quando outra rotina abrir */
+(function(){
+  var origEsc = escondeDocs;
+  escondeDocs = function(){ origEsc.apply(this, arguments); var v = $('view-prog'); if(v) v.style.display = 'none'; var g = $('pg-fundo'); if(g) g.classList.remove('on'); };
+})();
+document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && PROG.aberta) progFechar(); });
 
 </script>
 <!-- ==================== COLABORADORES DA FUNÇÃO (dashboard) ==================== -->
