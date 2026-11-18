@@ -1539,6 +1539,16 @@
   .pg-vazio-l{padding:30px !important;color:#8a97a6;}
   @media (max-width:900px){ .pg-kpis{grid-template-columns:repeat(2,1fr);} .pg-busca{width:100%;} }
   @media (prefers-reduced-motion: reduce){ .pg *,.pg-gaveta{animation:none !important;transition:none !important;} }
+
+  /* PCV: responsável atual (PA / TABOCA) */
+  select.resp-sel{appearance:none;-webkit-appearance:none;border:1px solid #d6dde5;border-radius:999px;padding:4px 24px 4px 11px;font-size:11.5px;font-weight:800;cursor:pointer;font-family:inherit;letter-spacing:.03em;
+    background:#fff url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M0 0l5 6 5-6z' fill='%23667'/></svg>") no-repeat right 9px center;transition:background-color .15s,border-color .15s;}
+  .ff select.resp-sel{width:100%;border-radius:10px;padding:9px 28px 9px 12px;font-size:13px;}
+  select.resp-sel:hover:not(:disabled){border-color:#9fb0c2;}
+  select.resp-sel.r-pa{background-color:#e2f2df;color:#1e6b2d;border-color:#b9dcb3;}
+  select.resp-sel.r-taboca{background-color:#e3effa;color:#1d5f94;border-color:#b7d3ee;}
+  select.resp-sel.r-vaz{color:#8a97a6;}
+  select.resp-sel:disabled{opacity:.75;cursor:default;}
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700;800&display=swap" rel="stylesheet">
@@ -4455,7 +4465,7 @@ var DOCS = {
       {k:'colaborador', l:'Colaborador', cls:'nm'},
       {k:'matricula_taboca', l:'Matrícula Taboca'},
       {k:'funcao', l:'Função'},
-      {k:'etapa', l:'Observação da etapa', cls:'obs'},
+      {k:'responsavel_atual', l:'Responsável atual', resp:true},
       {k:'_etapas', l:'Etapas'},
       {k:'_proc', l:'Etapa atual / dias'},
       {k:'data_vencimento', l:'Vencimento', date:true},
@@ -4473,7 +4483,7 @@ var DOCS = {
       {k:'status', l:'Status', status:true},
       {sec:'Etapas do processo'},
       {checklist:true},
-      {k:'etapa', l:'Observação sobre a etapa', w:3, ph:'Ex.: aguardando retorno do gestor'},
+      {k:'responsavel_atual', l:'Responsável atual', resp:true},
       {sec:'Validade'},
       {k:'data_vencimento', l:'Data de vencimento do PCV', date:true},
       {sec:'Observações'},
@@ -4844,6 +4854,25 @@ function etapasHTML(t, r){
   if(rn) tit.unshift(rn+'ª renovação'+(r.data_inicio_ciclo?' iniciada em '+fmtBR(r.data_inicio_ciclo):''));
   return '<span class="etp" title="'+esc(tit.join('\n'))+'"><span class="etp-bar">'+seg+'</span><span class="etp-n">'+(conc?'&#10003;':n+'/'+at.length)+'</span>'+(rn?'<span class="renov-tag">&#8635; '+rn+'</span>':'')+'</span>';
 }
+
+/* ----- PCV: responsável atual (PA / TABOCA) ----- */
+var RESP_OPS = [['PA','PA'],['TABOCA','TABOCA']];
+function respClasse(v){ return v==='PA' ? 'r-pa' : v==='TABOCA' ? 'r-taboca' : 'r-vaz'; }
+function respSelectHTML(v, attrs){
+  return '<select class="resp-sel '+respClasse(v)+'"'+attrs+'><option value="">-</option>'+RESP_OPS.map(function(o){ return '<option value="'+o[0]+'"'+(o[0]===v?' selected':'')+'>'+o[1]+'</option>'; }).join('')+'</select>';
+}
+function respSemColuna(t){ var l=state.docs[t]||[]; return l.length && l[0].responsavel_atual===undefined && !state.docLocal[t]; }
+function respSalvar(sel, t, id){
+  var v=sel.value, r=docById(t, id), ant=r ? (r.responsavel_atual||'') : '';
+  if(respSemColuna(t)){ sel.value=ant; toast('Rode o arquivo embarque_pcv_responsavel.sql no Supabase para gravar o responsável atual.', true); return; }
+  sel.className='resp-sel '+respClasse(v); sel.disabled=true;
+  docsSalvar(t, {responsavel_atual: v||null}, id).then(function(){
+    toast((r?r.colaborador+': ':'')+'responsável atual '+(v||'sem informação')+'.');
+  }).catch(function(e){
+    sel.value=ant; sel.className='resp-sel '+respClasse(ant);
+    var m=String(e&&e.message||e); toast(/responsavel_atual/.test(m) ? 'Rode o arquivo embarque_pcv_responsavel.sql no Supabase para gravar o responsável atual.' : 'Não foi possível salvar: '+m, true);
+  }).then(function(){ sel.disabled=false; });
+}
 function celulaDoc(t, c, x){
   var r=x.r, v;
   if(c.k==='_sit') return badgeSit(x.sit);
@@ -4851,6 +4880,7 @@ function celulaDoc(t, c, x){
   if(c.k==='_etapas') return etapasHTML(t, r);
   if(c.k==='_proc') return procHTML(t, r);
   if(c.k==='status') return badgeSt(r.status);
+  if(c.resp) return respSelectHTML(r.responsavel_atual||'', ' onclick="event.stopPropagation()" ondblclick="event.stopPropagation()" onchange="respSalvar(this,\''+t+'\',\''+esc(r.id)+'\')"'+(state.editMode?'':' disabled')+' title="Responsável atual pelo processo"');
   if(c.k==='colaborador' && t==='pcv' && r.colaborador) return esc(r.colaborador)+fotoChip('pcv', r.colaborador);
   v=r[c.k];
   if(c.date) return v ? fmtBR(v) : '<span class="dmuted">—</span>';
@@ -4969,7 +4999,9 @@ function abrirDocForm(modo, t, id){
     var v = r && r[f.k]!=null ? String(r[f.k]) : '';
     var id_='df-'+f.k, attrs=' id="'+id_+'"'+(ro?' disabled':'');
     var campo;
-    if(f.status){
+    if(f.resp){
+      campo=respSelectHTML(v, attrs+' onchange="this.className=\'resp-sel \'+respClasse(this.value)"');
+    } else if(f.status){
       var nv=normSt(v);
       campo='<select'+attrs+'>'+DOC_ST.map(function(s){ return '<option value="'+esc(s.v)+'"'+(s.v===nv?' selected':'')+'>'+stLabel(s.v)+'</option>'; }).join('')+'</select>';
     } else if(f.area){
@@ -5178,6 +5210,7 @@ function salvarDocForm(){
   dados.colaborador = dados.colaborador.replace(/\s+/g,' ').toUpperCase();
   if(COLS_NOVAS[f.t] && state.docColsFaltando[f.t]) COLS_NOVAS[f.t].forEach(function(k){ delete dados[k]; });
   dados.colaborador_id = $('df-colab-id').value || null;
+  if('responsavel_atual' in dados && respSemColuna(f.t)){ if(dados.responsavel_atual) toast('O responsável atual não foi gravado: rode o arquivo embarque_pcv_responsavel.sql no Supabase.', true); delete dados.responsavel_atual; }
   dados.status = dados.status ? normSt(dados.status) : null;
   loading(true);
   docsSalvar(f.t, dados, f.id).then(function(){
